@@ -1,4 +1,4 @@
-## Welcome to GitHub Pages
+## Wh0rigin
 
 You can use the [editor on GitHub](https://github.com/Wh0rigin/Wh0rigin.GitHub.io/edit/main/index.md) to maintain and preview the content for your website in Markdown files.
 
