@@ -1,4 +1,5 @@
-## Wh0rigin
+# Wh0rigin
+## 当然,我还没想好怎么写
 
 You can use the [editor on GitHub](https://github.com/Wh0rigin/Wh0rigin.GitHub.io/edit/main/index.md) to maintain and preview the content for your website in Markdown files.
 
