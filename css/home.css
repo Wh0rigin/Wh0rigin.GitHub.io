@@ -1,0 +1,10 @@
+.homepic{
+    background-image: url("../img/sb.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100%;
+    height: 100%;
+    position: relative;
+    z-index: -1;
+}
