@@ -1,0 +1,174 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    line-height: 3em;
+    margin-left: 3em;
+    color: gray;
+    text-decoration: none;
+}
+a:hover {
+    color: black;
+}
+
+header {
+    background-color: whitesmoke;
+    height: 3em;
+    width: 100%;
+    position: fixed;
+    z-index: 100;
+}
+
+.basic {
+    background-color: white;
+    height: 55em;
+    width: 100%;
+}
+
+.basic p {
+    margin-left: 10em;
+    display: inline-block;
+    width: 50%;
+}
+
+.basic p> span {
+    display: inline-block;
+    font-style: bold;
+    font-size: 5em;
+}
+
+.basic .back{
+    display: inline-block;
+    font-style: bold;
+    text-decoration: line-through;
+    font-size: 1.5em;
+    margin-left: 25em;
+    color: gray;
+}
+
+.basic .name{
+    font-size: 1em;
+    margin-top: 10em;
+    margin-left: 10em;
+    padding-bottom: 2em;
+}
+
+.basic p img {
+    width: 200px;
+}
+
+
+
+
+.basic .particular{
+    text-indent: 2em;
+    margin-left: 10em;
+    margin-top: 3em;
+    color: gray;
+    width: 50%;
+}
+
+.work {
+    background-color: whitesmoke;
+    height: 55em;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.work::before {
+    content: "";
+    width: 0;
+    height: 30%;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+}
+
+.work h1,
+.work p {
+    width: 100%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.experiences {
+    background-color: white;
+    height: 55em;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.experiences::before {
+    content: "";
+    width: 0;
+    height: 30%;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+}
+
+.experiences h1,
+.experiences p {
+    width: 100%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+.languages {
+    background-color: whitesmoke;
+    height: 55em;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.languages::before {
+    content: "";
+    width: 0;
+    height: 30%;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+}
+
+.languages h1,
+.languages p {
+    width: 100%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+.languages .title{
+    width: 100%;
+    font-size: 2em;
+    color: gray;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.Award {
+    background-color: white;
+    height: 55em;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.Award::before {
+    content: "";
+    width: 0;
+    height: 10%;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+}
+
+
+.Award h1,
+.Award p {
+    width: 100%;
+    display: inline-block;
+    vertical-align: middle;
+}
