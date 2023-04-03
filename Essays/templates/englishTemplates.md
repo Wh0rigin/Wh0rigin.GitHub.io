@@ -1,3 +1,6 @@
+@author: Wh0rigin
+@Last-update: 23-4-3
+
 # Sentences
 * **The last decade** has **contemplated** that an **overwhelming majority** of people have been **participating in an argument** about `whether to use English template`, which has been in the limelight and has **triggered widespread** concern in the public.
     > 近十年来，大量的人参与了**是否使用英语模板**的争论，这已经成为人们关注的焦点，引发了公众的广泛关注。
