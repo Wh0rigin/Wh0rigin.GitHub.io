@@ -31,19 +31,39 @@
     > 究竟是什么导致了这种现象?
 * I consider that the reasons of this issue mainly lie in the following aspects.
     > 我认为这个问题的原因主要有以下几个方面。
-
-
+* Nothing is **more important** than to **receive education**.
+    > 没有比**接受教育更重要**的事。
+* We cannot emphasize the importance of **protecting our eyes** too much.
+    > 我们再怎么强调**保护眼睛**的重要性也不为过。
+* **The progress of thee society** is based on **harmony**.
+    > **社会的进步**是以**和谐**为基础的。
+* We should spare no effort to **beautify our environment**.
+    > 我们应该不遗余力地**美化我们的环境**。
+* We should bring home to **people** **the value of working hard**.
+    > 我们应该让**人们**明白**努力的价值**
+* What's indisputable is that ...
+    > 不可争议的是...
+* You will make a difference in the world.
+    > 你可以让世界因你而不同
 # Greate expression
 `alleviate pressure`    缓解压力
 `Looking back on my life,...`   回顾我的人生
 `pleace great emphasis on`  高度重视
 `be not conductive to sth/doing`    不利于
 `take it for granted that ...`  认为...理所应当
+`it is said that...`    据说
+`it means to sb that...`    对sb有意义的是
 `contribute to sth`     导致
 `blow away`     印象深刻
 `gain A from B` 从B中获得A
-`get boil B down to A`   将B归结为A
-
+`boil B down to A`   将B归结为A
+`To some extent ...(句子)`    在某种情况下
+`driving forces`    驱动力
+`shed light on` 阐明
+`throw a spotlight on`  聚焦于
+`the dawn of sth`   什么的开始
+`time go by fast`   时间飞快的过去
+`make up for sth`   弥补补偿
 # Structure
 `In turn`   反之
 
@@ -52,6 +72,7 @@
 `To start with`
 `First of all`
 `First`
+`for one thing`
 
 `Apart from this`
 `Aside from this`
@@ -73,9 +94,15 @@
 `dramatically`  adv.    戏剧性地，夸张地
 `frequently`    adv.    经常地
 `extremely`     adv.    极其地
+`sufficiently`  adv.    充分地
 
+`due`   adj.    应当的
 `unprecedented` adj.    空前的;史无前例的
 `significant`   adj.    显著的
-``
+`preventable`   adj.    可预防的
+`sufficient`    adj.    充分的
 
 `overwhelm`     v.      压倒
+
+`competition`   n.  竞赛
+
