@@ -45,25 +45,41 @@
     > 不可争议的是...
 * You will make a difference in the world.
     > 你可以让世界因你而不同
+* Gone are the days when ...
+    > ...的日子已经不在了
+* I assume that the monumental proverb "" would not be alien to us, it aims at informing us that ...
+    > 我想这句不朽的谚语“”对我们来说并不陌生，它的目的是告诉我们……
+* It is goes without saying that ...
+    > 不言而喻的事情是...
+* It is no overstatment to say that ...
+    > 毫不夸张的说...
 # Greate expression
 `alleviate pressure`    缓解压力
+`broaden the circle of the association`     扩宽我们的交际圈
+`stretch one's money`   省钱
+
+`be not conductive to sth/doing`    不利于
+`boil B down to A`   将B归结为A
+`gain A from B` 从B中获得A
+`To some extent ...(句子)`    在某种情况下
+`throw a spotlight on`  聚焦于
+`contribute to sth`     导致
+
 `Looking back on my life,...`   回顾我的人生
 `pleace great emphasis on`  高度重视
-`be not conductive to sth/doing`    不利于
+
 `take it for granted that ...`  认为...理所应当
 `it is said that...`    据说
 `it means to sb that...`    对sb有意义的是
-`contribute to sth`     导致
+
 `blow away`     印象深刻
-`gain A from B` 从B中获得A
-`boil B down to A`   将B归结为A
-`To some extent ...(句子)`    在某种情况下
 `driving forces`    驱动力
 `shed light on` 阐明
-`throw a spotlight on`  聚焦于
 `the dawn of sth`   什么的开始
 `time go by fast`   时间飞快的过去
 `make up for sth`   弥补补偿
+
+
 # Structure
 `In turn`   反之
 
