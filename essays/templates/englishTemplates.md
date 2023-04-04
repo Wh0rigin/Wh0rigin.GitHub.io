@@ -1,5 +1,5 @@
 @author: Wh0rigin
-@Last-update: 23-4-4
+@Last-update: 23-4-5
 
 # Sentences
 * **The last decade** has **contemplated** that an **overwhelming majority** of people have been **participating in an argument** about `whether to use English template`, which has been in the limelight and has **triggered widespread** concern in the public.
@@ -64,6 +64,7 @@
 `be not conductive to sth/doing`    不利于
 `boil B down to A`   将B归结为A
 `gain A from B` 从B中获得A
+`profit from`   得益于
 `To some extent ...(句子)`    在某种情况下
 `throw a spotlight on`  聚焦于
 `contribute to sth`     导致
@@ -121,9 +122,11 @@
 `preventable`   adj.    可预防的
 `sufficient`    adj.    充分的
 `convenient`    adj.    方便的
-`effective`
+`effective`     adj.    有效的
+`detrimental`   adj.    有害的
 
 `overwhelm`     v.      压倒
 
 `competition`   n.  竞赛
-
+`relaxation`    n   休息
+`burden`        n   负荷
