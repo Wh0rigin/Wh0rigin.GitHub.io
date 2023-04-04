@@ -121,6 +121,7 @@
 `preventable`   adj.    可预防的
 `sufficient`    adj.    充分的
 `convenient`    adj.    方便的
+`effective`
 
 `overwhelm`     v.      压倒
 
