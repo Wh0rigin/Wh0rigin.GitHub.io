@@ -1,5 +1,5 @@
 @author: Wh0rigin
-@Last-update: 23-4-3
+@Last-update: 23-4-4
 
 # Sentences
 * **The last decade** has **contemplated** that an **overwhelming majority** of people have been **participating in an argument** about `whether to use English template`, which has been in the limelight and has **triggered widespread** concern in the public.
@@ -120,6 +120,7 @@
 `significant`   adj.    显著的
 `preventable`   adj.    可预防的
 `sufficient`    adj.    充分的
+`convenient`    adj.    方便的
 
 `overwhelm`     v.      压倒
 
