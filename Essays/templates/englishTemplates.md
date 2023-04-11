@@ -54,12 +54,14 @@
     > 我想这句不朽的谚语“”对我们来说并不陌生，它的目的是告诉我们……
 * It is goes without saying that ...
     > 不言而喻的事情是...
-* It is no overstatment to say that ...
+* It is no overstatement to say that ...
     > 毫不夸张的说...
 # Greate expression
 `alleviate pressure`    缓解压力
+`lighten up`    放松
 `broaden the circle of the association`     扩宽我们的交际圈
 `stretch one's money`   省钱
+`seize opportunity`     抓住机会
 
 `be not conductive to sth/doing`    不利于
 `boil B down to A`   将B归结为A
@@ -126,6 +128,8 @@
 `detrimental`   adj.    有害的
 
 `overwhelm`     v.      压倒
+`regulate`      v.      管理
+`indulge`       v.      沉溺
 
 `competition`   n.  竞赛
 `relaxation`    n   休息
