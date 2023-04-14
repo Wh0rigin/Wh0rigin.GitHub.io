@@ -1,5 +1,5 @@
 @author: Wh0rigin
-@Last-update: 23-4-5
+@Last-update: 23-4-14
 
 # Sentences
 * **The last decade** has **contemplated** that an **overwhelming majority** of people have been **participating in an argument** about `whether to use English template`, which has been in the limelight and has **triggered widespread** concern in the public.
@@ -56,12 +56,17 @@
     > 不言而喻的事情是...
 * It is no overstatement to say that ...
     > 毫不夸张的说...
+* Gone are the days  when ...
+    > ...的日子已经一去不复返了
 # Greate expression
 `alleviate pressure`    缓解压力
 `lighten up`    放松
 `broaden the circle of the association`     扩宽我们的交际圈
 `stretch one's money`   省钱
 `seize opportunity`     抓住机会
+`be enthusiastic about`     热衷于
+`equip oneself with`    具备
+`pat on the back`   鼓励,表扬
 
 `be not conductive to sth/doing`    不利于
 `boil B down to A`   将B归结为A
