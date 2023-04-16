@@ -10,3 +10,7 @@ tree
 |- index.html   简单描述
 |- README.md    你在看的这个
 ```
+
+主页:https://wh0rigin.github.io/
+
+英语模板:https://wh0rigin.github.io/Essays/templates/
