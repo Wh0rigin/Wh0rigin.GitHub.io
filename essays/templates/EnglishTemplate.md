@@ -1,5 +1,5 @@
 **@ author** : Wh0rigin
-**@ Last-update** : 23-4-16
+**@ Last-update** : 23-12-2
 
 # Sentences
 
@@ -10,7 +10,7 @@
     * Over the last decade, a contentious debate has emerged regarding **the use of an English template**. This hotly contested issue has sparked widespread public concern.
         > 在过去的十年中，关于**英语模板**的使用出现了一场有争议的辩论。这个争论激烈的问题引起了公众的广泛关注。
 
-* **In the temporary society**, there is a prevalent phenomenon that an increasing number of people `use English templates`.
+* **In the contemporary society**, there is a prevalent phenomenon that an increasing number of people `use English templates`.
     > 在当今社会，**使用英语模板**的人越来越多，这是一种普遍现象。
 
     * Within our contemporary society, a prevailing trend has emerged wherein a growing multitude of individuals are opting to **utilize English templates**.
@@ -19,8 +19,11 @@
 * It is generally agreed that the … has been playing an increasingly significant role in our life.
     > 人们普遍认为______在我们的生活中发挥着越来越重要的作用
 
-* Technology is developing by leaps and bounds. ... become an indispensable part in people's life. As an old saying goes,a coin has two sides. ... is no exception.
-    > 科技正在飞速发展，A成为人们生活中不可或缺的一部分。正如一句老话所说，一枚硬币有两面。A也不例外。
+* **Technology** is developing by leaps and bounds. ... become an indispensable part in people's life. As an old saying goes,a coin has two sides. ... is no exception.
+    > **科技**正在飞速发展，A成为人们生活中不可或缺的一部分。正如一句老话所说，一枚硬币有两面。A也不例外。
+
+* The advent of ... has reshaped the landscape of ... in recent year，presenting both advantageous and detrimental impacts.
+    > 最近...的出现重塑了...的形式,带来了好的方面和坏的方面
 #### proverb
 * As a monumental saying "",...
     > 正如一句不朽的
@@ -36,7 +39,7 @@
         > 翻译：根据条形/曲线图，... 在过去几年中呈稳步增长趋势。从2000年的...上升到2010年的...。
 ## center
 #### merit and demerit
-* Generally, its advantages/merits.strengths can be seen as follows.
+* Generally, its advantages/merits/strengths can be seen as follows.
     > 一般来说，它的优点/优势可以归纳如下。
 * On the contrary, the negative aspect are also apparent.
     > 相反，负面影响也很明显
@@ -94,7 +97,7 @@
     > 没有比**接受教育更重要**的事。
 * We cannot emphasize the importance of **protecting our eyes** too much.
     > 我们再怎么强调**保护眼睛**的重要性也不为过。
-* **The progress of thee society** is based on **harmony**.
+* **The progress of the society** is based on **harmony**.
     > **社会的进步**是以**和谐**为基础的。
 * We should spare no effort to **beautify our environment**.
     > 我们应该不遗余力地**美化我们的环境**。
@@ -112,11 +115,20 @@
     > 毫不夸张的说...
 * Gone are the days when ...
     > ...的日子已经一去不复返了
+* The advent of ... has reshaped the landscape of ... in recent year.
+    > 最近...的出现重塑了...的形式
+* Where there be ..., there be ...
+    > 有什么就有什么
 
 # Example
 * Turing
     > As the father of computer science, Alan Turing persisted in his work on the decoding despite constant setbacks, ultimately achieving success by breaking the code and helping to end World War II.
     作为计算机科学之父，艾伦·图灵在不断遭遇挫折的情况下坚持破解密码，最终成功打开密码，帮助结束了第二次世界大战。
+
+* Elon Musk
+    > Elon Musk, the founder of Space-X and Tesla, a great innovator of our age, serves as a shining and fitting example here. The **self-confidence** is the fundamental factor for his glorious personal success. It is **self-confidence** that helps him create enormous values to the general public and fulfill the great personal ambition.
+    Space-X和特斯拉的创始人埃隆·马斯克(Elon Musk)是我们这个时代伟大的创新者，在这方面就是一个闪亮而合适的例子。自信是他辉煌的个人成功的根本因素。正是自信帮助他为大众创造了巨大的价值，实现了伟大的个人抱负。
+
 
 # Greate expression
 `alleviate pressure`    缓解压力
@@ -127,7 +139,9 @@
 `be enthusiastic about`     热衷于
 `equip oneself with`    具备
 `pat on the back`   鼓励,表扬
+`it is a must for us to ..` 我们必须去
 
+`regardless of n` 无关
 `be not conductive to sth/doing`    不利于
 `boil B down to A`   将B归结为A
 `gain A from B` 从B中获得A
@@ -177,6 +191,7 @@
 `excessively`   adv.    过分地，过量地；极度
 `moderately`    adv.    有合理限度地，适中地；一般地，勉强地
 `evidently`     adv.    显然
+`obviously`     adv.    显然
 `efficiently`   adv.    有效地
 `dramatically`  adv.    戏剧性地，夸张地
 `frequently`    adv.    经常地
@@ -194,11 +209,14 @@
 
 `overwhelm`     v.      压倒
 `regulate`      v.      管理
+`foster`        v       培养
 `indulge`       v.      沉溺
 
 `competition`   n.  竞赛
 `relaxation`    n   休息
 `burden`        n   负荷
+`advent`        n   出现
+`landscape`     n   风景;形式;情形
 
 # For me
 
@@ -234,7 +252,7 @@
 #### 优缺点
 * Technology is developing by leaps and bounds. ... become an indispensable part in people's life. As an old saying goes,a coin has two sides. ... is no exception.
     > 科技正在飞速发展，...成为人们生活中不可或缺的一部分。正如一句老话所说，一枚硬币有两面。...也不例外。
-* Generally, its advantages/merits.strengths can be seen as follows.
+* Generally, its advantages/merits/strengths can be seen as follows.
     > 一般来说，它的优点/优势可以归纳如下。
 * On the contrary, the negative aspect are also apparent.
     > 相反，负面影响也很明显
@@ -268,3 +286,20 @@
     > 毫不夸张的说...
 * Gone are the days when ...
     > ...的日子已经一去不复返了
+* We cannot ignore the fact that ...
+    > 我们不能忽略这个事实
+* No one can deny that the fact that ...
+    > 没人能否认这个事实
+* The reason why **句子** is that **句子**
+    > ...的原因是...
+
+#### 高分排比
+##### waste time
+* waste hours, lavish days and even squander years.
+> 浪费时间，浪费日子，甚至浪费岁月。
+##### help
+* material support, financial aid, mental comfort and spiritual backup.
+> 物质上的支持，经济上的援助，精神上的安慰，精神上的支持
+##### Succeed
+* accumulate wealth, establish career, fit into society and attain social status
+>
