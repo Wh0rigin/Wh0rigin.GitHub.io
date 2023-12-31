@@ -5,7 +5,7 @@ import Footer from './components/common/Footer.vue';
 
 <template>
   <Header />
-  <Transition>
+  <Transition name="nested">
     <router-view></router-view>
   </Transition>
   <Footer />
@@ -15,5 +15,19 @@ import Footer from './components/common/Footer.vue';
 * {
   margin: 0;
   padding: 0;
+  scroll-behavior: smooth;
 }
+
+.nested-enter-active ,
+.nested-leave-active  {
+  transition: all 0.3s ease-in-out;
+}
+
+.nested-enter-from ,
+.nested-leave-to  {
+  transform: translateX(30px);
+  opacity: 0;
+}
+
+
 </style>
