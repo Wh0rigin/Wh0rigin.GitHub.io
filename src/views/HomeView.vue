@@ -215,6 +215,11 @@ import CodeWin from '../components/home/CodeWin.vue';
         flex-direction: row;
         justify-content: center;
         align-items: center;
+        @media (max-width: 992px) {
+            flex-direction: column;
+            // overflow: hidden;
+            height: auto;
+        }
     }
 }
 </style>

@@ -26,6 +26,7 @@
     height: 50%;
     border-radius: 10px;
     align-items: center;
+    filter: drop-shadow(0 0 2em gray);
 
     .code-header {
         display: flex;
@@ -67,6 +68,7 @@
         align-items: start;
         width: 95%;
         gap: 5px;
+        
         font-family: 'Courier New', Courier, monospace;
         .cursor {
             // width: 2em;
