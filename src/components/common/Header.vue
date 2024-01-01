@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue';
+const props = defineProps({
+    'color':String
+})
+
 let isOpen = ref(false);
 let isAtTop = ref(true);
 const toggleDropDownMenu = function () {
@@ -100,10 +104,11 @@ header {
             text-decoration: none;
             color: #000;
             font-weight: bold;
-            transition: color 0.3s ease-in-out;
+            transition: 0.3s ease-in-out;
 
             &:hover {
-                color: #ffcc00;
+                color: v-bind("props.color");
+                filter: drop-shadow(0 0 5px v-bind("props.color"));
             }
         }
 
@@ -131,7 +136,7 @@ header {
 }
 
 .action-btn {
-    background-color: orange;
+    background-color: v-bind("props.color");
     color: #fff;
     padding: 0.5rem 1rem;
     border: none;
@@ -140,9 +145,10 @@ header {
     font-size: 0.8rem;
     font-weight: bold;
     cursor: pointer;
-    transition: scale .2 ease;
+    transition: 0.2s ease-in-out;
     text-decoration: none;
     // margin-right: 50px;
+    
 
     @media (max-width: 992px) {
         display: none;
@@ -151,11 +157,12 @@ header {
     &:hover {
         scale: 1.05;
         color: #fff;
+        filter: drop-shadow(0 0 5px v-bind("props.color"));
     }
 
     &:active {
         scale: 0.95;
-
+        filter: drop-shadow(0 0 5px v-bind("props.color"));
     }
 }
 
@@ -190,7 +197,7 @@ header {
         transition: color 0.3s ease-in-out;
 
         &:hover {
-            color: #ffcc00;
+            color: v-bind("props.color");
         }
     }
 

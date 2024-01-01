@@ -26,8 +26,8 @@
     height: 50%;
     border-radius: 10px;
     align-items: center;
-    filter: drop-shadow(0 0 2em gray);
-
+    box-shadow:  17px 17px 34px #666666,
+             -17px -17px 34px #ffffff;
     .code-header {
         display: flex;
         flex-direction: row;
@@ -68,8 +68,9 @@
         align-items: start;
         width: 95%;
         gap: 5px;
-        
+
         font-family: 'Courier New', Courier, monospace;
+
         .cursor {
             // width: 2em;
             color: aliceblue;
@@ -89,4 +90,5 @@
             }
         }
     }
-}</style>
+}
+</style>

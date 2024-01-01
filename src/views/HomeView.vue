@@ -134,8 +134,10 @@ import CodeWin from '../components/home/CodeWin.vue';
                 margin-top: 15%;
                 // height: 500px;
                 width: 100%;
-
+                transition: 0.5s ease-in-out;
+                
                 &:hover {
+                    transition: 0.5s ease-in-out;
                     filter: drop-shadow(0 0 2em gray);
                 }
             }

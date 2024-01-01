@@ -5,7 +5,7 @@ import Footer from './components/common/Footer.vue';
 </script>
 
 <template>
-  <Header />
+  <Header color="#bd34fe" />
   <Transition name="nested">
     <router-view></router-view>
   </Transition>
