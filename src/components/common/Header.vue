@@ -27,12 +27,14 @@ onUnmounted(() => {
                 <router-link to="/" class="router-link">Home</router-link>
                 <router-link to="/about" class="router-link">About</router-link>
                 <router-link to="/contact" class="router-link">Contact</router-link>
+                
             </div>
             <a class="action-btn" href="https://github.com/Wh0rigin">Go GitHub</a>
             <a class="toggle-btn" @click="toggleDropDownMenu"><svg t="1703953580517" class="icon" viewBox="0 0 1024 1024"
                     version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4498" width="40" height="40">
                     <path d="M64 192h896v192H64z m0 256h896v192H64z m0 256h896v192H64z" p-id="4499"></path>
                 </svg></a>
+
         </nav>
         <transition name="slide-fade">
             <div class="dropdown_menu" v-if="isOpen">
@@ -104,6 +106,8 @@ header {
                 color: #ffcc00;
             }
         }
+
+
     }
 
     .toggle-btn {
@@ -214,5 +218,4 @@ header {
 .slide-fade-leave-to {
     transform: translateX(20px);
     opacity: 0;
-}
-</style>
+}</style>

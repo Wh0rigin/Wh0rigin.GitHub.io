@@ -9,7 +9,8 @@
             <div class="green-btn"></div>
         </div>
         <div class="code-content">
-            <div style="color: aliceblue;">print('hello world') <span class="cursor">_</span></div>
+            <div style="color: aliceblue;">Type "help", "copyright", "credits" or "license" for more information.</div>
+            <div style="color: aliceblue;"><span>>>></span> print('hello world') <span class="cursor">_</span></div>
         </div>
     </div>
 </template>
@@ -60,11 +61,13 @@
     }
 
     .code-content {
+        margin-top: 5px;
         display: flex;
         flex-direction: column;
         align-items: start;
         width: 95%;
-
+        gap: 5px;
+        font-family: 'Courier New', Courier, monospace;
         .cursor {
             // width: 2em;
             color: aliceblue;

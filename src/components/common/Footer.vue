@@ -1,41 +1,110 @@
+<script lang="ts" setup>
+import FooterBg from './FooterBg.vue';
+// import Clock3d from './footer/Clock3d.vue'
+</script>
+
+
 <template>
+    <footer-bg></footer-bg>
     <footer class="footer">
         <div class="container">
-            <div class="footer-content">
-                <p>&copy; {{ currentYear }} Your Company. All rights reserved.</p>
-                <div class="social-links">
-                    <a href="#" target="_blank" rel="noopener noreferrer">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="#" target="_blank" rel="noopener noreferrer">
-                        <i class="fab fa-facebook"></i>
-                    </a>
-                    <a href="#" target="_blank" rel="noopener noreferrer">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    <a href="#" target="_blank" rel="noopener noreferrer">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                </div>
+            <div class="area1">
+                <!-- <clock3d></clock3d> -->
+                <h2>Footer1</h2>
+                <ul>
+                    <li>first item</li>
+                    <li>second item</li>
+                    <li>third item</li>
+                </ul>
+            </div>
+            <div class="area2">
+                <h2>Footer2</h2>
+                <ul>
+                    <li>first item</li>
+                    <li>second item</li>
+                    <li>third item</li>
+                </ul>
+            </div>
+            <div class="area3">
+                <h2>Footer3</h2>
+                <ul>
+                    <li>first item</li>
+                    <li>second item</li>
+                    <li>third item</li>
+                </ul>
             </div>
         </div>
     </footer>
 </template>
 
-<script lang="ts" setup>
-    const currentYear =  new Date().getFullYear();
-</script>
 
 
 <style lang="less" scoped>
 .footer {
-    background-color: #333;
+    background-color: rgb(68, 68, 68);
     color: #fff;
     padding: 20px 0;
+    // display: flex;
+    // flex-direction: column;
 
     .container {
         max-width: 1200px;
         margin: 0 auto;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        
+
+        .area1 {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            ul{
+                position: relative;
+                left: 20px;
+            }
+
+            li {
+                margin-top: 10px;
+                color: gainsboro;
+            }
+        }
+
+        .area2 {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            ul{
+                position: relative;
+                left: 20px;
+            }
+
+            li {
+                margin-top: 10px;
+                color: gainsboro;
+            }
+        }
+
+        .area3 {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            ul{
+                position: relative;
+                left: 20px;
+            }
+
+            li {
+                margin-top: 10px;
+                color: gainsboro;
+            }
+        }
     }
 
     .footer-content {
