@@ -6,11 +6,11 @@ import NeonText from '../components/home/NeonText.vue';
 import { onMounted, ref, onUnmounted } from 'vue';
 
 
-
+// '/src/assets/logo/logo1.png'
 let img_url = ref(`https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1.png`)
 let timerId: any;
 onMounted(() => {
-
+    // '/src/assets/logo/logo1.png'
     img_url.value = `https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo${(Math.floor(Math.random() * 3) + 1)}.png`
     switch (img_url.value) {
         case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1.png':
@@ -88,7 +88,7 @@ const mouseup = () => {
         case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_smile.png':
         case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_none.png':
         case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_error.png':
-            img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2.pngs'
+            img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2.png'
             break;
         case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo3.png':
             break;
