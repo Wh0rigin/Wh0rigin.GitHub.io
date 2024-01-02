@@ -3,9 +3,10 @@ import WhoIntro from '../components/home/WhoIntro.vue';
 import CodeWin from '../components/home/CodeWin.vue';
 import NeonText from '../components/home/NeonText.vue';
 
-import { onMounted, ref, onUnmounted } from 'vue';
+// import { onMounted, ref, onUnmounted } from 'vue';
 
-const fallbackImageUrl = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo3.png'
+import { ref} from 'vue';
+// const fallbackImageUrl = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo3.png'
 
 
 // const preloadedImages: Array<string> = [
@@ -116,18 +117,18 @@ const fallbackImageUrl = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.Gi
 //     }
 // }
 
-const handleImageError = function () {
-    // 图片加载失败时触发此方法
-    // 切换到另一张图片
-    img_url.value = fallbackImageUrl;
-}
+// const handleImageError = function () {
+//     // 图片加载失败时触发此方法
+//     // 切换到另一张图片
+//     img_url.value = fallbackImageUrl;
+// }
 
 import logo1_url from '../assets/logo/logo1.png'
 // 本地资源
 
-import getAssets from '../utils/pub-use'
+// import getAssets from '../utils/pub-use'
 let img_url = ref(logo1_url)
-let timerId: any;
+// let timerId: any;
 // onMounted(() => {
 //     // '/src/assets/logo/logo1.png'
 //     img_url.value = getAssets(`../assets/logo/logo${(Math.floor(Math.random() * 3) + 1)}.png`)
