@@ -122,91 +122,91 @@ const handleImageError = function () {
     img_url.value = fallbackImageUrl;
 }
 
-
+import logo1_url from '../assets/logo/logo1.png'
 // 本地资源
 
 import getAssets from '../utils/pub-use'
-let img_url = ref(getAssets(`../assets/logo/logo1.png`))
+let img_url = ref(logo1_url)
 let timerId: any;
-onMounted(() => {
-    // '/src/assets/logo/logo1.png'
-    img_url.value = getAssets(`../assets/logo/logo${(Math.floor(Math.random() * 3) + 1)}.png`)
-    switch (img_url.value) {
-        case getAssets('../assets/logo/logo1.png'):
-            timerId = setInterval(() => {
-                img_url.value = getAssets('../assets/logo/logo1_slink.png')
-                setTimeout(() => {
-                    img_url.value = getAssets('../assets/logo/logo1.png')
-                }, 100);
-            }, 5000); // 每5秒执行一次眨眼
-            break;
-        case getAssets('../assets/logo/logo2.png'):
-            timerId = setInterval(() => {
-                switch ((Math.floor(Math.random() * 3) + 1)) {
-                    case 1:
-                        img_url.value = getAssets('../assets/logo/logo2_smile.png')
-                        break;
-                    case 2:
-                        img_url.value = getAssets('../assets/logo/logo2_none.png')
-                        break;
-                    case 3:
-                        img_url.value = getAssets('../assets/logo/logo2_error.png')
-                        break;
-                }
-                setTimeout(() => {
-                    img_url.value = getAssets('../assets/logo/logo2.png')
-                }, (Math.floor(Math.random() * 250) + 1));
-            }, (Math.floor(Math.random() * 10000) + 1000));
-            break;
-        case getAssets('../assets/logo/logo3.png'):
-            break;
-    }
-});
-onUnmounted(() => {
-    clearInterval(timerId);
-})
+// onMounted(() => {
+//     // '/src/assets/logo/logo1.png'
+//     img_url.value = getAssets(`../assets/logo/logo${(Math.floor(Math.random() * 3) + 1)}.png`)
+//     switch (img_url.value) {
+//         case getAssets('../assets/logo/logo1.png'):
+//             timerId = setInterval(() => {
+//                 img_url.value = getAssets('../assets/logo/logo1_slink.png')
+//                 setTimeout(() => {
+//                     img_url.value = getAssets('../assets/logo/logo1.png')
+//                 }, 100);
+//             }, 5000); // 每5秒执行一次眨眼
+//             break;
+//         case getAssets('../assets/logo/logo2.png'):
+//             timerId = setInterval(() => {
+//                 switch ((Math.floor(Math.random() * 3) + 1)) {
+//                     case 1:
+//                         img_url.value = getAssets('../assets/logo/logo2_smile.png')
+//                         break;
+//                     case 2:
+//                         img_url.value = getAssets('../assets/logo/logo2_none.png')
+//                         break;
+//                     case 3:
+//                         img_url.value = getAssets('../assets/logo/logo2_error.png')
+//                         break;
+//                 }
+//                 setTimeout(() => {
+//                     img_url.value = getAssets('../assets/logo/logo2.png')
+//                 }, (Math.floor(Math.random() * 250) + 1));
+//             }, (Math.floor(Math.random() * 10000) + 1000));
+//             break;
+//         case getAssets('../assets/logo/logo3.png'):
+//             break;
+//     }
+// });
+// onUnmounted(() => {
+//     clearInterval(timerId);
+// })
 
-const mousedown = () => {
-    switch (img_url.value) {
-        case getAssets('../assets/logo/logo1.png'):
+// const mousedown = () => {
+//     switch (img_url.value) {
+//         case getAssets('../assets/logo/logo1.png'):
 
-            img_url.value = getAssets('../assets/logo/logo1_slink.png')
+//             img_url.value = getAssets('../assets/logo/logo1_slink.png')
 
-            break;
-        case getAssets('../assets/logo/logo2.png'):
+//             break;
+//         case getAssets('../assets/logo/logo2.png'):
 
-            switch ((Math.floor(Math.random() * 3) + 1)) {
-                case 1:
-                    img_url.value = getAssets('../assets/logo/logo2_smile.png')
-                    break;
-                case 2:
-                    img_url.value = getAssets('../assets/logo/logo2_none.png')
-                    break;
-                case 3:
-                    img_url.value = getAssets('../assets/logo/logo2_error.png')
-                    break;
-            }
-            break;
-        case getAssets('../assets/logo/logo3.png'):
-            break;
-    }
-}
+//             switch ((Math.floor(Math.random() * 3) + 1)) {
+//                 case 1:
+//                     img_url.value = getAssets('../assets/logo/logo2_smile.png')
+//                     break;
+//                 case 2:
+//                     img_url.value = getAssets('../assets/logo/logo2_none.png')
+//                     break;
+//                 case 3:
+//                     img_url.value = getAssets('../assets/logo/logo2_error.png')
+//                     break;
+//             }
+//             break;
+//         case getAssets('../assets/logo/logo3.png'):
+//             break;
+//     }
+// }
 
-const mouseup = () => {
-    switch (img_url.value) {
-        case getAssets('../assets/logo/logo1_slink.png'):
+// const mouseup = () => {
+//     switch (img_url.value) {
+//         case getAssets('../assets/logo/logo1_slink.png'):
 
-            img_url.value = getAssets('../assets/logo/logo1.png')
-            break;
-        case getAssets('../assets/logo/logo2_smile.png'):
-        case getAssets('../assets/logo/logo2_none.png'):
-        case getAssets('../assets/logo/logo2_error.png'):
-            img_url.value = getAssets('../assets/logo/logo2.png')
-            break;
-        case getAssets('../assets/logo/logo3.png'):
-            break;
-    }
-}
+//             img_url.value = getAssets('../assets/logo/logo1.png')
+//             break;
+//         case getAssets('../assets/logo/logo2_smile.png'):
+//         case getAssets('../assets/logo/logo2_none.png'):
+//         case getAssets('../assets/logo/logo2_error.png'):
+//             img_url.value = getAssets('../assets/logo/logo2.png')
+//             break;
+//         case getAssets('../assets/logo/logo3.png'):
+//             break;
+//     }
+// }
 
 </script>
 
@@ -217,8 +217,10 @@ const mouseup = () => {
 
             <div class="left-container">
                 <!-- 有动画 -->
-                <img class="logo" draggable="false" @mousedown="mousedown" @mouseup="mouseup" :src="img_url"
-                    @error.once="handleImageError" />
+                <!-- <img class="logo" draggable="false" @mousedown="mousedown" @mouseup="mouseup" :src="img_url"
+                    @error.once="handleImageError" /> -->
+
+                    <img class="logo" draggable="false" :src="img_url"/>
                 <!-- 无动画 -->
                 <!-- <img class="logo" draggable="false" src="../assets/logo/logo2.png" /> -->
             </div>
