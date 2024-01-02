@@ -50,7 +50,7 @@ onMounted(() => {
             break;
     }
 
-    preloadedImages.forEach((imageUrl, index) => {
+    preloadedImages.forEach((imageUrl) => {
         const key = `preloadedImage_${imageUrl}`;
         if (!localStorage.getItem(key)) {
             localStorage.setItem(key, imageUrl);
