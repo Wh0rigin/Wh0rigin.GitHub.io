@@ -5,15 +5,15 @@ import NeonText from '../components/home/NeonText.vue';
 
 import { onMounted, ref, onUnmounted } from 'vue';
 
-// const preloadedImages: Array<string> = [
-//     'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1.png',
-//     'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1_slink.png',
-//     'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2.png',
-//     'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_smile.png',
-//     'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_none.png',
-//     'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_error.png',
-//     // 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo3_none.png',
-// ]
+const preloadedImages: Array<string> = [
+    logo1_url,
+    logo2_url,
+    logo3_url,
+    logo1_slink_url,
+    logo2_error_url,
+    logo2_none_url,
+    logo2_smile_url
+]
 
 
 // const handleImageError = function () {
@@ -43,7 +43,13 @@ const logos:Array<string> = [
 let img_url = ref(logo1_url)
 let timerId: any;
 onMounted(() => {
-    // '/src/assets/logo/logo1.png'
+    preloadedImages.forEach((imageUrl, index) => {
+        const key = `preloadedImage_${index}`;
+        if (!localStorage.getItem(key)) {
+            localStorage.setItem(key, imageUrl);
+        }
+    });
+
     img_url.value = logos[Math.floor(Math.random() * 3)]
     switch (img_url.value) {
         case logos[0]:
@@ -116,7 +122,7 @@ const mouseup = () => {
 
 <template>
     <div class="container">
-        <!-- <img v-for="(imageUrl, index) in preloadedImages" :key="index" :src="imageUrl" style="display: none;" /> -->
+        <img v-for="(imageUrl, index) in preloadedImages" :key="index" :src="imageUrl" style="display: none;" />
         <div class="page1">
 
             <div class="left-container">
