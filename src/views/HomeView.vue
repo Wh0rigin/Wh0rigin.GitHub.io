@@ -6,155 +6,67 @@ import NeonText from '../components/home/NeonText.vue';
 import { onMounted, ref, onUnmounted } from 'vue';
 
 const fallbackImageUrl = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo3.png'
-const preloadedImages: Array<string> = [
-    'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1.png',
-    'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1_slink.png',
-    'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2.png',
-    'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_smile.png',
-    'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_none.png',
-    'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_error.png',
-    // 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo3_none.png',
-]
+
+
+// const preloadedImages: Array<string> = [
+//     'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1.png',
+//     'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1_slink.png',
+//     'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2.png',
+//     'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_smile.png',
+//     'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_none.png',
+//     'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_error.png',
+//     // 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo3_none.png',
+// ]
 
 // // 网络资源
 // '/src/assets/logo/logo1.png'
-let img_url = ref(`https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1.png`)
-let timerId: any;
-onMounted(() => {
-
-    preloadedImages.forEach((imageUrl, index) => {
-        const key = `preloadedImage_${index}`;
-        if (!localStorage.getItem(key)) {
-            localStorage.setItem(key, imageUrl);
-        }
-    });
-
-    // '/src/assets/logo/logo1.png'
-    img_url.value = `https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo${(Math.floor(Math.random() * 3) + 1)}.png`
-    switch (img_url.value) {
-        case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1.png':
-            timerId = setInterval(() => {
-                img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1_slink.png'
-                setTimeout(() => {
-                    img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1.png'
-                }, 100);
-            }, 5000); // 每5秒执行一次眨眼
-            break;
-        case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2.png':
-            timerId = setInterval(() => {
-                switch ((Math.floor(Math.random() * 3) + 1)) {
-                    case 1:
-                        img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_smile.png'
-                        break;
-                    case 2:
-                        img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_none.png'
-                        break;
-                    case 3:
-                        img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_error.png'
-                        break;
-                }
-                // if((Math.floor(Math.random() * 2) +1) == 2){
-                //     img_url.value = '/src/assets/logo/logo2_none.png'
-                // }else{
-                //     img_url.value = '/src/assets/logo/logo2_smile.png'
-                // }
-
-                setTimeout(() => {
-                    img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2.png'
-                }, (Math.floor(Math.random() * 250) + 1));
-            }, (Math.floor(Math.random() * 10000) + 1000));
-            break;
-        case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo3.png':
-            break;
-    }
-});
-onUnmounted(() => {
-    clearInterval(timerId);
-})
-
-const mousedown = () => {
-    switch (img_url.value) {
-        case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1.png':
-
-            img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1_slink.png'
-
-            break;
-        case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2.png':
-
-            switch ((Math.floor(Math.random() * 3) + 1)) {
-                case 1:
-                    img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_smile.png'
-                    break;
-                case 2:
-                    img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_none.png'
-                    break;
-                case 3:
-                    img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_error.png'
-                    break;
-            }
-            break;
-        case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo3.png':
-            break;
-    }
-}
-
-const mouseup = () => {
-    switch (img_url.value) {
-        case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1_slink.png':
-
-            img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1.png'
-            break;
-        case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_smile.png':
-        case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_none.png':
-        case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_error.png':
-            img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2.png'
-            break;
-        case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo3.png':
-            break;
-    }
-}
-
-const handleImageError = function () {
-    // 图片加载失败时触发此方法
-    // 切换到另一张图片
-    img_url.value = fallbackImageUrl;
-}
-
-
-// 本地资源
-// let img_url = ref(`/src/assets/logo/logo1.png`)
+// let img_url = ref(`https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1.png`)
 // let timerId: any;
 // onMounted(() => {
+
+//     preloadedImages.forEach((imageUrl, index) => {
+//         const key = `preloadedImage_${index}`;
+//         if (!localStorage.getItem(key)) {
+//             localStorage.setItem(key, imageUrl);
+//         }
+//     });
+
 //     // '/src/assets/logo/logo1.png'
-//     img_url.value = `/src/assets/logo/logo${(Math.floor(Math.random() * 3) + 1)}.png`
+//     img_url.value = `https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo${(Math.floor(Math.random() * 3) + 1)}.png`
 //     switch (img_url.value) {
-//         case '/src/assets/logo/logo1.png':
+//         case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1.png':
 //             timerId = setInterval(() => {
-//                 img_url.value = '/src/assets/logo/logo1_slink.png'
+//                 img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1_slink.png'
 //                 setTimeout(() => {
-//                     img_url.value = '/src/assets/logo/logo1.png'
+//                     img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1.png'
 //                 }, 100);
 //             }, 5000); // 每5秒执行一次眨眼
 //             break;
-//         case '/src/assets/logo/logo2.png':
+//         case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2.png':
 //             timerId = setInterval(() => {
 //                 switch ((Math.floor(Math.random() * 3) + 1)) {
 //                     case 1:
-//                         img_url.value = '/src/assets/logo/logo2_smile.png'
+//                         img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_smile.png'
 //                         break;
 //                     case 2:
-//                         img_url.value = '/src/assets/logo/logo2_none.png'
+//                         img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_none.png'
 //                         break;
 //                     case 3:
-//                         img_url.value = '/src/assets/logo/logo2_error.png'
+//                         img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_error.png'
 //                         break;
 //                 }
+//                 // if((Math.floor(Math.random() * 2) +1) == 2){
+//                 //     img_url.value = '/src/assets/logo/logo2_none.png'
+//                 // }else{
+//                 //     img_url.value = '/src/assets/logo/logo2_smile.png'
+//                 // }
+
 //                 setTimeout(() => {
-//                     img_url.value = '/src/assets/logo/logo2.png'
+//                     img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2.png'
 //                 }, (Math.floor(Math.random() * 250) + 1));
 //             }, (Math.floor(Math.random() * 10000) + 1000));
 //             break;
-//         case '/src/assets/logo/logo3.png':
+//         case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo3.png':
 //             break;
 //     }
 // });
@@ -164,51 +76,143 @@ const handleImageError = function () {
 
 // const mousedown = () => {
 //     switch (img_url.value) {
-//         case '/src/assets/logo/logo1.png':
+//         case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1.png':
 
-//             img_url.value = '/src/assets/logo/logo1_slink.png'
+//             img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1_slink.png'
 
 //             break;
-//         case '/src/assets/logo/logo2.png':
+//         case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2.png':
 
 //             switch ((Math.floor(Math.random() * 3) + 1)) {
 //                 case 1:
-//                     img_url.value = '/src/assets/logo/logo2_smile.png'
+//                     img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_smile.png'
 //                     break;
 //                 case 2:
-//                     img_url.value = '/src/assets/logo/logo2_none.png'
+//                     img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_none.png'
 //                     break;
 //                 case 3:
-//                     img_url.value = '/src/assets/logo/logo2_error.png'
+//                     img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_error.png'
 //                     break;
 //             }
 //             break;
-//         case '/src/assets/logo/logo3.png':
+//         case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo3.png':
 //             break;
 //     }
 // }
 
 // const mouseup = () => {
 //     switch (img_url.value) {
-//         case '/src/assets/logo/logo1_slink.png':
+//         case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1_slink.png':
 
-//             img_url.value = '/src/assets/logo/logo1.png'
+//             img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1.png'
 //             break;
-//         case '/src/assets/logo/logo2_smile.png':
-//         case '/src/assets/logo/logo2_none.png':
-//         case '/src/assets/logo/logo2_error.png':
-//             img_url.value = '/src/assets/logo/logo2.png'
+//         case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_smile.png':
+//         case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_none.png':
+//         case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_error.png':
+//             img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2.png'
 //             break;
-//         case '/src/assets/logo/logo3.png':
+//         case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo3.png':
 //             break;
 //     }
 // }
+
+const handleImageError = function () {
+    // 图片加载失败时触发此方法
+    // 切换到另一张图片
+    img_url.value = fallbackImageUrl;
+}
+
+
+// 本地资源
+
+import getAssets from '../utils/pub-use'
+let img_url = ref(getAssets(`/src/assets/logo/logo1.png`))
+let timerId: any;
+onMounted(() => {
+    // '/src/assets/logo/logo1.png'
+    img_url.value = getAssets(`/src/assets/logo/logo${(Math.floor(Math.random() * 3) + 1)}.png`)
+    switch (img_url.value) {
+        case getAssets('/src/assets/logo/logo1.png'):
+            timerId = setInterval(() => {
+                img_url.value = getAssets('/src/assets/logo/logo1_slink.png')
+                setTimeout(() => {
+                    img_url.value = getAssets('/src/assets/logo/logo1.png')
+                }, 100);
+            }, 5000); // 每5秒执行一次眨眼
+            break;
+        case getAssets('/src/assets/logo/logo2.png'):
+            timerId = setInterval(() => {
+                switch ((Math.floor(Math.random() * 3) + 1)) {
+                    case 1:
+                        img_url.value = getAssets('/src/assets/logo/logo2_smile.png')
+                        break;
+                    case 2:
+                        img_url.value = getAssets('/src/assets/logo/logo2_none.png')
+                        break;
+                    case 3:
+                        img_url.value = getAssets('/src/assets/logo/logo2_error.png')
+                        break;
+                }
+                setTimeout(() => {
+                    img_url.value = getAssets('/src/assets/logo/logo2.png')
+                }, (Math.floor(Math.random() * 250) + 1));
+            }, (Math.floor(Math.random() * 10000) + 1000));
+            break;
+        case getAssets('/src/assets/logo/logo3.png'):
+            break;
+    }
+});
+onUnmounted(() => {
+    clearInterval(timerId);
+})
+
+const mousedown = () => {
+    switch (img_url.value) {
+        case getAssets('/src/assets/logo/logo1.png'):
+
+            img_url.value = getAssets('/src/assets/logo/logo1_slink.png')
+
+            break;
+        case getAssets('/src/assets/logo/logo2.png'):
+
+            switch ((Math.floor(Math.random() * 3) + 1)) {
+                case 1:
+                    img_url.value = getAssets('/src/assets/logo/logo2_smile.png')
+                    break;
+                case 2:
+                    img_url.value = getAssets('/src/assets/logo/logo2_none.png')
+                    break;
+                case 3:
+                    img_url.value = getAssets('/src/assets/logo/logo2_error.png')
+                    break;
+            }
+            break;
+        case getAssets('/src/assets/logo/logo3.png'):
+            break;
+    }
+}
+
+const mouseup = () => {
+    switch (img_url.value) {
+        case getAssets('/src/assets/logo/logo1_slink.png'):
+
+            img_url.value = getAssets('/src/assets/logo/logo1.png')
+            break;
+        case getAssets('/src/assets/logo/logo2_smile.png'):
+        case getAssets('/src/assets/logo/logo2_none.png'):
+        case getAssets('/src/assets/logo/logo2_error.png'):
+            img_url.value = getAssets('/src/assets/logo/logo2.png')
+            break;
+        case getAssets('/src/assets/logo/logo3.png'):
+            break;
+    }
+}
 
 </script>
 
 <template>
     <div class="container">
-        <img v-for="(imageUrl, index) in preloadedImages" :key="index" :src="imageUrl" style="display: none;" />
+        <!-- <img v-for="(imageUrl, index) in preloadedImages" :key="index" :src="imageUrl" style="display: none;" /> -->
         <div class="page1">
 
             <div class="left-container">
@@ -216,7 +220,7 @@ const handleImageError = function () {
                 <img class="logo" draggable="false" @mousedown="mousedown" @mouseup="mouseup" :src="img_url"
                     @error.once="handleImageError" />
                 <!-- 无动画 -->
-                <img class="logo" draggable="false" src="../assets/logo/logo2.png" />
+                <!-- <img class="logo" draggable="false" src="../assets/logo/logo2.png" /> -->
             </div>
 
 
