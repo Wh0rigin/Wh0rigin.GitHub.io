@@ -18,3 +18,6 @@ tree
 # 预计加入
 * 切换黑夜模式，title变成kill la kill风格
 * 为主页添加更多动效
+
+
+注意：上传时不要上传package_lock.json会出错

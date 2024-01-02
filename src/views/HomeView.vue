@@ -3,11 +3,7 @@ import WhoIntro from '../components/home/WhoIntro.vue';
 import CodeWin from '../components/home/CodeWin.vue';
 import NeonText from '../components/home/NeonText.vue';
 
-// import { onMounted, ref, onUnmounted } from 'vue';
-
-import { ref} from 'vue';
-// const fallbackImageUrl = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo3.png'
-
+import { onMounted, ref, onUnmounted } from 'vue';
 
 // const preloadedImages: Array<string> = [
 //     'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1.png',
@@ -19,103 +15,6 @@ import { ref} from 'vue';
 //     // 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo3_none.png',
 // ]
 
-// // 网络资源
-// '/src/assets/logo/logo1.png'
-// let img_url = ref(`https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1.png`)
-// let timerId: any;
-// onMounted(() => {
-
-//     preloadedImages.forEach((imageUrl, index) => {
-//         const key = `preloadedImage_${index}`;
-//         if (!localStorage.getItem(key)) {
-//             localStorage.setItem(key, imageUrl);
-//         }
-//     });
-
-//     // '/src/assets/logo/logo1.png'
-//     img_url.value = `https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo${(Math.floor(Math.random() * 3) + 1)}.png`
-//     switch (img_url.value) {
-//         case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1.png':
-//             timerId = setInterval(() => {
-//                 img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1_slink.png'
-//                 setTimeout(() => {
-//                     img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1.png'
-//                 }, 100);
-//             }, 5000); // 每5秒执行一次眨眼
-//             break;
-//         case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2.png':
-//             timerId = setInterval(() => {
-//                 switch ((Math.floor(Math.random() * 3) + 1)) {
-//                     case 1:
-//                         img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_smile.png'
-//                         break;
-//                     case 2:
-//                         img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_none.png'
-//                         break;
-//                     case 3:
-//                         img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_error.png'
-//                         break;
-//                 }
-//                 // if((Math.floor(Math.random() * 2) +1) == 2){
-//                 //     img_url.value = '/src/assets/logo/logo2_none.png'
-//                 // }else{
-//                 //     img_url.value = '/src/assets/logo/logo2_smile.png'
-//                 // }
-
-//                 setTimeout(() => {
-//                     img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2.png'
-//                 }, (Math.floor(Math.random() * 250) + 1));
-//             }, (Math.floor(Math.random() * 10000) + 1000));
-//             break;
-//         case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo3.png':
-//             break;
-//     }
-// });
-// onUnmounted(() => {
-//     clearInterval(timerId);
-// })
-
-// const mousedown = () => {
-//     switch (img_url.value) {
-//         case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1.png':
-
-//             img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1_slink.png'
-
-//             break;
-//         case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2.png':
-
-//             switch ((Math.floor(Math.random() * 3) + 1)) {
-//                 case 1:
-//                     img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_smile.png'
-//                     break;
-//                 case 2:
-//                     img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_none.png'
-//                     break;
-//                 case 3:
-//                     img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_error.png'
-//                     break;
-//             }
-//             break;
-//         case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo3.png':
-//             break;
-//     }
-// }
-
-// const mouseup = () => {
-//     switch (img_url.value) {
-//         case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1_slink.png':
-
-//             img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1.png'
-//             break;
-//         case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_smile.png':
-//         case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_none.png':
-//         case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_error.png':
-//             img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2.png'
-//             break;
-//         case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo3.png':
-//             break;
-//     }
-// }
 
 // const handleImageError = function () {
 //     // 图片加载失败时触发此方法
@@ -124,90 +23,94 @@ import { ref} from 'vue';
 // }
 
 import logo1_url from '../assets/logo/logo1.png'
+import logo1_slink_url from '../assets/logo/logo1_slink.png'
+import logo2_url from '../assets/logo/logo2.png'
+import logo2_error_url from '../assets/logo/logo2_error.png'
+import logo2_none_url from '../assets/logo/logo2_none.png'
+import logo2_smile_url from '../assets/logo/logo2_smile.png'
+import logo3_url from '../assets/logo/logo3.png'
+const logos:Array<string> = [
+    logo1_url,
+    logo2_url,
+    logo3_url,
+    logo1_slink_url,
+    logo2_error_url,
+    logo2_none_url,
+    logo2_smile_url
+]
 // 本地资源
 
-// import getAssets from '../utils/pub-use'
 let img_url = ref(logo1_url)
-// let timerId: any;
-// onMounted(() => {
-//     // '/src/assets/logo/logo1.png'
-//     img_url.value = getAssets(`../assets/logo/logo${(Math.floor(Math.random() * 3) + 1)}.png`)
-//     switch (img_url.value) {
-//         case getAssets('../assets/logo/logo1.png'):
-//             timerId = setInterval(() => {
-//                 img_url.value = getAssets('../assets/logo/logo1_slink.png')
-//                 setTimeout(() => {
-//                     img_url.value = getAssets('../assets/logo/logo1.png')
-//                 }, 100);
-//             }, 5000); // 每5秒执行一次眨眼
-//             break;
-//         case getAssets('../assets/logo/logo2.png'):
-//             timerId = setInterval(() => {
-//                 switch ((Math.floor(Math.random() * 3) + 1)) {
-//                     case 1:
-//                         img_url.value = getAssets('../assets/logo/logo2_smile.png')
-//                         break;
-//                     case 2:
-//                         img_url.value = getAssets('../assets/logo/logo2_none.png')
-//                         break;
-//                     case 3:
-//                         img_url.value = getAssets('../assets/logo/logo2_error.png')
-//                         break;
-//                 }
-//                 setTimeout(() => {
-//                     img_url.value = getAssets('../assets/logo/logo2.png')
-//                 }, (Math.floor(Math.random() * 250) + 1));
-//             }, (Math.floor(Math.random() * 10000) + 1000));
-//             break;
-//         case getAssets('../assets/logo/logo3.png'):
-//             break;
-//     }
-// });
-// onUnmounted(() => {
-//     clearInterval(timerId);
-// })
+let timerId: any;
+onMounted(() => {
+    // '/src/assets/logo/logo1.png'
+    img_url.value = logos[Math.floor(Math.random() * 3)]
+    switch (img_url.value) {
+        case logos[0]:
+            timerId = setInterval(() => {
+                img_url.value = logos[3]
+                setTimeout(() => {
+                    img_url.value = logos[0]
+                }, 100);
+            }, 5000); // 每5秒执行一次眨眼
+            break;
+        case logos[1]:
+            timerId = setInterval(() => {
+                img_url.value = logos[(Math.floor(Math.random() * 6) + 4)]
+                
+                setTimeout(() => {
+                    img_url.value =logos[1]
+                }, (Math.floor(Math.random() * 250) + 1));
+            }, (Math.floor(Math.random() * 10000) + 1000));
+            break;
+        case logos[2]:
+            break;
+    }
+});
+onUnmounted(() => {
+    clearInterval(timerId);
+})
 
-// const mousedown = () => {
-//     switch (img_url.value) {
-//         case getAssets('../assets/logo/logo1.png'):
+const mousedown = () => {
+    switch (img_url.value) {
+        case logos[0]:
 
-//             img_url.value = getAssets('../assets/logo/logo1_slink.png')
+            img_url.value = logos[3]
 
-//             break;
-//         case getAssets('../assets/logo/logo2.png'):
+            break;
+        case logos[1]:
 
-//             switch ((Math.floor(Math.random() * 3) + 1)) {
-//                 case 1:
-//                     img_url.value = getAssets('../assets/logo/logo2_smile.png')
-//                     break;
-//                 case 2:
-//                     img_url.value = getAssets('../assets/logo/logo2_none.png')
-//                     break;
-//                 case 3:
-//                     img_url.value = getAssets('../assets/logo/logo2_error.png')
-//                     break;
-//             }
-//             break;
-//         case getAssets('../assets/logo/logo3.png'):
-//             break;
-//     }
-// }
+            switch ((Math.floor(Math.random() * 3) + 1)) {
+                case 1:
+                    img_url.value = logos[4]
+                    break;
+                case 2:
+                    img_url.value = logos[5]
+                    break;
+                case 3:
+                    img_url.value = logos[6]
+                    break;
+            }
+            break;
+        case logos[2]:
+            break;
+    }
+}
 
-// const mouseup = () => {
-//     switch (img_url.value) {
-//         case getAssets('../assets/logo/logo1_slink.png'):
-
-//             img_url.value = getAssets('../assets/logo/logo1.png')
-//             break;
-//         case getAssets('../assets/logo/logo2_smile.png'):
-//         case getAssets('../assets/logo/logo2_none.png'):
-//         case getAssets('../assets/logo/logo2_error.png'):
-//             img_url.value = getAssets('../assets/logo/logo2.png')
-//             break;
-//         case getAssets('../assets/logo/logo3.png'):
-//             break;
-//     }
-// }
+const mouseup = () => {
+    switch (img_url.value) {
+        case logos[3]:
+            img_url.value = logos[0]
+            break;
+        case logos[4]:
+        case logos[5]:
+        case logos[6]:
+            img_url.value = logos[1]
+            break;
+        case logos[2]:
+            break;
+    }
+}
 
 </script>
 
@@ -218,10 +121,9 @@ let img_url = ref(logo1_url)
 
             <div class="left-container">
                 <!-- 有动画 -->
-                <!-- <img class="logo" draggable="false" @mousedown="mousedown" @mouseup="mouseup" :src="img_url"
-                    @error.once="handleImageError" /> -->
+                <img class="logo" draggable="false" @mousedown="mousedown" @mouseup="mouseup" :src="img_url"/>
 
-                    <img class="logo" draggable="false" :src="img_url"/>
+                    <!-- <img class="logo" draggable="false" :src="img_url"/> -->
                 <!-- 无动画 -->
                 <!-- <img class="logo" draggable="false" src="../assets/logo/logo2.png" /> -->
             </div>
