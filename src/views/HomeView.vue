@@ -216,7 +216,7 @@ const handleImageError = function () {
                 <img class="logo" draggable="false" @mousedown="mousedown" @mouseup="mouseup" :src="img_url"
                     @error.once="handleImageError" />
                 <!-- 无动画 -->
-                <!-- <img class="logo" draggable="false" src="../assets/logo/logo2.png" /> -->
+                <img class="logo" draggable="false" src="../assets/logo/logo2.png" />
             </div>
 
 
