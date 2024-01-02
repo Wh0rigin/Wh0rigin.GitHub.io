@@ -1,6 +1,14 @@
 <template>
     <div class="main">
-        <h1>Hello.</h1>
+        <!-- <h1>Hello.</h1> -->
+        <div class="jumping-text">
+            <span style="--index: 1;">H</span>
+            <span style="--index: 2;">e</span>
+            <span style="--index: 3;">l</span>
+            <span style="--index: 4;">l</span>
+            <span style="--index: 5;">o</span>
+            <span style="--index: 6;">.</span>
+        </div>
         <p class="name">My name is Wh0rigin.</p>
         <p>
             I'm a student programmer. Most of my work is open source and publicly
@@ -29,6 +37,75 @@
     -webkit-font-smoothing: antialiased;
     padding: 5vh 10vw;
     color: #121314;
+
+    .jumping-text {
+        span {
+
+            font-size: 4.5em;
+            font-weight: 500;
+            margin-bottom: 0;
+            display: inline-block;
+            animation: jump 10s infinite;
+            animation-delay: calc(0.1s * var(--index));
+
+            @keyframes jump {
+                0% {
+                    transform: translateY(0);
+                    // opacity: 0;
+                }
+
+                10% {
+                    transform: translateY(-20px);
+                    // opacity: 1;
+                }
+
+                20% {
+                    transform: translateY(0);
+                    // opacity: 0;
+                }
+
+                30% {
+                    transform: translateY(-20px);
+                    // opacity: 1;
+                }
+
+                40% {
+                    transform: translateY(0);
+                    // opacity: 0;
+                }
+
+                50% {
+                    transform: translateY(-20px);
+                    // opacity: 1;
+                }
+
+                60% {
+                    transform: translateY(0);
+                    // opacity: 0;
+                }
+
+                70% {
+                    transform: translateY(-20px);
+                    // opacity: 1;
+                }
+
+                80% {
+                    transform: translateY(0);
+                    // opacity: 0;
+                }
+
+                90% {
+                    transform: translateY(-20px);
+                    // opacity: 1;
+                }
+
+                100% {
+                    transform: translateY(0);
+                    // opacity: 1;
+                }
+            }
+        }
+    }
 }
 
 h1 {
@@ -74,5 +151,4 @@ a {
     &:hover:after {
         top: 0%;
     }
-}
-</style>
+}</style>

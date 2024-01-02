@@ -1,6 +1,63 @@
 <script lang="ts" setup>
 import WhoIntro from '../components/home/WhoIntro.vue';
 import CodeWin from '../components/home/CodeWin.vue';
+import NeonText from '../components/home/NeonText.vue';
+
+import { onMounted, ref, onUnmounted } from 'vue';
+
+let img_url = ref(`/src/assets/logo/logo1.png`)
+let timerId: any;
+onMounted(() => {
+    img_url.value = `/src/assets/logo/logo${(Math.floor(Math.random() * 3) + 1)}.png`
+    switch (img_url.value) {
+        case '/src/assets/logo/logo1.png':
+            timerId = setInterval(() => {
+                img_url.value = '/src/assets/logo/logo1_slink.png'
+                setTimeout(() => {
+                    img_url.value = '/src/assets/logo/logo1.png'
+                }, 100);
+            }, 5000); // 每5秒执行一次眨眼
+            break;
+        case '/src/assets/logo/logo2.png':
+            timerId = setInterval(() => {
+                switch((Math.floor(Math.random() * 3) +1)){
+                    case 1:
+                    img_url.value = '/src/assets/logo/logo2_smile.png'
+                        break;
+                    case 2:
+                        img_url.value = '/src/assets/logo/logo2_none.png'
+                        break;
+                    case 3:
+                        img_url.value = '/src/assets/logo/logo2_error.png'
+                        break;
+                }
+                // if((Math.floor(Math.random() * 2) +1) == 2){
+                //     img_url.value = '/src/assets/logo/logo2_none.png'
+                // }else{
+                //     img_url.value = '/src/assets/logo/logo2_smile.png'
+                // }
+                
+                setTimeout(() => {
+                    img_url.value = '/src/assets/logo/logo2.png'
+                }, (Math.floor(Math.random() * 250) +1));
+            }, (Math.floor(Math.random() * 10000) +1000)); 
+            break;
+        case '/src/assets/logo/logo3.png':
+            break;
+    }
+    // if (img_url.value == '/src/assets/logo/logo1.png') {
+    //     timerId = setInterval(() => {
+    //         img_url.value = '/src/assets/logo/logo1_slink.png'
+    //         setTimeout(() => {
+    //             img_url.value = '/src/assets/logo/logo1.png'
+    //         }, 100);
+    //     }, 5000); // 每5秒执行一次眨眼
+    // }
+});
+onUnmounted(() => {
+    clearInterval(timerId);
+})
+
 </script>
 
 <template>
@@ -8,19 +65,29 @@ import CodeWin from '../components/home/CodeWin.vue';
         <div class="page1">
 
             <div class="left-container">
-                <img class="logo" src="../assets/logo.png" />
+                <img class="logo" draggable="false" :src="img_url" />
             </div>
 
 
             <div class="title">
                 <div class="img-bg"></div>
                 <div class="title-header">
-                    <div class="cn">欢迎来到</div>
-                    <div class="en">Welcome to</div>
+                    <div class="cn">
+                        <span><i></i>欢</span>
+                        <span><i></i>迎</span>
+                        <span><i></i>来</span>
+                        <span><i></i>到</span>
+                    </div>
+                    <!-- <div class="en">Welcome to</div> -->
+                    <neon-text class="en" text="Welcome to" color="#47caff"></neon-text>
                 </div>
                 <div class="title-footer">
-                    <div class="cn">连线世界</div>
-                    <div class="en">The Wired World</div>
+
+                    <div class="cn"><i></i>连 线 世 界</div>
+
+
+                    <!-- <div class="en">The Wired World</div> -->
+                    <neon-text class="en" text="The Wired World" color="#bd34fe"></neon-text>
                 </div>
             </div>
 
@@ -48,6 +115,7 @@ import CodeWin from '../components/home/CodeWin.vue';
     display: flex;
     flex-direction: column;
     align-items: center;
+
     .page1 {
         width: 80%;
         height: 100vh;
@@ -133,12 +201,16 @@ import CodeWin from '../components/home/CodeWin.vue';
             .logo {
                 margin-top: 15%;
                 // height: 500px;
-                width: 100%;
+                width: 753px;
                 transition: 0.5s ease-in-out;
-                
+
                 &:hover {
                     transition: 0.5s ease-in-out;
                     filter: drop-shadow(0 0 2em gray);
+                }
+
+                @media (max-width: 992px) {
+                    width: 100%;
                 }
             }
         }
@@ -147,19 +219,72 @@ import CodeWin from '../components/home/CodeWin.vue';
 
             // font-size: 7em;
             .cn {
-
+                position: relative;
+                display: flex;
+                gap: 5px;
+                font-weight: 900;
+                // color: aliceblue;
                 font-size: 7em;
                 filter: drop-shadow(3px 3px red) sepia(100%) drop-shadow(-3px -3px blue);
+                cursor: default;
 
                 @media (max-width: 992px) {
                     font-size: 5em;
                 }
+
+                span {
+                    position: relative;
+                    // filter: blur(5px);
+                    padding: 0 5px;
+                    transition: 0.5s;
+
+                    &:hover {
+                        filter: blur(0px);
+                        transition: 0s;
+
+                        i::before {
+                            content: '';
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 2px;
+                            height: 8px;
+                            background: #fff;
+                            box-shadow:
+                                0 145px #fff,
+                                116px 145px #fff,
+                                116px 0 #fff;
+                        }
+
+                        i::after {
+                            content: '';
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 8px;
+                            height: 2px;
+                            background: #fff;
+                            box-shadow:
+                                0 152px #fff,
+                                110px 152px #fff,
+                                110px 0 #fff;
+                        }
+                    }
+
+                    i {
+                        position: absolute;
+                        inset: 0;
+                        background: transparent;
+                    }
+                }
+
             }
 
             .en {
-                color: gray;
+                // color: gray;
                 font-size: 3em;
-                filter: drop-shadow(3px 3px red) sepia(100%) drop-shadow(-3px -3px blue);
+                filter: drop-shadow(3px 3px red) drop-shadow(-3px -3px blue);
+                cursor: default;
 
                 @media (max-width: 992px) {
                     font-size: 3em;
@@ -194,6 +319,8 @@ import CodeWin from '../components/home/CodeWin.vue';
                     justify-content: center;
                 }
 
+
+
                 .cn,
                 .en {
                     @media (max-width: 992px) {
@@ -204,6 +331,190 @@ import CodeWin from '../components/home/CodeWin.vue';
                     display: flex;
                     flex-direction: row;
                     justify-content: end;
+
+
+
+                    i::before {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 2px;
+                        height: 8px;
+                        background: #fff;
+                        box-shadow:
+                            0 145px #fff,
+                            116px 145px #fff,
+                            116px 0 #fff;
+                        animation: move-before 10s infinite;
+                    }
+
+                    i::after {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 8px;
+                        height: 2px;
+                        background: #fff;
+                        box-shadow:
+                            0 152px #fff,
+                            110px 152px #fff,
+                            110px 0 #fff;
+                        animation: move-after 10s infinite;
+                    }
+
+                    @keyframes move-after {
+                        0% {
+                            top: 0;
+                            left: 0;
+                        }
+
+                        25% {
+                            left: 105%;
+                        }
+
+                        35% {
+                            left: 105%;
+                        }
+
+                        45% {
+                            left: 47%;
+                            box-shadow:
+                                0 152px #fff,
+                                110px 152px #fff,
+                                110px 0 #fff;
+                        }
+
+                        50% {
+                            left: 47%;
+                            box-shadow:
+                                0 60px #fff,
+                                30px 60px #fff,
+                                30px 0 #fff;
+                        }
+
+                        55% {
+                            left: 47%;
+                            box-shadow:
+                                0 152px #fff,
+                                110px 152px #fff,
+                                110px 0 #fff;
+                        }
+
+                        65% {
+                            left: 28%;
+                            box-shadow:
+                                0 152px #fff,
+                                110px 152px #fff,
+                                110px 0 #fff;
+                        }
+
+                        70% {
+                            left: 28%;
+                            box-shadow:
+                                0 60px #fff,
+                                30px 60px #fff,
+                                30px 0 #fff;
+                        }
+
+                        75% {
+                            left: 28%;
+                            box-shadow:
+                                0 152px #fff,
+                                110px 152px #fff,
+                                110px 0 #fff;
+                        }
+
+                        80% {
+                            left: 47%;
+                        }
+
+                        85% {
+                            left: 47%;
+                        }
+
+                        100% {
+                            top: 0;
+                            left: 0;
+                        }
+                    }
+
+                    @keyframes move-before {
+                        0% {
+                            top: 0;
+                            left: 0;
+                        }
+
+                        25% {
+                            left: 105%;
+                        }
+
+                        35% {
+                            left: 105%;
+                        }
+
+                        45% {
+                            left: 47%;
+                            box-shadow:
+                                0 145px #fff,
+                                116px 145px #fff,
+                                116px 0 #fff;
+                        }
+
+                        50% {
+                            left: 47%;
+                            box-shadow:
+                                0 53px #fff,
+                                36px 53px #fff,
+                                36px 0 #fff;
+                        }
+
+                        55% {
+                            left: 47%;
+                            box-shadow:
+                                0 145px #fff,
+                                116px 145px #fff,
+                                116px 0 #fff;
+                        }
+
+                        65% {
+                            left: 28%;
+                            box-shadow:
+                                0 145px #fff,
+                                116px 145px #fff,
+                                116px 0 #fff;
+                        }
+
+                        70% {
+                            left: 28%;
+                            box-shadow:
+                                0 53px #fff,
+                                36px 53px #fff,
+                                36px 0 #fff;
+                        }
+
+                        75% {
+                            left: 28%;
+                            box-shadow:
+                                0 145px #fff,
+                                116px 145px #fff,
+                                116px 0 #fff;
+                        }
+
+                        80% {
+                            left: 47%;
+                        }
+
+                        85% {
+                            left: 47%;
+                        }
+
+                        100% {
+                            top: 0;
+                            left: 0;
+                        }
+                    }
                 }
             }
         }
@@ -217,6 +528,7 @@ import CodeWin from '../components/home/CodeWin.vue';
         flex-direction: row;
         justify-content: center;
         align-items: center;
+
         @media (max-width: 992px) {
             flex-direction: column;
             // overflow: hidden;

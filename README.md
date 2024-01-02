@@ -14,3 +14,7 @@ tree
 主页:https://wh0rigin.github.io/
 
 英语模板:https://wh0rigin.github.io/Essays/templates/
+
+# 预计加入
+* 切换黑夜模式，title变成kill la kill风格
+* 为主页添加更多动效

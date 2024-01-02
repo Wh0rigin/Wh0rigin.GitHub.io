@@ -26,8 +26,9 @@
     height: 50%;
     border-radius: 10px;
     align-items: center;
-    box-shadow:  17px 17px 34px #666666,
-             -17px -17px 34px #ffffff;
+    box-shadow: 17px 17px 34px #666666,
+        -17px -17px 34px #ffffff;
+
     .code-header {
         display: flex;
         flex-direction: row;
