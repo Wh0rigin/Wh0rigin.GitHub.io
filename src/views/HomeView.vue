@@ -5,14 +5,8 @@ import NeonText from '../components/home/NeonText.vue';
 
 import { onMounted, ref, onUnmounted } from 'vue';
 
-const preloadedImages: Array<string> = [
-    logo1_url,
-    logo2_url,
-    logo3_url,
-    logo1_slink_url,
-    logo2_error_url,
-    logo2_none_url,
-    logo2_smile_url
+let preloadedImages: Array<string> = [
+
 ]
 
 
@@ -43,6 +37,19 @@ const logos:Array<string> = [
 let img_url = ref(logo1_url)
 let timerId: any;
 onMounted(() => {
+    img_url.value = logos[Math.floor(Math.random() * 3)]
+    switch(img_url.value){
+        case logos[0]:
+            preloadedImages = [logo1_slink_url,logo1_url];
+            break;
+        case logos[1]:
+            preloadedImages = [logo2_error_url,logo2_none_url,logo2_smile_url,logo2_url];
+            break;
+        case logos[2]:
+            preloadedImages = [logo3_url];
+            break;
+    }
+
     preloadedImages.forEach((imageUrl, index) => {
         const key = `preloadedImage_${index}`;
         if (!localStorage.getItem(key)) {
@@ -50,7 +57,7 @@ onMounted(() => {
         }
     });
 
-    img_url.value = logos[Math.floor(Math.random() * 3)]
+    
     switch (img_url.value) {
         case logos[0]:
             timerId = setInterval(() => {
