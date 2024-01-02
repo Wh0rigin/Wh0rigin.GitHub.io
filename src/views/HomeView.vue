@@ -4,31 +4,31 @@ import CodeWin from '../components/home/CodeWin.vue';
 import NeonText from '../components/home/NeonText.vue';
 
 import { onMounted, ref, onUnmounted } from 'vue';
-
-let img_url = ref(`../assets/logo/logo1.png`)
+// https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1.png
+let img_url = ref(`https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1.png`)
 let timerId: any;
 onMounted(() => {
-    img_url.value = `../assets/logo/logo${(Math.floor(Math.random() * 3) + 1)}.png`
+    img_url.value = `https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo${(Math.floor(Math.random() * 3) + 1)}.png`
     switch (img_url.value) {
-        case '../assets/logo/logo1.png':
+        case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1.png':
             timerId = setInterval(() => {
-                img_url.value = '../assets/logo/logo1_slink.png'
+                img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1_slink.png'
                 setTimeout(() => {
-                    img_url.value = '../assets/logo/logo1.png'
+                    img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo1.png'
                 }, 100);
             }, 5000); // 每5秒执行一次眨眼
             break;
-        case '../assets/logo/logo2.png':
+        case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2.png':
             timerId = setInterval(() => {
                 switch((Math.floor(Math.random() * 3) +1)){
                     case 1:
-                    img_url.value = '../assets/logo/logo2_smile.png'
+                    img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_smile.png'
                         break;
                     case 2:
-                        img_url.value = '../assets/logo/logo2_none.png'
+                        img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_none.png'
                         break;
                     case 3:
-                        img_url.value = '../assets/logo/logo2_error.png'
+                        img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2_error.png'
                         break;
                 }
                 // if((Math.floor(Math.random() * 2) +1) == 2){
@@ -38,11 +38,11 @@ onMounted(() => {
                 // }
                 
                 setTimeout(() => {
-                    img_url.value = '../assets/logo/logo2.png'
+                    img_url.value = 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo2.png'
                 }, (Math.floor(Math.random() * 250) +1));
             }, (Math.floor(Math.random() * 10000) +1000)); 
             break;
-        case '../assets/logo/logo3.png':
+        case 'https://raw.githubusercontent.com/Wh0rigin/Wh0rigin.GitHub.io/main/src/assets/logo/logo3.png':
             break;
     }
     // if (img_url.value == '/src/assets/logo/logo1.png') {
