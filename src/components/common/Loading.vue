@@ -9,19 +9,25 @@ const check_loading = function () {
             clearInterval(timer)
             loaded.value = true
         }
-    }, 300)
+    }, 500)
 }
 
 onMounted(() => {
-    // check_loading()
     router.beforeEach((_to, _from, next) => {
+        // 在路由切换前执行逻辑
         loaded.value = false
         setTimeout(() => {
             next()
-            check_loading()
         }, 1000)
     })
+
+    router.afterEach((_to, _from) => {
+        // 在路由切换后执行逻辑
+        check_loading()
+    });
+
 });
+
 </script>
 
 <template>
@@ -35,6 +41,9 @@ onMounted(() => {
             <span style="--index: 5;">I</span>
             <span style="--index: 6;">N</span>
             <span style="--index: 7;">G</span>
+            <span style="--index: 8;">.</span>
+            <span style="--index: 9;">.</span>
+            <span style="--index: 10;">.</span>
         </p>
     </div>
 </template>

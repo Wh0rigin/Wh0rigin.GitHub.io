@@ -24,6 +24,7 @@ onUnmounted(() => {
 </script>
 
 <template>
+    
     <header :class="{ 'at-top': isAtTop }">
         <nav class="navbar">
             <div class="logo">Wh0rigin</div>

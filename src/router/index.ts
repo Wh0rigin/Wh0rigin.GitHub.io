@@ -7,6 +7,11 @@ const routes: Array<RouteRecordRaw> = [
     name: "home",
     component: () => import("../views/HomeView.vue"),
   },
+  {
+    path: '/:catchAll(.*)',
+    name: "notfound",
+    component: import("../views/NotFound.vue"),
+  },
 ];
 
 const router = createRouter({

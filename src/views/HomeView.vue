@@ -69,11 +69,13 @@ onMounted(() => {
             break;
         case logos[1]:
             timerId = setInterval(() => {
-                img_url.value = logos[(Math.floor(Math.random() * 6) + 4)]
-                
+                img_url.value = logos[(Math.floor(Math.random() * 3) + 4)]
+                console.log(img_url.value)
+                let time = Math.floor(Math.random() * 400) + 100
                 setTimeout(() => {
                     img_url.value =logos[1]
-                }, (Math.floor(Math.random() * 250) + 1));
+                    console.log(time)
+                }, time);
             }, (Math.floor(Math.random() * 10000) + 1000));
             break;
         case logos[2]:
@@ -130,7 +132,6 @@ const mouseup = () => {
 <template>
     
     <div class="container">
-
         <img v-for="(imageUrl, index) in preloadedImages" :key="index" :src="imageUrl" style="display: none;" />
         <div class="page1">
 
