@@ -1,32 +1,33 @@
+User-agent: *
+allow: /
+
 User-agent: Yisouspider
-Allow: /
+allow: /
 
 User-agent: Applebot
-Allow: /
+allow: /
 
 User-agent: bingbot
-Allow: /
+allow: /
 
 User-agent: Sogou inst spider
-Allow: /
+allow: /
 
 User-agent: Sogou web spider
-Allow: /
+allow: /
 
 User-agent: 360Spider
-Allow: /
+allow: /
 
 User-agent: Googlebot
-Allow: /
+allow: /
 
 User-agent: Baiduspider
-Allow: /
+allow: /
 
 User-agent: Bytespider
-Allow: /
+allow: /
 
 User-agent: PetalBot
-Allow: /
+allow: /
 
-User-agent: *
-Disallow: /

@@ -128,7 +128,9 @@ const mouseup = () => {
 </script>
 
 <template>
+    
     <div class="container">
+
         <img v-for="(imageUrl, index) in preloadedImages" :key="index" :src="imageUrl" style="display: none;" />
         <div class="page1">
 

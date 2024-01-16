@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import Header from './components/common/Header.vue';
 import Footer from './components/common/Footer.vue';
-
+import Loading from './components/common/Loading.vue';
 </script>
 
 <template>
+  <Loading></Loading>
   <Header color="#bd34fe" />
   <Transition name="nested">
     <router-view></router-view>
