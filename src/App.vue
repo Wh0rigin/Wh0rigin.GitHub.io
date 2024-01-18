@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { ref,onMounted,Ref } from 'vue';
 
 import Header from './components/common/Header.vue';
 import Footer from './components/common/Footer.vue';
@@ -17,25 +17,23 @@ import logo2_smile_url from './assets/logo/logo2_smile.png'
 import logo3_url from './assets/logo/logo3.png'
 
 
-let preloadedImages: Array<string> = [
-
-]
+let preloadedImages: Ref<Array<string>> = ref([])
 
 onMounted(() => {
   const modeStore = useModeStore()
   modeStore.getNewRandomMode()
   switch (modeStore.mode) {
     case 0:
-      preloadedImages = [logo1_slink_url, logo1_url];
+      preloadedImages.value = [logo1_slink_url, logo1_url];
       break;
     case 1:
-      preloadedImages = [logo2_error_url, logo2_none_url, logo2_smile_url, logo2_url];
+      preloadedImages.value = [logo2_error_url, logo2_none_url, logo2_smile_url, logo2_url];
       break;
     case 2:
-      preloadedImages = [logo3_url];
+      preloadedImages.value = [logo3_url];
       break;
   }
-  preloadedImages.forEach((imageUrl) => {
+  preloadedImages.value.forEach((imageUrl) => {
     const key = `preloadedImage_${imageUrl}`;
     if (!localStorage.getItem(key)) {
       localStorage.setItem(key, imageUrl);
@@ -52,7 +50,10 @@ onMounted(() => {
     <router-view></router-view>
   </Transition>
   <Footer />
-  <img v-for="(imageUrl, index) in preloadedImages" :key="index" :src="imageUrl" style="display: none;" />
+  <div style="display: none;">
+    <img v-for="(imageUrl, index) in preloadedImages" :key="index" :src="imageUrl" />
+  </div>
+  
 </template>
 
 <style>

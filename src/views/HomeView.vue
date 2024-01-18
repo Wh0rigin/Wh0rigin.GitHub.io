@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onMounted, ref, onUnmounted } from 'vue';
+import { onMounted, ref,Ref, onUnmounted } from 'vue';
 import { useModeStore } from '../stores/mode';
 
 import WhoIntro from '../components/home/WhoIntro.vue';
@@ -41,7 +41,7 @@ const logos:Array<string> = [
 ]
 // 本地资源
 
-let img_url = ref(logo1_url)
+let img_url:Ref<string> = ref('')
 let timerId: any;
 onMounted(() => {
     img_url.value = logos[modeStore.mode]
@@ -77,11 +77,9 @@ onMounted(() => {
         case logos[1]:
             timerId = setInterval(() => {
                 img_url.value = logos[(Math.floor(Math.random() * 3) + 4)]
-                console.log(img_url.value)
                 let time = Math.floor(Math.random() * 400) + 100
                 setTimeout(() => {
                     img_url.value =logos[1]
-                    console.log(time)
                 }, time);
             }, (Math.floor(Math.random() * 10000) + 1000));
             break;
