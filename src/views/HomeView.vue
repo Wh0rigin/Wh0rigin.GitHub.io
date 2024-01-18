@@ -1,20 +1,10 @@
 <script lang="ts" setup>
+import { onMounted, ref, onUnmounted } from 'vue';
+import { useModeStore } from '../stores/mode';
+
 import WhoIntro from '../components/home/WhoIntro.vue';
 import CodeWin from '../components/home/CodeWin.vue';
 import NeonText from '../components/home/NeonText.vue';
-
-import { onMounted, ref, onUnmounted } from 'vue';
-
-let preloadedImages: Array<string> = [
-
-]
-
-
-// const handleImageError = function () {
-//     // 图片加载失败时触发此方法
-//     // 切换到另一张图片
-//     img_url.value = fallbackImageUrl;
-// }
 
 import logo1_url from '../assets/logo/logo1.png'
 import logo1_slink_url from '../assets/logo/logo1_slink.png'
@@ -23,6 +13,23 @@ import logo2_error_url from '../assets/logo/logo2_error.png'
 import logo2_none_url from '../assets/logo/logo2_none.png'
 import logo2_smile_url from '../assets/logo/logo2_smile.png'
 import logo3_url from '../assets/logo/logo3.png'
+
+const modeStore = useModeStore()
+
+
+
+// let preloadedImages: Array<string> = [
+
+// ]
+
+
+// const handleImageError = function () {
+//     // 图片加载失败时触发此方法
+//     // 切换到另一张图片
+//     img_url.value = fallbackImageUrl;
+// }
+
+
 const logos:Array<string> = [
     logo1_url,
     logo2_url,
@@ -37,25 +44,25 @@ const logos:Array<string> = [
 let img_url = ref(logo1_url)
 let timerId: any;
 onMounted(() => {
-    img_url.value = logos[Math.floor(Math.random() * 3)]
-    switch(img_url.value){
-        case logos[0]:
-            preloadedImages = [logo1_slink_url,logo1_url];
-            break;
-        case logos[1]:
-            preloadedImages = [logo2_error_url,logo2_none_url,logo2_smile_url,logo2_url];
-            break;
-        case logos[2]:
-            preloadedImages = [logo3_url];
-            break;
-    }
+    img_url.value = logos[modeStore.mode]
+    // switch(img_url.value){
+    //     case logos[0]:
+    //         preloadedImages = [logo1_slink_url,logo1_url];
+    //         break;
+    //     case logos[1]:
+    //         preloadedImages = [logo2_error_url,logo2_none_url,logo2_smile_url,logo2_url];
+    //         break;
+    //     case logos[2]:
+    //         preloadedImages = [logo3_url];
+    //         break;
+    // }
 
-    preloadedImages.forEach((imageUrl) => {
-        const key = `preloadedImage_${imageUrl}`;
-        if (!localStorage.getItem(key)) {
-            localStorage.setItem(key, imageUrl);
-        }
-    });
+    // preloadedImages.forEach((imageUrl) => {
+    //     const key = `preloadedImage_${imageUrl}`;
+    //     if (!localStorage.getItem(key)) {
+    //         localStorage.setItem(key, imageUrl);
+    //     }
+    // });
 
     
     switch (img_url.value) {
@@ -132,7 +139,7 @@ const mouseup = () => {
 <template>
     
     <div class="container">
-        <img v-for="(imageUrl, index) in preloadedImages" :key="index" :src="imageUrl" style="display: none;" />
+        <!-- <img v-for="(imageUrl, index) in preloadedImages" :key="index" :src="imageUrl" style="display: none;" /> -->
         <div class="page1">
 
             <div class="left-container">
