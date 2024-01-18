@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import FlipTextCarousel from './FlipTextCarousel.vue';
 import router from '../../router';
+
+
+
 var loaded = ref(false);
 
 const check_loading = function () {
@@ -45,6 +49,7 @@ onMounted(() => {
             <span style="--index: 9;">.</span>
             <span style="--index: 10;">.</span>
         </p>
+        <flip-text-carousel></flip-text-carousel>
     </div>
 </template>
 
@@ -57,6 +62,7 @@ onMounted(() => {
     margin: 0;
     width: 100%;
     justify-content: center;
+    align-items: center;
 
     height: 100vh;
     background-color: #f7f7f7;
