@@ -1,11 +1,11 @@
 **@ author** : Wh0rigin
-**@ Last-update** : 23-12-2
+**@ Last-update** : 24-6-15
 
 # Sentences
 
 ## head
 #### basic
-* **The last decade** has **contemplated** that an **overwhelming majority** of people have been **participating in an argument** about `whether to use English template`, which has been in the limelight and has **triggered widespread** concern in the public.
+* **The last decade** has **contemplated** that an **overwhelming majority** of people have been participating in an argument about `whether to use English template`, which has been in the limelight and has **triggered widespread** concern in the public.
     > 近十年来，大量的人参与了**是否使用英语模板**的争论，这已经成为人们关注的焦点，引发了公众的广泛关注。
     * Over the last decade, a contentious debate has emerged regarding **the use of an English template**. This hotly contested issue has sparked widespread public concern.
         > 在过去的十年中，关于**英语模板**的使用出现了一场有争议的辩论。这个争论激烈的问题引起了公众的广泛关注。
@@ -132,14 +132,23 @@
 
 # Greate expression
 `alleviate pressure`    缓解压力
+`be hard to deny`       是不能否认的
 `lighten up`    放松
+`in detail and at length`   详细地
 `broaden the circle of the association`     扩宽我们的交际圈
+`broaden one's horizon`     扩大视野
 `stretch one's money`   省钱
 `seize opportunity`     抓住机会
 `be enthusiastic about`     热衷于
 `equip oneself with`    具备
 `pat on the back`   鼓励,表扬
 `it is a must for us to ..` 我们必须去
+`put the brake on` 制止
+`go hand in hand` 相辅相成,相互关联的，关系密切的
+`know on which side one's bread is buttered` 用来形容人精：知道什么对自己有利；知道通过哪些人和事能让自己利益最大化，把精力放在利益最大化上；
+[e.g]She's far too clever to irritate her employer as she knows which side her bread is buttered on.
+[e.g]You need to remember where your bread is buttered.
+你需要记住你的利益所在
 
 `regardless of n` 无关
 `be not conductive to sth/doing`    不利于
@@ -149,6 +158,8 @@
 `To some extent ...(句子)`    在某种情况下
 `throw a spotlight on`  聚焦于
 `contribute to sth`     导致
+`be limited to`         局限于
+
 
 `Looking back on my life,...`   回顾我的人生
 `​place great emphasis on`  高度重视
@@ -206,17 +217,23 @@
 `convenient`    adj.    方便的
 `effective`     adj.    有效的
 `detrimental`   adj.    有害的
+`rampant`       adj.    肆虐的;疯长的
 
 `overwhelm`     v.      压倒
 `regulate`      v.      管理
 `foster`        v       培养
 `indulge`       v.      沉溺
+`outrage`       v.      激怒
 
 `competition`   n.  竞赛
 `relaxation`    n   休息
 `burden`        n   负荷
 `advent`        n   出现
 `landscape`     n   风景;形式;情形
+`malpractice`   n   违法行为;玩忽职守；渎职
+`outrage`       n   义愤
+`requirement`   n   必要条件，需要的东西
+
 
 # For me
 
@@ -292,6 +309,8 @@
     > 没人能否认这个事实
 * The reason why **句子** is that **句子**
     > ...的原因是...
+* **A** comes in the wake of **B**
+    > **A**紧随其后**B**
 
 #### 高分排比
 ##### waste time
@@ -301,5 +320,5 @@
 * material support, financial aid, mental comfort and spiritual backup.
 > 物质上的支持，经济上的援助，精神上的安慰，精神上的支持
 ##### Succeed
-* accumulate wealth, establish career, fit into society and attain social status
+* accumulate wealth, establish career, fit into society and even attain social status
 >

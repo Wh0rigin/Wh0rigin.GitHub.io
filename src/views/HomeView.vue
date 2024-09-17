@@ -6,13 +6,22 @@ import WhoIntro from '../components/home/WhoIntro.vue';
 import CodeWin from '../components/home/CodeWin.vue';
 import NeonText from '../components/home/NeonText.vue';
 
-import logo1_url from '../assets/logo/logo1.png'
-import logo1_slink_url from '../assets/logo/logo1_slink.png'
-import logo2_url from '../assets/logo/logo2.png'
-import logo2_error_url from '../assets/logo/logo2_error.png'
-import logo2_none_url from '../assets/logo/logo2_none.png'
-import logo2_smile_url from '../assets/logo/logo2_smile.png'
-import logo3_url from '../assets/logo/logo3.png'
+// import logo1_url from '../assets/logo/logo1.png'
+// import logo1_slink_url from '../assets/logo/logo1_slink.png'
+// import logo2_url from '../assets/logo/logo2.png'
+// import logo2_error_url from '../assets/logo/logo2_error.png'
+// import logo2_none_url from '../assets/logo/logo2_none.png'
+// import logo2_smile_url from '../assets/logo/logo2_smile.png'
+// import logo3_url from '../assets/logo/logo3.png'
+
+let logo1_url = 'https://wh0rigin.oss-cn-hangzhou.aliyuncs.com/assets/logo/logo1.png'
+let logo1_slink_url= 'https://wh0rigin.oss-cn-hangzhou.aliyuncs.com/assets/logo/logo1_slink.png'
+let logo2_url= 'https://wh0rigin.oss-cn-hangzhou.aliyuncs.com/assets/logo/logo2.png'
+let logo2_error_url = 'https://wh0rigin.oss-cn-hangzhou.aliyuncs.com/assets/logo/logo2_error.png'
+let logo2_none_url = 'https://wh0rigin.oss-cn-hangzhou.aliyuncs.com/assets/logo/logo2_none.png'
+let logo2_smile_url = 'https://wh0rigin.oss-cn-hangzhou.aliyuncs.com/assets/logo/logo2_smile.png'
+let logo3_url = 'https://wh0rigin.oss-cn-hangzhou.aliyuncs.com/assets/logo/logo3.png'
+
 
 const modeStore = useModeStore()
 
