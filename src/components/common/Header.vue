@@ -14,6 +14,14 @@ const closeMenu = () => {
     isOpen.value = false;
 };
 
+const scrollToSection = (sectionId: string) => {
+    closeMenu();
+    document.getElementById(sectionId)?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+    });
+};
+
 onMounted(() => {
     window.addEventListener('scroll', checkScrollPosition, { passive: true });
 });
@@ -32,7 +40,7 @@ onUnmounted(() => {
 
             <div class="nav-links">
                 <router-link to="/" class="nav-link">首页</router-link>
-                <a class="nav-link" href="#page2">关于</a>
+                <a class="nav-link" href="#page2" @click.prevent="scrollToSection('page2')">关于</a>
             </div>
 
             <div class="nav-actions">
@@ -77,7 +85,7 @@ onUnmounted(() => {
         <Transition name="slide-fade">
             <div v-if="isOpen" id="mobile-menu" class="mobile-menu">
                 <router-link to="/" class="menu-link" @click="closeMenu">首页</router-link>
-                <a class="menu-link" href="#page2" @click="closeMenu">关于</a>
+                <a class="menu-link" href="#page2" @click.prevent="scrollToSection('page2')">关于</a>
                 <a class="menu-link" href="https://github.com/Wh0rigin" target="_blank" rel="noreferrer">GitHub ↗</a>
             </div>
         </Transition>
