@@ -20,10 +20,10 @@
     width: 100%;
     min-height: 260px;
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--terminal-border);
     border-radius: 22px;
-    color: #edf0f7;
-    background: #171b27;
+    color: var(--terminal-text);
+    background: var(--terminal-surface);
     box-shadow: var(--shadow);
 }
 
@@ -33,7 +33,7 @@
     align-items: center;
     gap: 16px;
     padding: 0 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid var(--terminal-divider);
 }
 
 .window-controls {
@@ -52,7 +52,7 @@
 .green-btn { background: #31c96a; }
 
 .window-title {
-    color: #969eb2;
+    color: var(--terminal-muted);
     font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
     font-size: 0.76rem;
 }
@@ -62,18 +62,16 @@
     flex-direction: column;
     gap: 16px;
     padding: 26px 24px;
-    color: #d8deec;
+    color: var(--terminal-text);
     font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
     font-size: clamp(0.74rem, 1vw, 0.88rem);
     line-height: 1.7;
 }
 
-.prompt {
-    color: #78d6a4;
-}
+.prompt { color: var(--terminal-prompt); }
 
 .cursor {
-    color: #b5a8ff;
+    color: var(--terminal-cursor);
     animation: blink 1.2s steps(2, start) infinite;
 }
 

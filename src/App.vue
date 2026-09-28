@@ -84,6 +84,13 @@ onMounted(() => {
   --mint: #39aa9d;
   --shadow: 0 24px 70px rgba(35, 39, 65, 0.1);
   --footer-surface: #e9ebf3;
+  --terminal-surface: #ffffff;
+  --terminal-border: rgba(35, 39, 65, 0.12);
+  --terminal-divider: rgba(35, 39, 65, 0.1);
+  --terminal-text: #263047;
+  --terminal-muted: #697087;
+  --terminal-prompt: #16845e;
+  --terminal-cursor: #6655dc;
 }
 
 html[data-theme="dark"] {
@@ -101,6 +108,13 @@ html[data-theme="dark"] {
   --mint: #70d8c9;
   --shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
   --footer-surface: #171a25;
+  --terminal-surface: #171b27;
+  --terminal-border: rgba(255, 255, 255, 0.08);
+  --terminal-divider: rgba(255, 255, 255, 0.08);
+  --terminal-text: #d8deec;
+  --terminal-muted: #969eb2;
+  --terminal-prompt: #78d6a4;
+  --terminal-cursor: #b5a8ff;
 }
 
 * {
