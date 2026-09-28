@@ -400,6 +400,21 @@ h1 {
         padding-top: 98px;
     }
 
+    .hero-visual {
+        width: min(100%, 250px);
+        margin-top: 8px;
+
+        &::before {
+            display: none;
+        }
+    }
+
+    .logo {
+        width: 100%;
+        max-height: 30svh;
+        object-fit: contain;
+    }
+
     h1 {
         font-size: clamp(2.8rem, 14vw, 4rem);
     }
