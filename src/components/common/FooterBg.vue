@@ -7,9 +7,6 @@
             <img src="../../assets/gif/Pacman_right.gif" />
         </div>
     </div>
-    <div class="container">
-        <div class="box" v-for="index of 1400" :key="index"></div>
-    </div>
 </template>
 
 <style lang="less" scoped>
@@ -26,82 +23,6 @@
     @keyframes move {
         0%{left:-5%;}
         100%{left: 110%;}
-    }
-}
-.container{
-    display: flex;
-    flex-wrap: wrap;
-    height: 170px;
-    overflow: hidden;
-    .box{
-        position:relative;
-        width:24px;
-        height: 24px;
-        background-color: var(--footer-tile);
-        border: 1px solid var(--border);
-        box-sizing: border-box;
-        overflow: hidden;
-        &::before{
-            content: "";
-            position: absolute;
-            inset: 6px;
-            background: var(--footer-tile-center);
-            box-shadow: 0 1px 4px color-mix(in srgb, var(--text) 24%, transparent);
-            transition: 2s ease-in-out;
-        }
-
-        &:hover::before{
-            transition: 0s ease-in-out;
-            background: #f00;
-            box-shadow: 0 0 3px #f00,
-                        0 0 10px #f00;
-        }
-
-        &:nth-child(9n+1):hover::before{
-            background: #f00;
-            box-shadow: 0 0 3px #f00,
-                        0 0 10px #f00;
-        }
-        &:nth-child(9n+2):hover::before{
-            background: #fcc;
-            box-shadow: 0 0 3px #fcc,
-                        0 0 10px #fcc;
-        }
-        &:nth-child(9n+3):hover::before{
-            background: #0f0;
-            box-shadow: 0 0 3px #0f0,
-                        0 0 10px #0f0;
-        }
-        &:nth-child(9n+4):hover::before{
-            background: #00f;
-            box-shadow: 0 0 3px #00f,
-                        0 0 10px #00f;
-        }
-        &:nth-child(9n+5):hover::before{
-            background: #5ff;
-            box-shadow: 0 0 3px #5ff,
-                        0 0 10px #5ff;
-        }
-        &:nth-child(9n+6):hover::before{
-            background: #ff6;
-            box-shadow: 0 0 3px #ff6,
-                        0 0 10px #ff6;
-        }
-        &:nth-child(9n+7):hover::before{
-            background: #f6f;
-            box-shadow: 0 0 3px #f6f,
-                        0 0 10px #f6f;
-        }
-        &:nth-child(9n+8):hover::before{
-            background: #fff;
-            box-shadow: 0 0 3px #fff,
-                        0 0 10px #fff;
-        }
-        &:nth-child(9n+9):hover::before{
-            background: rgb(102, 135, 255);
-            box-shadow: 0 0 3px rgb(102, 135, 255),
-                        0 0 10px rgb(102, 135, 255);
-        }
     }
 }
 </style>

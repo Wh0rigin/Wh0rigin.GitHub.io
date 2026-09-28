@@ -84,8 +84,6 @@ onMounted(() => {
   --mint: #39aa9d;
   --shadow: 0 24px 70px rgba(35, 39, 65, 0.1);
   --footer-surface: #e9ebf3;
-  --footer-tile: #d9dce8;
-  --footer-tile-center: #c8ccda;
 }
 
 html[data-theme="dark"] {
@@ -103,8 +101,6 @@ html[data-theme="dark"] {
   --mint: #70d8c9;
   --shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
   --footer-surface: #171a25;
-  --footer-tile: #202432;
-  --footer-tile-center: #303548;
 }
 
 * {
