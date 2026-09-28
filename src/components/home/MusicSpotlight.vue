@@ -48,6 +48,7 @@
 
 <style lang="less" scoped>
 .music-card {
+    position: relative;
     grid-column: 1 / -1;
     display: grid;
     grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.1fr);
@@ -55,11 +56,54 @@
     gap: clamp(24px, 5vw, 64px);
     overflow: hidden;
     padding: clamp(24px, 4vw, 48px);
-    border: 1px solid var(--border);
-    border-radius: 26px;
+    border: var(--panel-border-width) solid var(--border);
+    border-radius: var(--panel-radius);
     color: var(--text);
     background: linear-gradient(120deg, var(--surface), color-mix(in srgb, var(--accent-soft) 58%, var(--surface)));
     box-shadow: var(--shadow);
+    backdrop-filter: blur(14px);
+    transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease;
+
+    &::before {
+        position: absolute;
+        top: -42%;
+        right: -8%;
+        width: 42%;
+        aspect-ratio: 1;
+        border: 22px solid color-mix(in srgb, var(--accent) 10%, transparent);
+        border-radius: 50%;
+        pointer-events: none;
+        animation: music-orbit 12s linear infinite;
+        content: "";
+    }
+
+    &:hover {
+        border-color: color-mix(in srgb, var(--accent) 42%, var(--border));
+    }
+}
+
+.record-scene,
+.music-copy {
+    position: relative;
+    z-index: 1;
+}
+
+:global(html[data-theme="dark"]) .music-card {
+    border-color: rgba(255, 255, 255, 0.68);
+    background: linear-gradient(120deg, #17171b 0 72%, color-mix(in srgb, var(--accent) 26%, #17171b) 72%);
+    box-shadow: 12px 12px 0 #000000, 17px 17px 0 color-mix(in srgb, var(--accent) 48%, transparent);
+
+    &::before {
+        top: -32%;
+        right: -10%;
+        width: 46%;
+        border: 0;
+        border-radius: 0;
+        background: var(--accent);
+        clip-path: polygon(18% 0, 100% 7%, 76% 100%, 0 76%);
+        opacity: 0.18;
+        animation: music-jagged 8s steps(6, end) infinite alternate;
+    }
 }
 
 .record-scene {
@@ -247,6 +291,14 @@ h3 {
     to { transform: rotate(360deg); }
 }
 
+@keyframes music-orbit {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes music-jagged {
+    to { transform: translate(-9%, 7%) rotate(8deg); }
+}
+
 @media (max-width: 820px) {
     .music-card {
         grid-template-columns: 1fr;
@@ -278,7 +330,6 @@ h3 {
     .music-card {
         gap: 0;
         padding: 20px;
-        border-radius: 21px;
     }
 
     .record-scene {

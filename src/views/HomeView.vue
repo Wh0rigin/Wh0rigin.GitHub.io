@@ -145,6 +145,13 @@ const mouseup = () => {
 
 <template>
     <main class="home">
+        <div class="theme-atmosphere" aria-hidden="true">
+            <span class="motif-ring motif-ring-one"></span>
+            <span class="motif-ring motif-ring-two"></span>
+            <span class="motif-sweep motif-sweep-one"></span>
+            <span class="motif-sweep motif-sweep-two"></span>
+        </div>
+
         <section id="top" class="hero" aria-labelledby="hero-title">
             <div class="hero-copy">
                 <p class="eyebrow"><span class="eyebrow-dot"></span> Welcome to</p>
@@ -181,9 +188,103 @@ const mouseup = () => {
 <style lang="less" scoped>
 .home {
     position: relative;
+    overflow: clip;
+}
+
+.theme-atmosphere {
+    position: fixed;
+    z-index: -1;
+    inset: 64px 0 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.motif-ring,
+.motif-sweep {
+    position: absolute;
+    display: block;
+}
+
+.motif-ring {
+    border: clamp(18px, 3vw, 42px) solid color-mix(in srgb, var(--accent) 13%, transparent);
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent);
+    animation: ring-breathe 9s ease-in-out infinite alternate;
+}
+
+.motif-ring-one {
+    top: 7vh;
+    right: -11vw;
+    width: min(43vw, 620px);
+    aspect-ratio: 1;
+}
+
+.motif-ring-two {
+    bottom: 4vh;
+    left: -8vw;
+    width: min(27vw, 390px);
+    aspect-ratio: 1;
+    animation-delay: -4s;
+}
+
+.motif-sweep {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--mint) 65%, transparent), transparent);
+    opacity: 0.52;
+    transform: rotate(-16deg);
+    animation: current-flow 10s ease-in-out infinite;
+}
+
+.motif-sweep-one {
+    top: 32%;
+    left: -20%;
+    width: 72%;
+}
+
+.motif-sweep-two {
+    right: -24%;
+    bottom: 22%;
+    width: 65%;
+    animation-delay: -5s;
+}
+
+:global(html[data-theme="dark"]) .motif-ring {
+    border: 0;
+    border-radius: 0;
+    background: var(--accent);
+    box-shadow: none;
+    clip-path: polygon(8% 0, 100% 0, 79% 100%, 0 82%);
+    opacity: 0.13;
+    animation: dark-panel-drift 8s steps(8, end) infinite alternate;
+}
+
+:global(html[data-theme="dark"]) .motif-ring-one {
+    top: 4%;
+    right: -18%;
+    width: min(55vw, 760px);
+    aspect-ratio: 1.5;
+    transform: rotate(-12deg);
+}
+
+:global(html[data-theme="dark"]) .motif-ring-two {
+    bottom: 1%;
+    left: -17%;
+    width: min(42vw, 620px);
+    aspect-ratio: 1.8;
+    transform: rotate(16deg);
+}
+
+:global(html[data-theme="dark"]) .motif-sweep {
+    height: clamp(9px, 1.3vw, 18px);
+    background: linear-gradient(90deg, transparent, var(--accent) 22% 76%, transparent);
+    opacity: 0.2;
+    transform: rotate(-23deg) skewX(-24deg);
+    animation: slash-run 7s cubic-bezier(0.74, 0, 0.26, 1) infinite;
 }
 
 .hero {
+    position: relative;
+    z-index: 1;
     width: min(1120px, calc(100% - 48px));
     min-height: 100vh;
     min-height: 100svh;
@@ -198,6 +299,7 @@ const mouseup = () => {
 .hero-copy {
     position: relative;
     z-index: 1;
+    animation: hero-rise 720ms cubic-bezier(0.2, 0.72, 0.2, 1) both;
 }
 
 .eyebrow {
@@ -233,12 +335,27 @@ h1 {
 }
 
 .headline-accent {
+    position: relative;
     width: fit-content;
     color: var(--accent-strong);
     background: linear-gradient(110deg, var(--accent-strong), var(--mint));
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+
+    &::after {
+        position: absolute;
+        right: 2%;
+        bottom: -0.08em;
+        left: 2%;
+        height: 0.08em;
+        border-radius: 999px;
+        background: linear-gradient(90deg, transparent, var(--mint), var(--accent), transparent);
+        transform: scaleX(0);
+        transform-origin: left;
+        animation: line-draw 900ms 420ms ease-out forwards;
+        content: "";
+    }
 }
 
 .hero-description {
@@ -286,7 +403,7 @@ h1 {
 }
 
 .button-primary {
-    color: var(--surface);
+    color: var(--theme-contrast);
     background: var(--accent);
     box-shadow: 0 10px 24px color-mix(in srgb, var(--accent) 25%, transparent);
 }
@@ -330,6 +447,7 @@ h1 {
     min-width: 0;
     place-items: center;
     isolation: isolate;
+    animation: visual-float 6s ease-in-out infinite;
 
     &::before {
         position: absolute;
@@ -337,7 +455,11 @@ h1 {
         width: min(100%, 500px);
         aspect-ratio: 1;
         border-radius: 50%;
-        background: radial-gradient(circle, color-mix(in srgb, var(--accent) 15%, transparent), transparent 70%);
+        border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+        background:
+            radial-gradient(circle, transparent 50%, color-mix(in srgb, var(--accent) 9%, transparent) 51% 63%, transparent 64%),
+            conic-gradient(from 20deg, transparent, color-mix(in srgb, var(--mint) 20%, transparent), transparent 38%);
+        animation: orbit-turn 18s linear infinite;
         content: "";
     }
 }
@@ -349,6 +471,8 @@ h1 {
 }
 
 .about-section {
+    position: relative;
+    z-index: 1;
     width: min(1120px, calc(100% - 48px));
     margin: 0 auto;
     padding: 42px 0 112px;
@@ -357,6 +481,130 @@ h1 {
     align-items: stretch;
     gap: clamp(28px, 5vw, 76px);
     scroll-margin-top: 88px;
+}
+
+:global(html[data-theme="dark"]) .hero-copy {
+    animation-name: hero-snap;
+}
+
+:global(html[data-theme="dark"]) h1 {
+    text-shadow: 4px 4px 0 #000000;
+}
+
+:global(html[data-theme="dark"]) .headline-accent {
+    padding: 0.02em 0.17em 0.08em;
+    color: #ffffff;
+    background: var(--accent);
+    clip-path: polygon(3% 7%, 100% 0, 94% 91%, 0 100%);
+    text-shadow: 4px 4px 0 #08080a;
+    transform: rotate(-1.2deg) skewX(-4deg);
+    -webkit-text-fill-color: #ffffff;
+
+    &::after {
+        right: -4%;
+        bottom: -0.1em;
+        left: 18%;
+        height: 0.06em;
+        border-radius: 0;
+        background: #ffffff;
+        transform: rotate(-1deg);
+        animation: none;
+    }
+}
+
+:global(html[data-theme="dark"]) .eyebrow-dot {
+    border-radius: 1px;
+    background: var(--accent);
+    box-shadow: 4px 4px 0 rgba(255, 255, 255, 0.14);
+    transform: rotate(45deg);
+}
+
+:global(html[data-theme="dark"]) .button {
+    border-radius: 2px;
+    clip-path: polygon(7% 0, 100% 0, 93% 100%, 0 88%);
+}
+
+:global(html[data-theme="dark"]) .button-primary {
+    color: #ffffff;
+    box-shadow: 7px 7px 0 #000000;
+}
+
+:global(html[data-theme="dark"]) .button-primary:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 10px 10px 0 #000000;
+}
+
+:global(html[data-theme="dark"]) .hero-caption span {
+    height: 4px;
+    background: var(--accent);
+    transform: skewX(-28deg);
+}
+
+:global(html[data-theme="dark"]) .hero-visual {
+    animation: dark-jolt 6s steps(1, end) infinite;
+
+    &::before {
+        border: 0;
+        border-radius: 0;
+        background: var(--accent);
+        clip-path: polygon(7% 18%, 72% 0, 100% 34%, 79% 91%, 20% 100%, 0 69%);
+        opacity: 0.16;
+        animation: dark-shape-turn 16s linear infinite;
+    }
+}
+
+@keyframes hero-rise {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes hero-snap {
+    0% { opacity: 0; transform: translate(-36px, 12px) skewX(-7deg); }
+    65% { opacity: 1; transform: translate(5px, -2px) skewX(1deg); }
+    100% { transform: translate(0) skewX(0); }
+}
+
+@keyframes line-draw {
+    to { transform: scaleX(1); }
+}
+
+@keyframes visual-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+@keyframes dark-jolt {
+    0%, 91%, 94%, 100% { transform: translate(0); }
+    92% { transform: translate(-4px, 2px) skewX(-0.6deg); }
+    93% { transform: translate(3px, -1px) skewX(0.4deg); }
+}
+
+@keyframes orbit-turn {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes dark-shape-turn {
+    to { transform: rotate(-360deg); }
+}
+
+@keyframes ring-breathe {
+    to { transform: scale(1.12) translate(-2%, 3%); opacity: 0.7; }
+}
+
+@keyframes current-flow {
+    0%, 100% { transform: translateX(-8%) rotate(-16deg); opacity: 0; }
+    25%, 70% { opacity: 0.52; }
+    50% { transform: translateX(28%) rotate(-16deg); }
+}
+
+@keyframes dark-panel-drift {
+    to { translate: 7% -4%; }
+}
+
+@keyframes slash-run {
+    0%, 100% { translate: -22% 16%; opacity: 0; }
+    22%, 70% { opacity: 0.2; }
+    52% { translate: 28% -14%; }
 }
 
 @media (max-width: 820px) {
@@ -393,6 +641,16 @@ h1 {
 }
 
 @media (max-width: 520px) {
+    .motif-ring-two,
+    .motif-sweep-two {
+        display: none;
+    }
+
+    .motif-ring-one {
+        right: -46vw;
+        width: 92vw;
+    }
+
     .hero,
     .about-section {
         width: calc(100% - 36px);

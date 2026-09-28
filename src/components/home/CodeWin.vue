@@ -17,14 +17,34 @@
 
 <style lang="less" scoped>
 .terminal {
+    position: relative;
     width: 100%;
     min-height: 260px;
     overflow: hidden;
-    border: 1px solid var(--terminal-border);
-    border-radius: 22px;
+    border: var(--panel-border-width) solid var(--terminal-border);
+    border-radius: var(--panel-radius);
     color: var(--terminal-text);
     background: var(--terminal-surface);
     box-shadow: var(--shadow);
+    transition: border-color 220ms ease, background-color 220ms ease, box-shadow 220ms ease, transform 220ms ease;
+
+    &::after {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: -42%;
+        width: 32%;
+        pointer-events: none;
+        background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent) 9%, transparent), transparent);
+        transform: skewX(-18deg);
+        animation: terminal-scan 7s ease-in-out infinite;
+        content: "";
+    }
+
+    &:hover {
+        border-color: var(--accent);
+        transform: translateY(-4px);
+    }
 }
 
 .terminal-header {
@@ -75,6 +95,38 @@
     animation: blink 1.2s steps(2, start) infinite;
 }
 
+:global(html[data-theme="dark"]) .terminal {
+    box-shadow: 10px 10px 0 #000000, 14px 14px 0 color-mix(in srgb, var(--accent) 55%, transparent);
+
+    &::after {
+        width: 18%;
+        background: linear-gradient(90deg, transparent, rgba(255, 56, 66, 0.18), transparent);
+        transform: skewX(-28deg);
+        animation-duration: 4.8s;
+    }
+
+    &:hover {
+        box-shadow: 6px 6px 0 #000000, 10px 10px 0 color-mix(in srgb, var(--accent) 70%, transparent);
+        transform: translate(4px, 4px);
+    }
+}
+
+:global(html[data-theme="dark"]) .terminal-header {
+    background: linear-gradient(105deg, color-mix(in srgb, var(--accent) 18%, transparent), transparent 54%);
+}
+
+:global(html[data-theme="dark"]) .red-btn,
+:global(html[data-theme="dark"]) .yellow-btn,
+:global(html[data-theme="dark"]) .green-btn {
+    border-radius: 1px;
+}
+
+@keyframes terminal-scan {
+    0%, 18% { left: -42%; opacity: 0; }
+    30% { opacity: 1; }
+    64%, 100% { left: 118%; opacity: 0; }
+}
+
 @keyframes blink {
     to { visibility: hidden; }
 }
@@ -82,7 +134,6 @@
 @media (max-width: 520px) {
     .terminal {
         min-height: 220px;
-        border-radius: 18px;
     }
 
     .terminal-content {

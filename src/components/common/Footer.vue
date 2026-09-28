@@ -31,8 +31,26 @@ const year = new Date().getFullYear();
 
 <style lang="less" scoped>
 .footer {
+    position: relative;
     color: var(--text);
     background: var(--footer-surface);
+    transition: background-color 220ms ease, border-color 220ms ease;
+}
+
+:global(html[data-theme="dark"]) .footer {
+    border-top: 4px solid var(--accent);
+    box-shadow: inset 0 6px 0 #000000;
+
+    &::before {
+        position: absolute;
+        top: -4px;
+        right: 8%;
+        width: 160px;
+        height: 4px;
+        background: #ffffff;
+        transform: skewX(-32deg);
+        content: "";
+    }
 }
 
 .footer-inner {

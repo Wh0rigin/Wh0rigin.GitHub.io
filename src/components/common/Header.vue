@@ -101,7 +101,7 @@ header {
     background: color-mix(in srgb, var(--surface) 88%, transparent);
     border-bottom: 1px solid var(--border);
     backdrop-filter: blur(16px);
-    transition: background-color 220ms ease, border-color 220ms ease;
+    transition: background-color 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
 }
 
 header.at-top {
@@ -132,6 +132,7 @@ header.at-top {
     font-size: 0.98rem;
     font-weight: 800;
     letter-spacing: 0.12em;
+    transition: transform 180ms ease, text-shadow 180ms ease;
 }
 
 .brand-prefix {
@@ -247,6 +248,44 @@ header.at-top {
     display: none;
 }
 
+:global(html[data-theme="dark"]) header:not(.at-top) {
+    border-bottom: 3px solid var(--accent);
+    background: color-mix(in srgb, #09090c 92%, transparent);
+    box-shadow: 0 5px 0 rgba(0, 0, 0, 0.58);
+}
+
+:global(html[data-theme="dark"]) .brand-text {
+    text-shadow: 3px 3px 0 #000000;
+    transform: skewX(-5deg);
+}
+
+:global(html[data-theme="dark"]) .github-link {
+    border-width: 2px;
+    border-radius: 2px;
+    box-shadow: 4px 4px 0 #000000;
+    transform: skewX(-5deg);
+
+    &:hover {
+        color: #ffffff;
+        background: var(--accent);
+        box-shadow: 2px 2px 0 #000000;
+        transform: translate(2px, 2px) skewX(-5deg);
+    }
+}
+
+:global(html[data-theme="dark"]) .icon-button {
+    border-width: 2px;
+    border-radius: 2px;
+    box-shadow: 3px 3px 0 #000000;
+    transform: rotate(-2deg);
+
+    &:hover {
+        color: #ffffff;
+        background: var(--accent);
+        transform: translate(2px, 2px) rotate(-2deg);
+    }
+}
+
 .slide-fade-enter-active,
 .slide-fade-leave-active {
     transition: opacity 160ms ease, transform 160ms ease;
@@ -292,6 +331,12 @@ header.at-top {
         border-radius: 18px;
         background: var(--surface);
         box-shadow: var(--shadow);
+    }
+
+    :global(html[data-theme="dark"]) .mobile-menu {
+        border-width: 2px;
+        border-radius: 3px;
+        box-shadow: 8px 8px 0 #000000, 11px 11px 0 var(--accent);
     }
 
     .menu-link {

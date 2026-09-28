@@ -15,12 +15,52 @@
 
 <style lang="less" scoped>
 .intro-card {
+    position: relative;
+    overflow: hidden;
     padding: clamp(28px, 4vw, 48px);
-    border: 1px solid var(--border);
-    border-radius: 24px;
+    border: var(--panel-border-width) solid var(--border);
+    border-radius: var(--panel-radius);
     color: var(--text);
     background: var(--surface);
     box-shadow: var(--shadow);
+    backdrop-filter: blur(14px);
+    transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+
+    &::before {
+        position: absolute;
+        top: 0;
+        right: 12%;
+        left: 12%;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, var(--mint), var(--accent), transparent);
+        content: "";
+    }
+
+    &:hover {
+        border-color: color-mix(in srgb, var(--accent) 42%, var(--border));
+        transform: translateY(-4px);
+    }
+}
+
+:global(html[data-theme="dark"]) .intro-card {
+    border-color: rgba(255, 255, 255, 0.7);
+    box-shadow: 10px 10px 0 var(--accent), 18px 18px 0 #000000;
+
+    &::before {
+        top: 18px;
+        right: -38px;
+        left: auto;
+        width: 150px;
+        height: 16px;
+        background: var(--accent);
+        transform: rotate(37deg);
+    }
+
+    &:hover {
+        border-color: #ffffff;
+        box-shadow: 6px 6px 0 var(--accent), 12px 12px 0 #000000;
+        transform: translate(4px, 4px);
+    }
 }
 
 .eyebrow {
