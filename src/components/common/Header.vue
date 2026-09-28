@@ -26,8 +26,8 @@ onUnmounted(() => {
 <template>
     <header :class="{ 'at-top': isAtTop }">
         <nav class="navbar" aria-label="主导航">
-            <router-link to="/" class="brand" aria-label="连线世界 首页" @click="closeMenu">
-                <span class="brand-text">连线<span>世界</span></span>
+            <router-link to="/" class="brand" aria-label="The Wired World home" @click="closeMenu">
+                <span class="brand-text"><span class="brand-prefix">THE</span> <span class="brand-accent">WIRED WORLD</span></span>
             </router-link>
 
             <div class="nav-links">
@@ -121,18 +121,23 @@ header.at-top {
 }
 
 .brand-text {
-    font-size: 1.12rem;
+    font-size: 0.98rem;
     font-weight: 800;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.12em;
+}
 
-    span {
-        margin-left: 2px;
-        color: var(--accent-strong);
-        background: linear-gradient(110deg, var(--accent-strong), var(--mint));
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
+.brand-prefix {
+    color: var(--text-muted);
+    font-size: 0.78em;
+    letter-spacing: 0.18em;
+}
+
+.brand-accent {
+    color: var(--accent-strong);
+    background: linear-gradient(110deg, var(--accent-strong), var(--mint));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .nav-links,
