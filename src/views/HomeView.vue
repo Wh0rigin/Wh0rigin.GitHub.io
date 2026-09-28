@@ -354,7 +354,7 @@ h1 {
     padding: 42px 0 112px;
     display: grid;
     grid-template-columns: 1fr 0.92fr;
-    align-items: center;
+    align-items: stretch;
     gap: clamp(28px, 5vw, 76px);
     scroll-margin-top: 88px;
 }
