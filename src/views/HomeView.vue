@@ -173,6 +173,16 @@ const mouseup = () => {
             </div>
 
             <div class="hero-visual">
+                <svg class="silhouette-filters" aria-hidden="true" width="0" height="0">
+                    <defs>
+                        <filter id="hero-blue-silhouette" color-interpolation-filters="sRGB">
+                            <feColorMatrix type="matrix" values="0 0 0 0 0.09  0 0 0 0 0.56  0 0 0 0 0.85  0 0 0 1 0" />
+                        </filter>
+                        <filter id="hero-red-silhouette" color-interpolation-filters="sRGB">
+                            <feColorMatrix type="matrix" values="0 0 0 0 0.90  0 0 0 0 0.13  0 0 0 0 0.18  0 0 0 1 0" />
+                        </filter>
+                    </defs>
+                </svg>
                 <img class="logo" draggable="false" @mousedown="mousedown" @mouseup="mouseup" :src="img_url"/>
             </div>
         </section>
@@ -469,6 +479,22 @@ h1 {
     display: block;
     width: min(100%, 570px);
     height: auto;
+}
+
+.silhouette-filters {
+    position: absolute;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+@media (hover: hover) {
+    .logo:hover {
+        filter: url(#hero-blue-silhouette);
+    }
+
+    :global(html[data-theme="dark"] .logo:hover) {
+        filter: url(#hero-red-silhouette);
+    }
 }
 
 .about-section {
