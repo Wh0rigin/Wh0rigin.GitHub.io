@@ -183,7 +183,8 @@ const mouseup = () => {
                         </filter>
                     </defs>
                 </svg>
-                <img class="logo" draggable="false" @mousedown="mousedown" @mouseup="mouseup" :src="img_url"/>
+                <img class="logo logo-original" alt="连线世界主题插画" draggable="false" @mousedown="mousedown" @mouseup="mouseup" :src="img_url" />
+                <img class="logo logo-silhouette" alt="" aria-hidden="true" draggable="false" :src="img_url" />
             </div>
         </section>
 
@@ -477,8 +478,24 @@ h1 {
 
 .logo {
     display: block;
+    grid-area: 1 / 1;
     width: min(100%, 570px);
     height: auto;
+}
+
+.logo-original,
+.logo-silhouette {
+    transition: opacity 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.logo-silhouette {
+    opacity: 0;
+    pointer-events: none;
+    filter: url(#hero-blue-silhouette);
+}
+
+:global(html[data-theme="dark"] .logo-silhouette) {
+    filter: url(#hero-red-silhouette);
 }
 
 .silhouette-filters {
@@ -488,12 +505,12 @@ h1 {
 }
 
 @media (hover: hover) {
-    .logo:hover {
-        filter: url(#hero-blue-silhouette);
+    .logo-original:hover {
+        opacity: 0;
     }
 
-    :global(html[data-theme="dark"] .logo:hover) {
-        filter: url(#hero-red-silhouette);
+    .logo-original:hover + .logo-silhouette {
+        opacity: 1;
     }
 }
 
