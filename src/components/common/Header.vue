@@ -1,21 +1,21 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue';
-const props = defineProps({
-    'color':String
-})
+import { useModeStore } from '../../stores/mode';
 
-let isOpen = ref(false);
-let isAtTop = ref(true);
-const toggleDropDownMenu = function () {
-    isOpen.value = !isOpen.value;
-}
+const modeStore = useModeStore();
+const isOpen = ref(false);
+const isAtTop = ref(true);
 
 const checkScrollPosition = () => {
     isAtTop.value = window.scrollY === 0;
 };
 
+const closeMenu = () => {
+    isOpen.value = false;
+};
+
 onMounted(() => {
-    window.addEventListener('scroll', checkScrollPosition);
+    window.addEventListener('scroll', checkScrollPosition, { passive: true });
 });
 
 onUnmounted(() => {
@@ -24,206 +24,272 @@ onUnmounted(() => {
 </script>
 
 <template>
-    
     <header :class="{ 'at-top': isAtTop }">
-        <nav class="navbar">
-            <div class="logo">Wh0rigin</div>
-            <div class="nav-links">
-                <router-link to="/" class="router-link">Home</router-link>
-                <router-link to="/about" class="router-link">About</router-link>
-                <router-link to="/contact" class="router-link">Contact</router-link>
-                
-            </div>
-            <a class="action-btn" href="https://github.com/Wh0rigin">Go GitHub</a>
-            <a class="toggle-btn" @click="toggleDropDownMenu"><svg t="1703953580517" class="icon" viewBox="0 0 1024 1024"
-                    version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4498" width="40" height="40">
-                    <path d="M64 192h896v192H64z m0 256h896v192H64z m0 256h896v192H64z" p-id="4499"></path>
-                </svg></a>
+        <nav class="navbar" aria-label="主导航">
+            <router-link to="/" class="brand" aria-label="Wh0rigin 首页" @click="closeMenu">
+                <span class="brand-mark" aria-hidden="true">W</span>
+                <span>Wh0rigin</span>
+            </router-link>
 
-        </nav>
-        <transition name="slide-fade">
-            <div class="dropdown_menu" v-if="isOpen">
-                <router-link to="/" class="router-link">Home</router-link>
-                <router-link to="/about" class="router-link">About</router-link>
-                <router-link to="/contact" class="router-link">Contact</router-link>
-                <div class="router-link"><a class="action-btn" href="https://github.com/Wh0rigin">Go GitHub</a></div>
+            <div class="nav-links">
+                <router-link to="/" class="nav-link">首页</router-link>
+                <a class="nav-link" href="#page2">关于</a>
             </div>
-        </transition>
+
+            <div class="nav-actions">
+                <a class="github-link" href="https://github.com/Wh0rigin" target="_blank" rel="noreferrer">
+                    GitHub
+                    <svg aria-hidden="true" viewBox="0 0 20 20">
+                        <path d="M5 15 15 5M6 5h9v9" />
+                    </svg>
+                </a>
+
+                <button
+                    class="icon-button theme-button"
+                    type="button"
+                    :aria-label="modeStore.theme === 'dark' ? '切换到日间模式' : '切换到夜间模式'"
+                    :title="modeStore.theme === 'dark' ? '切换到日间模式' : '切换到夜间模式'"
+                    @click="modeStore.toggleTheme"
+                >
+                    <svg v-if="modeStore.theme === 'dark'" aria-hidden="true" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="4" />
+                        <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" />
+                    </svg>
+                    <svg v-else aria-hidden="true" viewBox="0 0 24 24">
+                        <path d="M20.2 15.4A8.5 8.5 0 0 1 8.6 3.8 8.6 8.6 0 1 0 20.2 15.4Z" />
+                    </svg>
+                </button>
+
+                <button
+                    class="icon-button menu-button"
+                    type="button"
+                    :aria-expanded="isOpen"
+                    aria-controls="mobile-menu"
+                    :aria-label="isOpen ? '关闭导航菜单' : '打开导航菜单'"
+                    @click="isOpen = !isOpen"
+                >
+                    <svg aria-hidden="true" viewBox="0 0 24 24">
+                        <path d="M4 7h16M4 12h16M4 17h16" />
+                    </svg>
+                </button>
+            </div>
+        </nav>
+
+        <Transition name="slide-fade">
+            <div v-if="isOpen" id="mobile-menu" class="mobile-menu">
+                <router-link to="/" class="menu-link" @click="closeMenu">首页</router-link>
+                <a class="menu-link" href="#page2" @click="closeMenu">关于</a>
+                <a class="menu-link" href="https://github.com/Wh0rigin" target="_blank" rel="noreferrer">GitHub ↗</a>
+            </div>
+        </Transition>
     </header>
 </template>
 
 <style lang="less" scoped>
 header {
     position: fixed;
-    width: 100%;
-    background-color: white;
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    // border-bottom: solid 1px gainsboro;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    inset: 0 0 auto;
     z-index: 1000;
+    color: var(--text);
+    background: color-mix(in srgb, var(--surface) 88%, transparent);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(16px);
+    transition: background-color 220ms ease, border-color 220ms ease;
 }
 
-
-.at-top {
-    /* 根据需要设置在顶部时导航栏的样式 */
-    background-color: rgba(255, 255, 255, 0.1);
-    transition: background-color 0.3s ease-in-out;
+header.at-top {
+    background: transparent;
+    border-color: transparent;
+    backdrop-filter: none;
 }
 
 .navbar {
-    width: 80%;
-
+    width: min(1120px, calc(100% - 48px));
+    min-height: 72px;
+    margin: 0 auto;
     display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-    padding: 10px;
-
     align-items: center;
-    color: #000;
-
-    @media (max-width: 992px) {
-        width: 95%;
-    }
-
-
-    .logo {
-        font-size: 1.5em;
-    }
-
-    .nav-links {
-        display: flex;
-        gap: 2rem;
-
-        @media (max-width: 992px) {
-            display: none;
-        }
-
-        .router-link {
-
-            text-decoration: none;
-            color: #000;
-            font-weight: bold;
-            transition: 0.3s ease-in-out;
-
-            &:hover {
-                color: v-bind("props.color");
-                filter: drop-shadow(0 0 5px v-bind("props.color"));
-            }
-        }
-
-
-    }
-
-    .toggle-btn {
-        // margin-right: 50px;
-        display: none;
-        color: #fff;
-        font-size: 1.5rem;
-        cursor: pointer;
-
-        @media (max-width: 992px) {
-            display: block;
-        }
-
-        svg {
-            align-items: center;
-        }
-
-    }
-
-
+    justify-content: space-between;
+    gap: 28px;
 }
 
-.action-btn {
-    background-color: v-bind("props.color");
-    color: #fff;
-    padding: 0.5rem 1rem;
-    border: none;
-    outline: none;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.2s ease-in-out;
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text);
+    font-size: 1.05rem;
+    font-weight: 750;
+    letter-spacing: -0.03em;
     text-decoration: none;
-    // margin-right: 50px;
-    
+    white-space: nowrap;
+}
 
-    @media (max-width: 992px) {
-        display: none;
+.brand-mark {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    place-items: center;
+    border-radius: 11px;
+    color: var(--surface);
+    background: var(--accent);
+    font-size: 0.95rem;
+    font-weight: 800;
+}
+
+.nav-links,
+.nav-actions {
+    display: flex;
+    align-items: center;
+}
+
+.nav-links {
+    gap: 30px;
+    margin-left: auto;
+    margin-right: 14px;
+}
+
+.nav-link,
+.menu-link {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 160ms ease;
+
+    &:hover,
+    &:focus-visible {
+        color: var(--accent-strong);
     }
+}
+
+.nav-actions {
+    gap: 12px;
+}
+
+.github-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 15px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--text);
+    font-size: 0.88rem;
+    font-weight: 650;
+    text-decoration: none;
+    transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease;
 
     &:hover {
-        scale: 1.05;
-        color: #fff;
-        filter: drop-shadow(0 0 5px v-bind("props.color"));
+        color: var(--accent-strong);
+        border-color: var(--accent);
+        background: var(--accent-soft);
     }
 
-    &:active {
-        scale: 0.95;
-        filter: drop-shadow(0 0 5px v-bind("props.color"));
+    svg {
+        width: 14px;
+        height: 14px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
     }
 }
 
+.icon-button {
+    display: grid;
+    width: 40px;
+    height: 40px;
+    place-items: center;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    color: var(--text);
+    background: var(--surface);
+    cursor: pointer;
+    transition: color 160ms ease, border-color 160ms ease, transform 160ms ease;
 
-.dropdown_menu {
+    &:hover {
+        color: var(--accent-strong);
+        border-color: var(--accent);
+        transform: translateY(-1px);
+    }
 
+    &:focus-visible {
+        outline: 3px solid var(--accent);
+        outline-offset: 3px;
+    }
+
+    svg {
+        width: 19px;
+        height: 19px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.7;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+}
+
+.menu-button,
+.mobile-menu {
     display: none;
-    position: absolute;
-    right: 2rem;
-    top: 80px;
-    width: 300px;
-    background: rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(15px);
-    border-radius: 10px;
-    overflow: hidden;
-    // height: 0;
-
-
-
-    @media (max-width: 992px) {
-        display: block;
-    }
-
-    .router-link {
-        padding: 0.7rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-decoration: none;
-        color: #fff;
-        font-weight: bold;
-        transition: color 0.3s ease-in-out;
-
-        &:hover {
-            color: v-bind("props.color");
-        }
-    }
-
-    .action-btn {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-    }
 }
 
-
-/*
-进入和离开动画可以使用不同
-持续时间和速度曲线。
-*/
-.slide-fade-enter-active {
-    transition: all 0.3s ease-out;
-}
-
+.slide-fade-enter-active,
 .slide-fade-leave-active {
-    transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+    transition: opacity 160ms ease, transform 160ms ease;
 }
 
 .slide-fade-enter-from,
 .slide-fade-leave-to {
-    transform: translateX(20px);
     opacity: 0;
-}</style>
+    transform: translateY(-6px);
+}
+
+@media (max-width: 720px) {
+    .navbar {
+        width: calc(100% - 32px);
+        min-height: 64px;
+        gap: 12px;
+    }
+
+    .nav-links,
+    .nav-actions > .github-link {
+        display: none;
+    }
+
+    .nav-actions {
+        margin-left: auto;
+        gap: 8px;
+    }
+
+    .menu-button {
+        display: grid;
+    }
+
+    .mobile-menu {
+        position: absolute;
+        top: calc(100% + 8px);
+        right: 16px;
+        display: flex;
+        width: min(280px, calc(100vw - 32px));
+        flex-direction: column;
+        gap: 2px;
+        padding: 8px;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        background: var(--surface);
+        box-shadow: var(--shadow);
+    }
+
+    .menu-link {
+        padding: 12px 14px;
+        border-radius: 11px;
+
+        &:hover {
+            background: var(--surface-muted);
+        }
+    }
+}
+</style>

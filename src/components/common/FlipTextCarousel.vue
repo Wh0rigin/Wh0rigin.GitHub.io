@@ -69,7 +69,7 @@ onUnmounted(() => {
 
 .text {
     transform: translateY(100%);
-    color: gray;
+    color: var(--text-muted);
     font-size: 15px;
 }
 

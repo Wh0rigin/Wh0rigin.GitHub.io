@@ -52,7 +52,7 @@ onMounted(() => {
 
 <template>
   <Loading></Loading>
-  <Header color="#bd34fe" />
+  <Header />
   <Transition name="nested">
     <router-view></router-view>
   </Transition>
@@ -64,10 +64,81 @@ onMounted(() => {
 </template>
 
 <style>
+:root {
+  color-scheme: light;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --page-bg: #f6f7fb;
+  --surface: #ffffff;
+  --surface-muted: #eef0f7;
+  --text: #202235;
+  --text-muted: #697087;
+  --border: rgba(35, 39, 65, 0.1);
+  --accent: #6655dc;
+  --accent-strong: #5643cb;
+  --accent-soft: #edeaff;
+  --mint: #39aa9d;
+  --shadow: 0 24px 70px rgba(35, 39, 65, 0.1);
+  --footer-surface: #e9ebf3;
+  --footer-tile: #d9dce8;
+  --footer-tile-center: #c8ccda;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+
+  --page-bg: #10121b;
+  --surface: #191c28;
+  --surface-muted: #222635;
+  --text: #f1f2fa;
+  --text-muted: #a5abc0;
+  --border: rgba(223, 226, 255, 0.12);
+  --accent: #a99aff;
+  --accent-strong: #c2b8ff;
+  --accent-soft: #2c2845;
+  --mint: #70d8c9;
+  --shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+  --footer-surface: #171a25;
+  --footer-tile: #202432;
+  --footer-tile-center: #303548;
+}
+
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
   scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  background: var(--page-bg);
+  color: var(--text);
+  transition: background-color 220ms ease, color 220ms ease;
+}
+
+button,
+a {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  color: var(--text);
+  background: var(--accent-soft);
+}
+
+#app {
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow-x: hidden;
 }
 
 .nested-enter-active,

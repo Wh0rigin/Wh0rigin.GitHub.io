@@ -65,7 +65,7 @@ onMounted(() => {
     align-items: center;
 
     height: 100vh;
-    background-color: #f7f7f7;
+    background-color: var(--page-bg);
     z-index: 1000000000000;
     transition: 1s ease;
 
@@ -74,7 +74,7 @@ onMounted(() => {
     p {
         font-family: sans-serif;
         font-size: 2rem;
-        color: #171717;
+        color: var(--text);
         align-items: center;
         font-weight: 900;
         transition: 0.3s ease;

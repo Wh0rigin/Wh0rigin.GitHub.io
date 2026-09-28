@@ -1,10 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
     <head>
-        
         <meta charset="UTF-8" />
         <link rel="shortcut icon" href="./favicon/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="theme-color" content="#f6f7fb" />
+        <script>
+            try {
+                const savedTheme = localStorage.getItem('wh0rigin-theme');
+                const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                document.documentElement.dataset.theme = savedTheme === 'dark' || savedTheme === 'light'
+                    ? savedTheme
+                    : systemTheme;
+            } catch {
+                document.documentElement.dataset.theme = 'light';
+            }
+        </script>
         <title>Wh0rigin's World | 连线世界</title>
     </head>
     <body>

@@ -1,95 +1,94 @@
-<script setup lang="ts">
-</script>
-
 <template>
-    <div class="code-container">
-        <div class="code-header">
-            <div class="red-btn"></div>
-            <div class="yellow-btn"></div>
-            <div class="green-btn"></div>
+    <section class="terminal" aria-label="代码终端示例">
+        <div class="terminal-header">
+            <div class="window-controls" aria-hidden="true">
+                <span class="red-btn"></span>
+                <span class="yellow-btn"></span>
+                <span class="green-btn"></span>
+            </div>
+            <span class="window-title">python — interactive session</span>
         </div>
-        <div class="code-content">
-            <div style="color: aliceblue;">Type "help", "copyright", "credits" or "license" for more information.</div>
-            <div style="color: aliceblue;"><span>>>></span> print('hello world') <span class="cursor">_</span></div>
+        <div class="terminal-content">
+            <p>Type "help", "copyright", "credits" or "license" for more information.</p>
+            <p><span class="prompt">&gt;&gt;&gt;</span> print('hello world') <span class="cursor">_</span></p>
         </div>
-    </div>
+    </section>
 </template>
 
-
 <style lang="less" scoped>
-.code-container {
-    display: flex;
-    justify-content: start;
-    flex-direction: column;
-    background-color: rgb(38, 50, 56);
+.terminal {
     width: 100%;
-    height: 50%;
-    border-radius: 10px;
+    min-height: 260px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 22px;
+    color: #edf0f7;
+    background: #171b27;
+    box-shadow: var(--shadow);
+}
+
+.terminal-header {
+    display: flex;
+    min-height: 54px;
     align-items: center;
-    box-shadow: 17px 17px 34px #666666,
-        -17px -17px 34px #ffffff;
+    gap: 16px;
+    padding: 0 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
 
-    .code-header {
-        display: flex;
-        flex-direction: row;
-        justify-content: start;
-        height: 25px;
-        width: 97%;
+.window-controls {
+    display: flex;
+    gap: 7px;
 
-        // gap: 50px;
-        .green-btn {
-            background-color: rgb(39, 201, 63);
-            border-radius: 50%;
-            height: 15px;
-            width: 15px;
-            margin: 5px;
-        }
+    span {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+    }
+}
 
-        .red-btn {
-            background-color: rgb(255, 95, 86);
-            border-radius: 50%;
-            height: 15px;
-            width: 15px;
-            margin: 5px;
-        }
+.red-btn { background: #ff6258; }
+.yellow-btn { background: #ffbd45; }
+.green-btn { background: #31c96a; }
 
-        .yellow-btn {
-            background-color: rgb(255, 189, 46);
-            border-radius: 50%;
-            height: 15px;
-            width: 15px;
-            margin: 5px;
-        }
+.window-title {
+    color: #969eb2;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    font-size: 0.76rem;
+}
+
+.terminal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 26px 24px;
+    color: #d8deec;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    font-size: clamp(0.74rem, 1vw, 0.88rem);
+    line-height: 1.7;
+}
+
+.prompt {
+    color: #78d6a4;
+}
+
+.cursor {
+    color: #b5a8ff;
+    animation: blink 1.2s steps(2, start) infinite;
+}
+
+@keyframes blink {
+    to { visibility: hidden; }
+}
+
+@media (max-width: 520px) {
+    .terminal {
+        min-height: 220px;
+        border-radius: 18px;
     }
 
-    .code-content {
-        margin-top: 5px;
-        display: flex;
-        flex-direction: column;
-        align-items: start;
-        width: 95%;
-        gap: 5px;
-
-        font-family: 'Courier New', Courier, monospace;
-
-        .cursor {
-            // width: 2em;
-            color: aliceblue;
-            border-bottom: 2px solid aliceblue;
-            animation: slink 1.5s infinite;
-        }
-
-        @keyframes slink {
-
-            0%,
-            100% {
-                opacity: 0;
-            }
-
-            50% {
-                opacity: 1;
-            }
-        }
+    .terminal-content {
+        padding: 22px 18px;
     }
 }
 </style>

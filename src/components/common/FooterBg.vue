@@ -37,16 +37,16 @@
         position:relative;
         width:24px;
         height: 24px;
-        background-color: rgb(68, 68, 68);
-        border: 1px solid rgba(0, 0, 0,.2);
+        background-color: var(--footer-tile);
+        border: 1px solid var(--border);
         box-sizing: border-box;
         overflow: hidden;
         &::before{
             content: "";
             position: absolute;
             inset: 6px;
-            background: #666;
-            box-shadow: 0 1px 4px #000;
+            background: var(--footer-tile-center);
+            box-shadow: 0 1px 4px color-mix(in srgb, var(--text) 24%, transparent);
             transition: 2s ease-in-out;
         }
 

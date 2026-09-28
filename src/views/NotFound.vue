@@ -18,24 +18,25 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 100%;
+    min-height: 80vh;
+    padding: 88px 24px 32px;
     text-align: center;
 
     .not-found-title {
         font-size: 8em;
         margin: 0;
-        color: #f00;
+        color: var(--accent-strong);
     }
 
     .not-found-message {
         font-size: 1.5em;
-        color: #333;
+        color: var(--text-muted);
         margin: 10px 0;
     }
 
     .home-link {
         margin-top: 20px;
-        color: #3498db;
+        color: var(--accent-strong);
         text-decoration: none;
         font-size: 1.2em;
     }
@@ -49,4 +50,3 @@
     }
 }
 </style>
-  
