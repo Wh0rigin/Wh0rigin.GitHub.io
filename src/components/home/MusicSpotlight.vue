@@ -88,22 +88,22 @@
     z-index: 1;
 }
 
-:global(html[data-theme="dark"]) .music-card {
+:global(html[data-theme="dark"] .music-card) {
     border-color: rgba(255, 255, 255, 0.68);
     background: linear-gradient(120deg, #17171b 0 72%, color-mix(in srgb, var(--accent) 26%, #17171b) 72%);
     box-shadow: 12px 12px 0 #000000, 17px 17px 0 color-mix(in srgb, var(--accent) 48%, transparent);
+}
 
-    &::before {
-        top: -32%;
-        right: -10%;
-        width: 46%;
-        border: 0;
-        border-radius: 0;
-        background: var(--accent);
-        clip-path: polygon(18% 0, 100% 7%, 76% 100%, 0 76%);
-        opacity: 0.18;
-        animation: music-jagged 8s steps(6, end) infinite alternate;
-    }
+:global(html[data-theme="dark"] .music-card::before) {
+    top: -32%;
+    right: -10%;
+    width: 46%;
+    border: 0;
+    border-radius: 0;
+    background: var(--accent);
+    clip-path: polygon(18% 0, 100% 7%, 76% 100%, 0 76%);
+    opacity: 0.18;
+    animation: music-jagged 8s steps(6, end) infinite alternate;
 }
 
 .record-scene {

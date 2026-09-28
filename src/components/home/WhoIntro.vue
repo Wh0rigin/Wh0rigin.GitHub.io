@@ -42,25 +42,25 @@
     }
 }
 
-:global(html[data-theme="dark"]) .intro-card {
+:global(html[data-theme="dark"] .intro-card) {
     border-color: rgba(255, 255, 255, 0.7);
     box-shadow: 10px 10px 0 var(--accent), 18px 18px 0 #000000;
+}
 
-    &::before {
-        top: 18px;
-        right: -38px;
-        left: auto;
-        width: 150px;
-        height: 16px;
-        background: var(--accent);
-        transform: rotate(37deg);
-    }
+:global(html[data-theme="dark"] .intro-card::before) {
+    top: 18px;
+    right: -38px;
+    left: auto;
+    width: 150px;
+    height: 16px;
+    background: var(--accent);
+    transform: rotate(37deg);
+}
 
-    &:hover {
-        border-color: #ffffff;
-        box-shadow: 6px 6px 0 var(--accent), 12px 12px 0 #000000;
-        transform: translate(4px, 4px);
-    }
+:global(html[data-theme="dark"] .intro-card:hover) {
+    border-color: #ffffff;
+    box-shadow: 6px 6px 0 var(--accent), 12px 12px 0 #000000;
+    transform: translate(4px, 4px);
 }
 
 .eyebrow {

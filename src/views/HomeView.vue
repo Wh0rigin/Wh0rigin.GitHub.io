@@ -248,7 +248,7 @@ const mouseup = () => {
     animation-delay: -5s;
 }
 
-:global(html[data-theme="dark"]) .motif-ring {
+:global(html[data-theme="dark"] .motif-ring) {
     border: 0;
     border-radius: 0;
     background: var(--accent);
@@ -258,7 +258,7 @@ const mouseup = () => {
     animation: dark-panel-drift 8s steps(8, end) infinite alternate;
 }
 
-:global(html[data-theme="dark"]) .motif-ring-one {
+:global(html[data-theme="dark"] .motif-ring-one) {
     top: 4%;
     right: -18%;
     width: min(55vw, 760px);
@@ -266,7 +266,7 @@ const mouseup = () => {
     transform: rotate(-12deg);
 }
 
-:global(html[data-theme="dark"]) .motif-ring-two {
+:global(html[data-theme="dark"] .motif-ring-two) {
     bottom: 1%;
     left: -17%;
     width: min(42vw, 620px);
@@ -274,7 +274,7 @@ const mouseup = () => {
     transform: rotate(16deg);
 }
 
-:global(html[data-theme="dark"]) .motif-sweep {
+:global(html[data-theme="dark"] .motif-sweep) {
     height: clamp(9px, 1.3vw, 18px);
     background: linear-gradient(90deg, transparent, var(--accent) 22% 76%, transparent);
     opacity: 0.2;
@@ -285,7 +285,8 @@ const mouseup = () => {
 .hero {
     position: relative;
     z-index: 1;
-    width: min(1120px, calc(100% - 48px));
+    width: calc(100% - 48px);
+    max-width: 1120px;
     min-height: 100vh;
     min-height: 100svh;
     margin: 0 auto;
@@ -473,7 +474,8 @@ h1 {
 .about-section {
     position: relative;
     z-index: 1;
-    width: min(1120px, calc(100% - 48px));
+    width: calc(100% - 48px);
+    max-width: 1120px;
     margin: 0 auto;
     padding: 42px 0 112px;
     display: grid;
@@ -483,15 +485,15 @@ h1 {
     scroll-margin-top: 88px;
 }
 
-:global(html[data-theme="dark"]) .hero-copy {
+:global(html[data-theme="dark"] .hero-copy) {
     animation-name: hero-snap;
 }
 
-:global(html[data-theme="dark"]) h1 {
+:global(html[data-theme="dark"] .hero h1) {
     text-shadow: 4px 4px 0 #000000;
 }
 
-:global(html[data-theme="dark"]) .headline-accent {
+:global(html[data-theme="dark"] .headline-accent) {
     padding: 0.02em 0.17em 0.08em;
     color: #ffffff;
     background: var(--accent);
@@ -499,58 +501,58 @@ h1 {
     text-shadow: 4px 4px 0 #08080a;
     transform: rotate(-1.2deg) skewX(-4deg);
     -webkit-text-fill-color: #ffffff;
-
-    &::after {
-        right: -4%;
-        bottom: -0.1em;
-        left: 18%;
-        height: 0.06em;
-        border-radius: 0;
-        background: #ffffff;
-        transform: rotate(-1deg);
-        animation: none;
-    }
 }
 
-:global(html[data-theme="dark"]) .eyebrow-dot {
+:global(html[data-theme="dark"] .headline-accent::after) {
+    right: -4%;
+    bottom: -0.1em;
+    left: 18%;
+    height: 0.06em;
+    border-radius: 0;
+    background: #ffffff;
+    transform: rotate(-1deg);
+    animation: none;
+}
+
+:global(html[data-theme="dark"] .eyebrow-dot) {
     border-radius: 1px;
     background: var(--accent);
     box-shadow: 4px 4px 0 rgba(255, 255, 255, 0.14);
     transform: rotate(45deg);
 }
 
-:global(html[data-theme="dark"]) .button {
+:global(html[data-theme="dark"] .hero .button) {
     border-radius: 2px;
     clip-path: polygon(7% 0, 100% 0, 93% 100%, 0 88%);
 }
 
-:global(html[data-theme="dark"]) .button-primary {
+:global(html[data-theme="dark"] .button-primary) {
     color: #ffffff;
     box-shadow: 7px 7px 0 #000000;
 }
 
-:global(html[data-theme="dark"]) .button-primary:hover {
+:global(html[data-theme="dark"] .button-primary:hover) {
     transform: translate(-2px, -2px);
     box-shadow: 10px 10px 0 #000000;
 }
 
-:global(html[data-theme="dark"]) .hero-caption span {
+:global(html[data-theme="dark"] .hero-caption span) {
     height: 4px;
     background: var(--accent);
     transform: skewX(-28deg);
 }
 
-:global(html[data-theme="dark"]) .hero-visual {
+:global(html[data-theme="dark"] .hero-visual) {
     animation: dark-jolt 6s steps(1, end) infinite;
+}
 
-    &::before {
-        border: 0;
-        border-radius: 0;
-        background: var(--accent);
-        clip-path: polygon(7% 18%, 72% 0, 100% 34%, 79% 91%, 20% 100%, 0 69%);
-        opacity: 0.16;
-        animation: dark-shape-turn 16s linear infinite;
-    }
+:global(html[data-theme="dark"] .hero-visual::before) {
+    border: 0;
+    border-radius: 0;
+    background: var(--accent);
+    clip-path: polygon(7% 18%, 72% 0, 100% 34%, 79% 91%, 20% 100%, 0 69%);
+    opacity: 0.16;
+    animation: dark-shape-turn 16s linear infinite;
 }
 
 @keyframes hero-rise {

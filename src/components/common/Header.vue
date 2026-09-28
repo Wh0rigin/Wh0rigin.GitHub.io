@@ -111,7 +111,8 @@ header.at-top {
 }
 
 .navbar {
-    width: min(1120px, calc(100% - 48px));
+    width: calc(100% - 48px);
+    max-width: 1120px;
     min-height: 72px;
     margin: 0 auto;
     display: flex;
@@ -248,42 +249,42 @@ header.at-top {
     display: none;
 }
 
-:global(html[data-theme="dark"]) header:not(.at-top) {
+:global(html[data-theme="dark"] header:not(.at-top)) {
     border-bottom: 3px solid var(--accent);
     background: color-mix(in srgb, #09090c 92%, transparent);
     box-shadow: 0 5px 0 rgba(0, 0, 0, 0.58);
 }
 
-:global(html[data-theme="dark"]) .brand-text {
+:global(html[data-theme="dark"] .brand-text) {
     text-shadow: 3px 3px 0 #000000;
     transform: skewX(-5deg);
 }
 
-:global(html[data-theme="dark"]) .github-link {
+:global(html[data-theme="dark"] .github-link) {
     border-width: 2px;
     border-radius: 2px;
     box-shadow: 4px 4px 0 #000000;
     transform: skewX(-5deg);
-
-    &:hover {
-        color: #ffffff;
-        background: var(--accent);
-        box-shadow: 2px 2px 0 #000000;
-        transform: translate(2px, 2px) skewX(-5deg);
-    }
 }
 
-:global(html[data-theme="dark"]) .icon-button {
+:global(html[data-theme="dark"] .github-link:hover) {
+    color: #ffffff;
+    background: var(--accent);
+    box-shadow: 2px 2px 0 #000000;
+    transform: translate(2px, 2px) skewX(-5deg);
+}
+
+:global(html[data-theme="dark"] .icon-button) {
     border-width: 2px;
     border-radius: 2px;
     box-shadow: 3px 3px 0 #000000;
     transform: rotate(-2deg);
+}
 
-    &:hover {
-        color: #ffffff;
-        background: var(--accent);
-        transform: translate(2px, 2px) rotate(-2deg);
-    }
+:global(html[data-theme="dark"] .icon-button:hover) {
+    color: #ffffff;
+    background: var(--accent);
+    transform: translate(2px, 2px) rotate(-2deg);
 }
 
 .slide-fade-enter-active,
@@ -333,7 +334,7 @@ header.at-top {
         box-shadow: var(--shadow);
     }
 
-    :global(html[data-theme="dark"]) .mobile-menu {
+    :global(html[data-theme="dark"] .mobile-menu) {
         border-width: 2px;
         border-radius: 3px;
         box-shadow: 8px 8px 0 #000000, 11px 11px 0 var(--accent);

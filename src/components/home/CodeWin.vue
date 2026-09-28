@@ -95,29 +95,29 @@
     animation: blink 1.2s steps(2, start) infinite;
 }
 
-:global(html[data-theme="dark"]) .terminal {
+:global(html[data-theme="dark"] .terminal) {
     box-shadow: 10px 10px 0 #000000, 14px 14px 0 color-mix(in srgb, var(--accent) 55%, transparent);
-
-    &::after {
-        width: 18%;
-        background: linear-gradient(90deg, transparent, rgba(255, 56, 66, 0.18), transparent);
-        transform: skewX(-28deg);
-        animation-duration: 4.8s;
-    }
-
-    &:hover {
-        box-shadow: 6px 6px 0 #000000, 10px 10px 0 color-mix(in srgb, var(--accent) 70%, transparent);
-        transform: translate(4px, 4px);
-    }
 }
 
-:global(html[data-theme="dark"]) .terminal-header {
+:global(html[data-theme="dark"] .terminal::after) {
+    width: 18%;
+    background: linear-gradient(90deg, transparent, rgba(255, 56, 66, 0.18), transparent);
+    transform: skewX(-28deg);
+    animation-duration: 4.8s;
+}
+
+:global(html[data-theme="dark"] .terminal:hover) {
+    box-shadow: 6px 6px 0 #000000, 10px 10px 0 color-mix(in srgb, var(--accent) 70%, transparent);
+    transform: translate(4px, 4px);
+}
+
+:global(html[data-theme="dark"] .terminal-header) {
     background: linear-gradient(105deg, color-mix(in srgb, var(--accent) 18%, transparent), transparent 54%);
 }
 
-:global(html[data-theme="dark"]) .red-btn,
-:global(html[data-theme="dark"]) .yellow-btn,
-:global(html[data-theme="dark"]) .green-btn {
+:global(html[data-theme="dark"] .red-btn),
+:global(html[data-theme="dark"] .yellow-btn),
+:global(html[data-theme="dark"] .green-btn) {
     border-radius: 1px;
 }
 
