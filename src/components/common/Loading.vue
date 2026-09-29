@@ -58,7 +58,7 @@ onMounted(async () => {
         await delay(950);
         if (!active) return;
         phase.value = 'dim';
-        await delay(650);
+        await delay(1300);
     }
     if (active) {
         phase.value = 'finished';
@@ -76,7 +76,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div class="loading" :class="[`phase-${phase}`, { 'light-loading': modeStore.theme === 'light' }]" aria-label="页面加载中">
+    <div class="loading" :class="[`phase-${phase}`, { 'light-loading': modeStore.theme === 'light', closing: modeStore.theme === 'light' && (phase === 'dim' || phase === 'finished') }]" aria-label="页面加载中">
         <template v-if="modeStore.theme === 'light'">
             <div class="date-stage" aria-hidden="true">
                 <div class="date-composition">
@@ -107,6 +107,7 @@ onUnmounted(() => {
                 <span>LOADING</span>
                 <span class="loading-spinner" aria-hidden="true"></span>
             </div>
+            <div class="closing-wipe" aria-hidden="true"></div>
         </template>
         <div v-else class="classic-loading">
             <p>LOADING...</p>
@@ -136,18 +137,37 @@ onUnmounted(() => {
     animation: pulse 1.5s ease-in-out infinite alternate;
 }
 .light-loading { display: block; background: #171b2b; color: #fff; }
-.light-loading::after {
+.light-loading.closing { background: transparent; }
+.light-loading.closing .date-stage { animation: clear-scene 1.3s steps(1, end) both; }
+.light-loading.closing .loading-indicator { opacity: 0; transition: opacity 160ms ease; }
+.closing-wipe {
     position: absolute;
-    z-index: 5;
-    inset: 0;
-    background: #080c19;
+    z-index: 6;
+    top: 0;
+    bottom: 0;
+    left: -35vw;
+    width: 170vw;
+    background: linear-gradient(110deg, #0346a8 0%, #086ed5 48%, #13c7df 100%);
+    clip-path: polygon(8% 0, 100% 0, 92% 100%, 0 100%);
     opacity: 0;
     pointer-events: none;
-    transition: opacity 650ms ease-in;
+    transform: translate3d(-120%, 0, 0) skewX(-9deg);
+    will-change: transform;
+}
+.closing-wipe::after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 8%;
+    width: clamp(5px, .8vw, 12px);
+    background: #a6ffff;
+    box-shadow: 0 0 28px rgba(122, 255, 255, .8);
     content: '';
 }
-.light-loading.phase-dim::after,
-.light-loading.phase-finished::after { opacity: 1; }
+.light-loading.closing .closing-wipe {
+    opacity: 1;
+    animation: blue-screen-wipe 1.3s cubic-bezier(.78, .02, .2, 1) both;
+}
 .date-stage {
     --band-angle: 14deg;
     position: absolute;
@@ -350,6 +370,16 @@ onUnmounted(() => {
     from { transform: translate(-50%, -50%) scale(.65); opacity: .85; }
     to { transform: translate(-50%, -50%) scale(1.55); opacity: 0; }
 }
+@keyframes clear-scene {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
+@keyframes blue-screen-wipe {
+    0% { transform: translate3d(-120%, 0, 0) skewX(-9deg); }
+    42% { transform: translate3d(-18%, 0, 0) skewX(-9deg); }
+    48%, 53% { transform: translate3d(0, 0, 0) skewX(-9deg); }
+    100% { transform: translate3d(120%, 0, 0) skewX(-9deg); }
+}
 @media (min-width: 701px) and (max-width: 900px) {
     .opening-date { top: 26%; }
 }
@@ -368,10 +398,13 @@ onUnmounted(() => {
     .date-ripple { width: 70px; }
 }
 @media (prefers-reduced-motion: reduce) {
-    .loading, .light-loading::after, .day-change-enter-active, .day-change-leave-active,
+    .loading, .day-change-enter-active, .day-change-leave-active,
     .timeline, .timeline-day, .timeline-dot, .timeline-label { transition-duration: .01ms; }
     .loading-spinner, .classic-loading > p,
+    .light-loading.closing .date-stage, .light-loading.closing .closing-wipe,
     .phase-arrived .date-ripple, .phase-arrived .date-ripple::before,
     .phase-arrived .date-ripple::after { animation: none; }
+    .light-loading.closing .date-stage { opacity: 0; animation: none; }
+    .light-loading.closing .closing-wipe { display: none; }
 }
 </style>
