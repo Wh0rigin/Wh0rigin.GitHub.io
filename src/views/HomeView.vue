@@ -688,6 +688,23 @@ h1 {
     to { transform: translate(14px, -10px) rotate(3deg); }
 }
 
+:global(html[data-theme="dark"] .hero::after) {
+    position: absolute;
+    z-index: -1;
+    top: 4%;
+    left: -10vw;
+    color: rgba(229, 34, 45, 0.24);
+    font-size: clamp(13rem, 32vw, 33rem);
+    font-style: italic;
+    font-weight: 950;
+    letter-spacing: -0.17em;
+    line-height: 1;
+    text-shadow: 8px 8px 0 rgba(0, 0, 0, 0.42);
+    transform: rotate(-11deg) skewX(-7deg);
+    pointer-events: none;
+    content: "05";
+}
+
 :global(html[data-theme="dark"] .hero-copy) {
     animation-name: hero-snap;
 }
@@ -829,6 +846,12 @@ h1 {
         font-size: clamp(12rem, 38vw, 23rem);
     }
 
+    :global(html[data-theme="dark"] .hero::after) {
+        top: 2%;
+        left: -9%;
+        font-size: clamp(12rem, 38vw, 23rem);
+    }
+
     .hero {
         min-height: auto;
         grid-template-columns: 1fr;
@@ -862,6 +885,13 @@ h1 {
 }
 
 @media (max-width: 520px) {
+    :global(html[data-theme="dark"] .hero::after) {
+        top: 11%;
+        left: 48%;
+        color: rgba(229, 34, 45, 0.33);
+        font-size: clamp(8rem, 40vw, 13rem);
+    }
+
     :global(html[data-theme="light"] .hero::before) {
         right: -18px;
         left: -18px;
