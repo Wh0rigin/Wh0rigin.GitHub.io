@@ -84,7 +84,7 @@ onUnmounted(() => {
                 <div class="date-composition">
                     <div class="blue-band"></div>
                     <svg class="date-line" viewBox="0 0 100 100" preserveAspectRatio="none">
-                        <line x1="0" y1="86" x2="100" y2="8" />
+                        <line x1="-10" y1="110" x2="110" y2="-10" />
                     </svg>
                     <div class="opening-date">
                         <div class="date-year">{{ displayedDate.getFullYear() }} <span>{{ monthName }}</span></div>
@@ -440,8 +440,8 @@ onUnmounted(() => {
 .blue-band {
     position: absolute;
     top: calc(41.5% + clamp(10px, 5vw, 65px));
-    left: -10%;
-    width: 120%;
+    left: -20%;
+    width: 140%;
     height: clamp(90px, 10vw, 135px);
     background: linear-gradient(90deg, #0750a7, #0876cf 54%, #0450ac);
     transform: rotate(var(--band-angle));
@@ -652,7 +652,7 @@ onUnmounted(() => {
 @media (max-width: 700px) {
     .date-stage { --band-angle: 22deg; }
     .date-composition { transform: translate(4vw, 3vh); }
-    .blue-band { top: calc(39% + 75px); left: -32%; width: 165%; height: 110px; }
+    .blue-band { top: calc(39% + 75px); left: -42%; width: 185%; height: 110px; }
     .opening-date { top: 18%; left: 34vw; }
     .date-year { top: 126px; left: -32vw; }
     .date-weekday { top: 166px; left: -32vw; }
