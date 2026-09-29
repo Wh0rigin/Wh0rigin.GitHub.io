@@ -3,6 +3,10 @@ import { ref } from "vue";
 
 export type Theme = "light" | "dark";
 
+type ViewTransitionDocument = Document & {
+    startViewTransition?: (updateCallback: () => void) => { finished: Promise<void> };
+};
+
 function getInitialTheme(): Theme {
     if (typeof window === "undefined") return "light";
 
@@ -25,14 +29,49 @@ export const useModeStore = defineStore("mode", () => {
     }
 
     function setTheme(nextTheme: Theme) {
-        theme.value = nextTheme;
-        if (typeof window === "undefined") return;
+        if (theme.value === nextTheme) return;
 
-        document.documentElement.dataset.theme = nextTheme;
+        const applyTheme = () => {
+            theme.value = nextTheme;
+            document.documentElement.dataset.theme = nextTheme;
+            try {
+                window.localStorage.setItem("wh0rigin-theme", nextTheme);
+            } catch {
+                // The current page still uses the selected theme for this session.
+            }
+        };
+
+        if (typeof window === "undefined") {
+            theme.value = nextTheme;
+            return;
+        }
+
+        const root = document.documentElement;
+        const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+        const transitionDocument = document as ViewTransitionDocument;
+        if (!transitionDocument.startViewTransition || reducedMotion) {
+            applyTheme();
+            return;
+        }
+
+        const toggleButton = document.querySelector<HTMLElement>(".theme-button");
+        const buttonBounds = toggleButton?.getBoundingClientRect();
+        if (buttonBounds) {
+            root.style.setProperty("--theme-transition-x", `${buttonBounds.left + buttonBounds.width / 2}px`);
+            root.style.setProperty("--theme-transition-y", `${buttonBounds.top + buttonBounds.height / 2}px`);
+        }
+
+        const clearTransitionOrigin = () => {
+            root.style.removeProperty("--theme-transition-x");
+            root.style.removeProperty("--theme-transition-y");
+        };
+
         try {
-            window.localStorage.setItem("wh0rigin-theme", nextTheme);
+            const transition = transitionDocument.startViewTransition(applyTheme);
+            void transition.finished.then(clearTransitionOrigin, clearTransitionOrigin);
         } catch {
-            // The current page still uses the selected theme for this session.
+            clearTransitionOrigin();
+            applyTheme();
         }
     }
 

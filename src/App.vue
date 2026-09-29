@@ -204,6 +204,33 @@ a {
   to { transform: translate3d(9%, 7%, 0) scale(1.08); }
 }
 
+::view-transition-group(root) {
+  animation-duration: 760ms;
+}
+
+::view-transition-old(root) {
+  animation: theme-old-shift 760ms cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+::view-transition-new(root) {
+  animation: theme-new-reveal 760ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes theme-old-shift {
+  to { transform: scale(1.012); }
+}
+
+@keyframes theme-new-reveal {
+  from {
+    clip-path: circle(0 at var(--theme-transition-x, 50vw) var(--theme-transition-y, 50vh));
+    filter: brightness(0.92) saturate(0.88);
+  }
+  to {
+    clip-path: circle(160vmax at var(--theme-transition-x, 50vw) var(--theme-transition-y, 50vh));
+    filter: brightness(1) saturate(1);
+  }
+}
+
 .nested-enter-active,
 .nested-leave-active {
   transition: all 0.3s ease-in-out;
@@ -216,6 +243,11 @@ a {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+
   *,
   *::before,
   *::after {
