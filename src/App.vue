@@ -205,15 +205,15 @@ a {
 }
 
 ::view-transition-group(root) {
-  animation-duration: 1280ms;
+  animation-duration: 1160ms;
 }
 
 ::view-transition-old(root) {
-  animation: theme-old-shift 1280ms cubic-bezier(0.65, 0, 0.35, 1) both;
+  animation: theme-old-shift 1160ms cubic-bezier(0.65, 0, 0.35, 1) both;
 }
 
 ::view-transition-new(root) {
-  animation: theme-new-reveal 1280ms cubic-bezier(0.65, 0, 0.35, 1) both;
+  animation: theme-new-reveal 1160ms cubic-bezier(0.65, 0, 0.35, 1) both;
 }
 
 @keyframes theme-old-shift {
@@ -231,7 +231,7 @@ a {
     filter: brightness(0.96) saturate(0.94);
     animation-timing-function: cubic-bezier(0.72, 0, 0.28, 1);
   }
-  78% {
+  72% {
     clip-path: circle(118vmax at var(--theme-transition-x, 50vw) var(--theme-transition-y, 50vh));
     filter: brightness(1.04) saturate(1.06);
     animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
