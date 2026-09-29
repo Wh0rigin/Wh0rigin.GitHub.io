@@ -205,27 +205,38 @@ a {
 }
 
 ::view-transition-group(root) {
-  animation-duration: 760ms;
+  animation-duration: 1280ms;
 }
 
 ::view-transition-old(root) {
-  animation: theme-old-shift 760ms cubic-bezier(0.65, 0, 0.35, 1) both;
+  animation: theme-old-shift 1280ms cubic-bezier(0.65, 0, 0.35, 1) both;
 }
 
 ::view-transition-new(root) {
-  animation: theme-new-reveal 760ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: theme-new-reveal 1280ms cubic-bezier(0.65, 0, 0.35, 1) both;
 }
 
 @keyframes theme-old-shift {
-  to { transform: scale(1.012); }
+  to { transform: scale(1.018); }
 }
 
 @keyframes theme-new-reveal {
-  from {
+  0% {
     clip-path: circle(0 at var(--theme-transition-x, 50vw) var(--theme-transition-y, 50vh));
     filter: brightness(0.92) saturate(0.88);
+    animation-timing-function: cubic-bezier(0.55, 0, 0.72, 0.16);
   }
-  to {
+  12% {
+    clip-path: circle(5vmax at var(--theme-transition-x, 50vw) var(--theme-transition-y, 50vh));
+    filter: brightness(0.96) saturate(0.94);
+    animation-timing-function: cubic-bezier(0.72, 0, 0.28, 1);
+  }
+  78% {
+    clip-path: circle(118vmax at var(--theme-transition-x, 50vw) var(--theme-transition-y, 50vh));
+    filter: brightness(1.04) saturate(1.06);
+    animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  100% {
     clip-path: circle(160vmax at var(--theme-transition-x, 50vw) var(--theme-transition-y, 50vh));
     filter: brightness(1) saturate(1);
   }
