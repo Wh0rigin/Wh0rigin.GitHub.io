@@ -233,8 +233,8 @@ onUnmounted(() => {
 .timeline-day.selected { opacity: 1; }
 .timeline-label {
     position: absolute;
-    bottom: -30px;
-    left: clamp(-70px, -5vw, -36px);
+    bottom: -14px;
+    left: clamp(-105px, -8vw, -55px);
     display: flex;
     align-items: baseline;
     gap: clamp(3px, .5vw, 9px);
@@ -331,7 +331,7 @@ onUnmounted(() => {
     .date-number { font-size: clamp(9rem, 43vw, 17rem); }
     .timeline-number { font-size: clamp(1.2rem, 6vw, 2rem); }
     .timeline-weekday { font-size: .55rem; }
-    .timeline-label { bottom: -4px; left: -28px; }
+    .timeline-label { bottom: 0; left: -35px; }
     .timeline-dot { top: 13px; border-width: 2px; }
     .date-ripple { width: 70px; }
 }
