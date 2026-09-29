@@ -664,6 +664,10 @@ h1 {
     filter: drop-shadow(16px 22px 0 rgba(0, 24, 112, 0.35));
 }
 
+:global(html[data-theme="light"] .hero-visual-number) {
+    display: none;
+}
+
 :global(html[data-theme="light"] .hero-visual::before) {
     width: 100%;
     max-width: 520px;
