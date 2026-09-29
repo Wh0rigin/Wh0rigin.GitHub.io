@@ -86,7 +86,7 @@ onUnmounted(() => {
                         <span class="date-weekday">{{ day === 13 ? 'WEDNESDAY' : 'THURSDAY' }}</span>
                     </div>
                     <div class="timeline" :class="{ advanced: phase !== 'waiting' }">
-                        <div v-for="(item, index) in timelineDays" :key="item.date" class="timeline-day" :class="{ selected: highlightedDay === item.date }" :style="{ '--x': `${10 + index * 11.5}%`, '--y': `${78 - index * 9}%` }">
+                        <div v-for="(item, index) in timelineDays" :key="item.date" class="timeline-day" :class="{ selected: highlightedDay === item.date, past: item.date < (phase === 'moving' ? day + 1 : day) }" :style="{ '--x': `${10 + index * 11.5}%`, '--y': `${78 - index * 9}%` }">
                             <span class="timeline-label">
                                 <span class="timeline-number">{{ item.date }}</span>
                                 <span class="timeline-weekday">{{ item.weekday }}</span>
@@ -157,10 +157,10 @@ onUnmounted(() => {
 }
 .blue-band {
     position: absolute;
-    top: 41.5%;
+    top: calc(41.5% + clamp(10px, 5vw, 65px));
     left: -10%;
     width: 120%;
-    height: clamp(115px, 20vw, 255px);
+    height: clamp(90px, 10vw, 135px);
     background: linear-gradient(90deg, #0750a7, #0876cf 54%, #0450ac);
     transform: rotate(var(--band-angle));
     box-shadow: 0 12px 0 rgba(0, 0, 0, .1);
@@ -257,8 +257,10 @@ onUnmounted(() => {
     gap: clamp(3px, .5vw, 9px);
     white-space: nowrap;
     transform: translateX(-50%);
+    transition: transform 450ms ease;
     text-shadow: 2px 3px 0 rgba(0, 0, 0, .28);
 }
+.timeline-day.past .timeline-label { transform: translate(-50%, 10px); }
 .timeline-number {
     font-size: clamp(1.45rem, 4vw, 4.4rem);
     font-weight: 950;
@@ -342,10 +344,13 @@ onUnmounted(() => {
     from { transform: translate(-50%, -50%) scale(.65); opacity: .85; }
     to { transform: translate(-50%, -50%) scale(1.55); opacity: 0; }
 }
+@media (min-width: 701px) and (max-width: 900px) {
+    .opening-date { top: 26%; }
+}
 @media (max-width: 700px) {
     .date-stage { --band-angle: 22deg; }
     .date-composition { transform: translate(4vw, 3vh); }
-    .blue-band { top: calc(39% + 20px); left: -32%; width: 165%; height: 220px; }
+    .blue-band { top: calc(39% + 75px); left: -32%; width: 165%; height: 110px; }
     .opening-date { top: 18%; left: 34vw; }
     .date-year { top: 126px; left: -32vw; }
     .date-weekday { top: 166px; left: -32vw; }
@@ -358,7 +363,7 @@ onUnmounted(() => {
 }
 @media (prefers-reduced-motion: reduce) {
     .loading, .light-loading::after, .day-change-enter-active, .day-change-leave-active,
-    .timeline, .timeline-day, .timeline-dot { transition-duration: .01ms; }
+    .timeline, .timeline-day, .timeline-dot, .timeline-label { transition-duration: .01ms; }
     .loading-spinner, .classic-loading > p,
     .phase-arrived .date-ripple, .phase-arrived .date-ripple::before,
     .phase-arrived .date-ripple::after { animation: none; }
