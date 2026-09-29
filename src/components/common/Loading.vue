@@ -191,6 +191,7 @@ onUnmounted(() => {
     font-size: clamp(1.5rem, 3.5vw, 3rem);
     font-weight: 950;
     letter-spacing: -.06em;
+    transform: translate(18.7vw, 12.5vw);
 }
 .date-year span { padding-bottom: 4px; font-size: clamp(.6rem, 1vw, .85rem); letter-spacing: .12em; }
 .date-number {
@@ -328,6 +329,7 @@ onUnmounted(() => {
 @media (max-width: 700px) {
     .blue-band { top: calc(39% + 20px); left: -32%; width: 165%; height: 220px; transform: rotate(22deg); }
     .opening-date { top: 19%; left: 8%; }
+    .date-year { transform: translate(55vw, 27vh); }
     .date-number { font-size: clamp(9rem, 43vw, 17rem); }
     .timeline-number { font-size: clamp(1.2rem, 6vw, 2rem); }
     .timeline-weekday { font-size: .55rem; }
