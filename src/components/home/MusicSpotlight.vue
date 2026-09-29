@@ -36,11 +36,11 @@
 
             <a
                 class="album-link"
-                href="https://music.apple.com/us/album/replica/1714599649"
+                href="https://music.163.com/#/user/home?id=356485354"
                 target="_blank"
                 rel="noreferrer"
             >
-                在 Apple Music 查看专辑 <span aria-hidden="true">↗</span>
+                Get to know me on NetEase Music <span aria-hidden="true">↗</span>
             </a>
         </div>
     </article>
