@@ -183,6 +183,7 @@ const mouseup = () => {
                         </filter>
                     </defs>
                 </svg>
+                <span class="hero-visual-number" aria-hidden="true">05</span>
                 <img class="logo logo-original" alt="连线世界主题插画" draggable="false" @mousedown="mousedown" @mouseup="mouseup" :src="img_url" />
                 <img class="logo logo-silhouette" alt="" aria-hidden="true" draggable="false" :src="img_url" />
             </div>
@@ -687,49 +688,87 @@ h1 {
     to { transform: translate(14px, -10px) rotate(3deg); }
 }
 
-:global(html[data-theme="dark"] .hero::after) {
+:global(html[data-theme="dark"] .hero::before) {
     position: absolute;
     z-index: -1;
-    top: 4%;
-    left: -10vw;
-    color: rgba(229, 34, 45, 0.24);
-    font-size: clamp(13rem, 32vw, 33rem);
-    font-style: italic;
-    font-weight: 950;
-    letter-spacing: -0.17em;
-    line-height: 1;
-    text-shadow: 8px 8px 0 rgba(0, 0, 0, 0.42);
-    transform: rotate(-11deg) skewX(-7deg);
+    top: -2%;
+    bottom: -3%;
+    left: -50vw;
+    width: calc(50vw + 62%);
+    border-right: 8px solid #f6f2ec;
+    background:
+        repeating-linear-gradient(135deg, transparent 0 34px, rgba(255, 255, 255, .075) 34px 36px, transparent 36px 68px),
+        linear-gradient(145deg, #8f080d 0%, #e5222d 52%, #bd111b 100%);
+    clip-path: polygon(0 0, 100% 0, 88% 100%, 0 94%);
+    content: "";
+}
+
+:global(html[data-theme="dark"] .hero::after) {
+    position: absolute;
+    z-index: 0;
+    top: 12%;
+    right: -8vw;
+    width: 47%;
+    height: 83%;
+    background: linear-gradient(145deg, #ff302e, #b90b16 68%, #73080e);
+    clip-path: polygon(18% 0, 100% 9%, 76% 100%, 0 83%);
+    transform: rotate(-5deg);
     pointer-events: none;
-    content: "05";
+    content: "";
 }
 
 :global(html[data-theme="dark"] .hero-copy) {
+    z-index: 3;
+    max-width: 590px;
     animation-name: hero-snap;
 }
 
+:global(html[data-theme="dark"] .hero .eyebrow) {
+    width: fit-content;
+    margin-bottom: 20px;
+    padding: 8px 13px;
+    color: #08080a;
+    background: #f6f2ec;
+    font-weight: 900;
+    letter-spacing: .21em;
+    box-shadow: 5px 5px 0 #08080a;
+    transform: skewX(-9deg) rotate(-1deg);
+}
+
 :global(html[data-theme="dark"] .hero h1) {
-    text-shadow: 4px 4px 0 #000000;
+    position: relative;
+    gap: 0;
+    color: #fff;
+    font-size: clamp(3.4rem, 7.1vw, 6.9rem);
+    font-style: italic;
+    font-weight: 950;
+    letter-spacing: -.09em;
+    line-height: .98;
+    text-shadow: 4px 4px 0 #08080a, 7px 7px 0 rgba(255, 255, 255, .42);
+    transform: skewX(-5deg);
 }
 
 :global(html[data-theme="dark"] .headline-accent) {
-    padding: 0.02em 0.17em 0.08em;
+    margin-top: .08em;
+    padding: 0.025em 0.19em 0.11em;
     color: #ffffff;
-    background: var(--accent);
+    background: #08080a;
     clip-path: polygon(3% 7%, 100% 0, 94% 91%, 0 100%);
-    text-shadow: 4px 4px 0 #08080a;
-    transform: rotate(-1.2deg) skewX(-4deg);
+    text-shadow: 4px 4px 0 #e5222d;
+    box-shadow: 8px 8px 0 #f6f2ec;
+    transform: translateX(.06em) rotate(-1.8deg) skewX(-3deg);
     -webkit-text-fill-color: #ffffff;
 }
 
 :global(html[data-theme="dark"] .headline-accent::after) {
-    right: -4%;
-    bottom: -0.1em;
-    left: 18%;
-    height: 0.06em;
+    right: -5%;
+    bottom: -.13em;
+    left: 13%;
+    height: .065em;
     border-radius: 0;
-    background: #ffffff;
-    transform: rotate(-1deg);
+    background: #fff;
+    box-shadow: 0 4px 0 #08080a;
+    transform: rotate(-1.4deg);
     animation: none;
 }
 
@@ -741,37 +780,98 @@ h1 {
 }
 
 :global(html[data-theme="dark"] .hero .button) {
+    min-height: 52px;
+    padding-right: 23px;
+    padding-left: 23px;
     border-radius: 2px;
+    border: 2px solid #08080a;
     clip-path: polygon(7% 0, 100% 0, 93% 100%, 0 88%);
 }
 
-:global(html[data-theme="dark"] .button-primary) {
-    color: #ffffff;
-    box-shadow: 7px 7px 0 #000000;
+:global(html[data-theme="dark"] .hero .button-primary) {
+    color: #08080a;
+    background: #f6f2ec;
+    box-shadow: 7px 7px 0 #08080a, 11px 11px 0 #f6f2ec;
 }
 
-:global(html[data-theme="dark"] .button-primary:hover) {
+:global(html[data-theme="dark"] .hero .button-primary:hover) {
     transform: translate(-2px, -2px);
-    box-shadow: 10px 10px 0 #000000;
+    box-shadow: 9px 9px 0 #08080a, 14px 14px 0 #f6f2ec;
+}
+
+:global(html[data-theme="dark"] .hero .text-link) {
+    padding: 7px 0;
+    color: #fff;
+    font-weight: 850;
+    text-shadow: 2px 2px 0 #08080a;
 }
 
 :global(html[data-theme="dark"] .hero-caption span) {
-    height: 4px;
-    background: var(--accent);
-    transform: skewX(-28deg);
+    width: 42px;
+    height: 5px;
+    background: #f6f2ec;
+    transform: skewX(-32deg);
 }
 
 :global(html[data-theme="dark"] .hero-visual) {
-    animation: dark-jolt 6s steps(1, end) infinite;
+    z-index: 1;
+    filter: drop-shadow(11px 12px 0 #08080a) drop-shadow(17px 19px 0 #e5222d);
+    animation: dark-jolt 5.2s steps(1, end) infinite;
+}
+
+:global(html[data-theme="dark"] .hero-visual-number) {
+    position: absolute;
+    z-index: 0;
+    top: -7%;
+    right: -12%;
+    color: #e5222d;
+    font-size: clamp(17rem, 35vw, 39rem);
+    font-style: italic;
+    font-weight: 1000;
+    letter-spacing: -.19em;
+    line-height: .82;
+    -webkit-text-stroke: 4px #08080a;
+    text-shadow: 4px 4px 0 #f6f2ec;
+    transform: rotate(8deg);
+    pointer-events: none;
+}
+
+:global(html[data-theme="dark"] .hero .logo) {
+    position: relative;
+    z-index: 1;
 }
 
 :global(html[data-theme="dark"] .hero-visual::before) {
+    width: 108%;
+    max-width: 580px;
     border: 0;
     border-radius: 0;
-    background: var(--accent);
-    clip-path: polygon(7% 18%, 72% 0, 100% 34%, 79% 91%, 20% 100%, 0 69%);
-    opacity: 0.16;
-    animation: dark-shape-turn 16s linear infinite;
+    background:
+        radial-gradient(circle, rgba(8, 8, 10, .9) 0 1.25px, transparent 1.8px) 0 0 / 11px 11px,
+        linear-gradient(135deg, #f6f2ec, #fff 68%, #e9e4dd);
+    clip-path: polygon(15% 0, 100% 5%, 87% 100%, 0 88%);
+    opacity: 1;
+    transform: rotate(4deg);
+    animation: dark-panel-drift 7s ease-in-out infinite alternate;
+}
+
+:global(html[data-theme="dark"] .hero-visual::after) {
+    position: absolute;
+    z-index: 3;
+    right: -3%;
+    bottom: 7%;
+    padding: 8px 13px;
+    border: 2px solid #08080a;
+    border-left: 6px solid #e5222d;
+    color: #08080a;
+    background: #f6f2ec;
+    box-shadow: 5px 5px 0 #08080a;
+    font-size: .67rem;
+    font-weight: 950;
+    letter-spacing: .19em;
+    transform: rotate(-6deg);
+    animation: access-stamp 520ms cubic-bezier(.16, 1, .3, 1) 500ms both;
+    content: "PHANTOM LINK // 05";
 }
 
 @keyframes hero-rise {
@@ -846,9 +946,23 @@ h1 {
     }
 
     :global(html[data-theme="dark"] .hero::after) {
-        top: 2%;
-        left: -9%;
-        font-size: clamp(12rem, 38vw, 23rem);
+        top: 52%;
+        right: -13%;
+        width: 76%;
+        height: 43%;
+        transform: rotate(-7deg);
+    }
+
+    :global(html[data-theme="dark"] .hero::before) {
+        top: 0;
+        right: -24px;
+        bottom: auto;
+        left: -24px;
+        width: auto;
+        height: 52%;
+        border-right: 0;
+        border-bottom: 8px solid #f6f2ec;
+        clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
     }
 
     .hero {
@@ -884,15 +998,20 @@ h1 {
 }
 
 @media (max-width: 520px) {
-    :global(html[data-theme="light"] .hero::after),
-    :global(html[data-theme="dark"] .hero::after) {
+    :global(html[data-theme="light"] .hero::after) {
         font-size: clamp(12rem, 38vw, 23rem);
     }
 
     :global(html[data-theme="dark"] .hero::after) {
-        top: 11%;
-        left: 48%;
-        color: rgba(229, 34, 45, 0.33);
+        top: 54%;
+        right: -27%;
+        width: 105%;
+        height: 35%;
+        transform: rotate(-8deg);
+    }
+
+    :global(html[data-theme="dark"] .hero::before) {
+        height: 53%;
     }
 
     :global(html[data-theme="light"] .hero::before) {
@@ -941,6 +1060,29 @@ h1 {
         }
     }
 
+    :global(html[data-theme="dark"] .hero-visual::before) {
+        display: block;
+        width: 118%;
+        max-width: 330px;
+        opacity: 1;
+    }
+
+    :global(html[data-theme="dark"] .hero-visual-number) {
+        top: -4%;
+        right: -15%;
+        font-size: clamp(12rem, 51vw, 19rem);
+        -webkit-text-stroke-width: 3px;
+        text-shadow: 3px 3px 0 #f6f2ec;
+    }
+
+    :global(html[data-theme="dark"] .hero-visual::after) {
+        right: -10%;
+        bottom: 5%;
+        padding: 6px 9px;
+        font-size: .5rem;
+        letter-spacing: .1em;
+    }
+
     .logo {
         width: 100%;
         max-height: 30svh;
@@ -949,6 +1091,13 @@ h1 {
 
     h1 {
         font-size: clamp(2.8rem, 13vw, 4.3rem);
+    }
+
+    .hero-description {
+        max-width: 100%;
+        font-size: .9rem;
+        line-height: 1.7;
+        text-wrap: pretty;
     }
 
     .hero-actions {
