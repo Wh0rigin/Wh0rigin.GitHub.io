@@ -3,10 +3,21 @@ import { onMounted, onUnmounted, ref } from 'vue';
 import { useModeStore } from '../../stores/mode';
 import FlipTextCarousel from './FlipTextCarousel.vue';
 
-type Phase = 'waiting' | 'next-day' | 'dim' | 'finished';
+type Phase = 'waiting' | 'moving' | 'arrived' | 'dim' | 'finished';
 const modeStore = useModeStore();
 const phase = ref<Phase>('waiting');
 const day = ref(13);
+const highlightedDay = ref<number | null>(13);
+const timelineDays = [
+    { date: 10, weekday: 'SUN' },
+    { date: 11, weekday: 'MON' },
+    { date: 12, weekday: 'TUE' },
+    { date: 13, weekday: 'WED' },
+    { date: 14, weekday: 'THU' },
+    { date: 15, weekday: 'FRI' },
+    { date: 16, weekday: 'SAT' },
+    { date: 17, weekday: 'SUN' },
+];
 let active = true;
 const timers: Array<ReturnType<typeof setTimeout>> = [];
 let removeLoadListener: (() => void) | undefined;
@@ -31,9 +42,14 @@ onMounted(async () => {
     await Promise.all([waitForLoad(), delay(1600)]);
     if (!active) return;
     if (modeStore.theme === 'light') {
+        highlightedDay.value = null;
+        phase.value = 'moving';
+        await delay(900);
+        if (!active) return;
         day.value = 14;
-        phase.value = 'next-day';
-        await delay(700);
+        highlightedDay.value = 14;
+        phase.value = 'arrived';
+        await delay(950);
         if (!active) return;
         phase.value = 'dim';
         await delay(650);
@@ -58,7 +74,9 @@ onUnmounted(() => {
         <template v-if="modeStore.theme === 'light'">
             <div class="date-stage" aria-hidden="true">
                 <div class="blue-band"></div>
-                <div class="date-line"></div>
+                <svg class="date-line" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <line x1="0" y1="86" x2="100" y2="8" />
+                </svg>
                 <div class="opening-date">
                     <div class="date-year">2002 <span>NOVEMBER</span></div>
                     <Transition name="day-change" mode="out-in">
@@ -66,14 +84,16 @@ onUnmounted(() => {
                     </Transition>
                     <span class="date-weekday">{{ day === 13 ? 'WEDNESDAY' : 'THURSDAY' }}</span>
                 </div>
-                <div class="timeline">
-                    <div v-for="date in [11, 12, 13, 14, 15, 16, 17]" :key="date" class="timeline-day" :class="{ selected: day === date }">
-                        <span class="timeline-number">{{ date }}</span>
+                <div class="timeline" :class="{ advanced: phase !== 'waiting' }">
+                    <div v-for="(item, index) in timelineDays" :key="item.date" class="timeline-day" :class="{ selected: highlightedDay === item.date }" :style="{ '--x': `${10 + index * 11.5}%`, '--y': `${78 - index * 9}%` }">
+                        <span class="timeline-label">
+                            <span class="timeline-number">{{ item.date }}</span>
+                            <span class="timeline-weekday">{{ item.weekday }}</span>
+                            <span v-if="highlightedDay === item.date" class="date-ripple"></span>
+                        </span>
                         <span class="timeline-dot"></span>
                     </div>
                 </div>
-                <div class="orbit orbit-one"></div>
-                <div class="orbit orbit-two"></div>
             </div>
             <div class="loading-indicator" role="status">
                 <span>LOADING</span>
@@ -140,13 +160,17 @@ onUnmounted(() => {
 .date-line {
     position: absolute;
     z-index: 2;
-    top: 56%;
-    left: -4%;
-    width: 112%;
-    height: 2px;
-    background: rgba(255, 255, 255, .9);
-    transform: rotate(-27deg);
-    box-shadow: 0 1px 8px rgba(0, 0, 0, .25);
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+}
+.date-line line {
+    stroke: rgba(255, 255, 255, .92);
+    stroke-width: 2;
+    vector-effect: non-scaling-stroke;
+    filter: drop-shadow(0 1px 4px rgba(0, 0, 0, .4));
 }
 .opening-date {
     position: absolute;
@@ -172,7 +196,7 @@ onUnmounted(() => {
 .date-number {
     display: block;
     margin-left: -.075em;
-    font-size: clamp(9rem, 32vw, 31rem);
+    font-size: clamp(9rem, 24vw, 24rem);
     font-weight: 950;
     font-style: italic;
     letter-spacing: -.16em;
@@ -190,48 +214,90 @@ onUnmounted(() => {
 .timeline {
     position: absolute;
     z-index: 3;
-    top: 18%;
-    right: 4%;
-    display: flex;
-    align-items: center;
-    gap: clamp(16px, 3.4vw, 60px);
-    transform: rotate(-27deg);
-    transform-origin: right center;
+    inset: 0;
+    pointer-events: none;
+    transition: transform 900ms cubic-bezier(.32, .02, .18, 1);
+}
+.timeline.advanced {
+    transform: translate(-11.5vw, 9vh);
 }
 .timeline-day {
-    display: grid;
-    justify-items: center;
-    gap: 11px;
-    min-width: clamp(25px, 3vw, 44px);
-    opacity: .8;
-    transition: opacity 450ms ease, transform 450ms ease;
+    position: absolute;
+    top: var(--y);
+    left: var(--x);
+    width: 0;
+    height: 0;
+    opacity: .88;
+    transition: opacity 240ms ease;
 }
-.timeline-day.selected { opacity: 1; transform: scale(1.15); }
-.timeline-number { font-size: clamp(1rem, 2.8vw, 2.5rem); font-weight: 950; line-height: 1; }
+.timeline-day.selected { opacity: 1; }
+.timeline-label {
+    position: absolute;
+    bottom: clamp(13px, 2vw, 24px);
+    left: 0;
+    display: flex;
+    align-items: baseline;
+    gap: clamp(3px, .5vw, 9px);
+    white-space: nowrap;
+    transform: translateX(-50%);
+    text-shadow: 2px 3px 0 rgba(0, 0, 0, .28);
+}
+.timeline-number {
+    font-size: clamp(1.45rem, 4vw, 4.4rem);
+    font-weight: 950;
+    line-height: .85;
+}
+.timeline-weekday {
+    font-size: clamp(.55rem, 1.2vw, 1rem);
+    font-weight: 900;
+    letter-spacing: .13em;
+}
 .timeline-dot {
-    width: clamp(15px, 2.2vw, 30px);
+    position: absolute;
+    top: clamp(13px, 2vw, 24px);
+    left: 0;
+    width: clamp(16px, 2.8vw, 35px);
     aspect-ratio: 1;
-    border: 3px solid white;
+    border: 3px solid #fff;
     border-radius: 50%;
     background: #fff;
-    box-shadow: 0 0 0 2px rgba(0, 0, 0, .28);
-    transition: background 450ms ease, box-shadow 450ms ease;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, .25);
+    transform: translateX(-50%);
+    transition: background 260ms ease, box-shadow 260ms ease;
 }
 .selected .timeline-dot {
     background: #f4dc19;
     box-shadow: 0 0 0 5px #155fc3, 0 0 0 8px rgba(255, 255, 255, .58);
 }
-.orbit {
+.date-ripple,
+.date-ripple::before,
+.date-ripple::after {
     position: absolute;
-    z-index: 2;
-    width: 90px;
+    top: 50%;
+    left: 30%;
+    width: clamp(56px, 9vw, 140px);
     aspect-ratio: 1;
-    border: 3px solid rgba(171, 225, 255, .65);
+    border: 2px solid rgba(173, 223, 255, .65);
     border-radius: 50%;
     pointer-events: none;
+    transform: translate(-50%, -50%);
 }
-.orbit-one { top: 51%; left: 55%; animation: orbit-pulse 2s ease-in-out infinite alternate; }
-.orbit-two { top: 48%; left: 53.5%; width: 130px; border-color: rgba(171, 225, 255, .3); }
+.date-ripple::before,
+.date-ripple::after {
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    content: '';
+}
+.date-ripple::before { transform: translate(-50%, -50%) scale(1.35); opacity: .45; }
+.date-ripple::after { transform: translate(-50%, -50%) scale(1.7); opacity: .22; }
+.phase-arrived .date-ripple,
+.phase-arrived .date-ripple::before,
+.phase-arrived .date-ripple::after {
+    animation: ripple 750ms ease-out both;
+}
+.phase-arrived .date-ripple::before { animation-delay: 90ms; }
+.phase-arrived .date-ripple::after { animation-delay: 180ms; }
 .loading-indicator {
     position: absolute;
     z-index: 4;
@@ -254,26 +320,25 @@ onUnmounted(() => {
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes pulse { to { opacity: .45; } }
-@keyframes orbit-pulse { to { transform: scale(1.2); opacity: .4; } }
+@keyframes ripple {
+    from { transform: translate(-50%, -50%) scale(.65); opacity: .85; }
+    to { transform: translate(-50%, -50%) scale(1.55); opacity: 0; }
+}
 @media (max-width: 700px) {
     .blue-band { top: 39%; left: -32%; width: 165%; height: 155px; transform: rotate(22deg); }
-    .opening-date { top: 25%; left: 8%; }
+    .opening-date { top: 16%; left: 8%; }
     .date-number { font-size: clamp(9rem, 43vw, 17rem); }
-    .date-line { top: 64%; transform: rotate(-35deg); }
-    .timeline {
-        top: 18%;
-        right: 5%;
-        gap: 14px;
-        transform: rotate(-25deg) scale(.85);
-    }
-    .timeline-day:first-child,
-    .timeline-day:nth-last-child(-n + 2) { display: none; }
-    .orbit-one { top: 52%; left: 66%; }
-    .orbit-two { top: 50%; left: 64%; }
+    .timeline-number { font-size: clamp(1.2rem, 6vw, 2rem); }
+    .timeline-weekday { font-size: .55rem; }
+    .timeline-label { bottom: 13px; }
+    .timeline-dot { top: 13px; border-width: 2px; }
+    .date-ripple { width: 70px; }
 }
 @media (prefers-reduced-motion: reduce) {
     .loading, .light-loading::after, .day-change-enter-active, .day-change-leave-active,
-    .timeline-day, .timeline-dot { transition-duration: .01ms; }
-    .loading-spinner, .orbit-one, .classic-loading > p { animation: none; }
+    .timeline, .timeline-day, .timeline-dot { transition-duration: .01ms; }
+    .loading-spinner, .classic-loading > p,
+    .phase-arrived .date-ripple, .phase-arrived .date-ripple::before,
+    .phase-arrived .date-ripple::after { animation: none; }
 }
 </style>
