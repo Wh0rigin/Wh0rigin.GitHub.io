@@ -176,8 +176,8 @@ onUnmounted(() => {
 .opening-date {
     position: absolute;
     z-index: 3;
-    top: 13%;
-    left: 20vw;
+    top: 15%;
+    left: 25vw;
     display: grid;
     align-content: start;
     width: 28vw;
