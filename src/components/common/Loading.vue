@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useModeStore } from '../../stores/mode';
-import FlipTextCarousel from './FlipTextCarousel.vue';
 
 type Phase = 'waiting' | 'moving' | 'arrived' | 'dim' | 'finished';
 const modeStore = useModeStore();
@@ -110,9 +109,24 @@ onUnmounted(() => {
             <div class="closing-wipe-underlay" aria-hidden="true"></div>
             <div class="closing-wipe" aria-hidden="true"></div>
         </template>
-        <div v-else class="classic-loading">
-            <p>LOADING...</p>
-            <FlipTextCarousel />
+        <div v-else class="persona-loading" role="status" aria-label="Loading the Wired World">
+            <div class="persona-topbar">
+                <span class="persona-brand"><i aria-hidden="true"></i> THE WIRED WORLD</span>
+                <span class="persona-connection"><i aria-hidden="true"></i> SECURE CONNECTION</span>
+            </div>
+            <div class="persona-red-slice" aria-hidden="true"></div>
+            <span class="persona-number" aria-hidden="true">05</span>
+            <main class="persona-copy">
+                <p class="persona-kicker">NETWORK ACCESS <span>//</span> WH0RIGIN</p>
+                <h1 class="persona-title">
+                    <span class="persona-title-now">NOW</span>
+                    <span class="persona-title-loading">LOADING<span class="persona-ellipsis">...</span></span>
+                </h1>
+                <p class="persona-message">The Wired World is opening.</p>
+                <div class="persona-progress" aria-hidden="true"><span></span></div>
+                <div class="persona-progress-labels"><span>ESTABLISHING CONNECTION</span><span>PLEASE WAIT</span></div>
+            </main>
+            <div class="persona-footer"><span>PHANTOM LINK <b>05</b></span><span>WH0RIGIN // ONLINE</span></div>
         </div>
     </div>
 </template>
@@ -129,14 +143,171 @@ onUnmounted(() => {
     transition: opacity 800ms ease, visibility 800ms ease;
 }
 .phase-finished { opacity: 0; visibility: hidden; pointer-events: none; }
-.classic-loading { display: grid; gap: 14px; justify-items: center; padding: 24px; text-align: center; }
-.classic-loading > p {
-    color: var(--text);
-    font-size: clamp(2rem, 6vw, 4rem);
-    font-weight: 900;
-    letter-spacing: .22em;
-    animation: pulse 1.5s ease-in-out infinite alternate;
+.persona-loading {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 100svh;
+    overflow: hidden;
+    isolation: isolate;
+    padding: clamp(24px, 4.5vw, 64px) clamp(24px, 6vw, 88px);
+    color: #fff;
+    background:
+        radial-gradient(ellipse at 68% 52%, rgba(229, 34, 45, .16), transparent 43%),
+        #09090c;
+    text-align: left;
+
+    &::before {
+        position: absolute;
+        z-index: 1;
+        inset: 0;
+        pointer-events: none;
+        background: repeating-linear-gradient(135deg, transparent 0 28px, rgba(255, 255, 255, .025) 28px 29px);
+        content: "";
+    }
 }
+.persona-topbar,
+.persona-footer {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    font-size: .7rem;
+    font-weight: 850;
+    letter-spacing: .2em;
+}
+.persona-brand { display: inline-flex; align-items: center; gap: 11px; }
+.persona-brand i {
+    width: 12px;
+    height: 12px;
+    background: #e5222d;
+    transform: rotate(45deg);
+    box-shadow: 3px 3px 0 #fff;
+}
+.persona-connection { display: inline-flex; align-items: center; gap: 9px; color: #c9c5c2; }
+.persona-connection i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #ff3842;
+    box-shadow: 0 0 12px rgba(255, 56, 66, .9);
+    animation: persona-signal 900ms steps(2, end) infinite;
+}
+.persona-red-slice {
+    position: absolute;
+    z-index: 0;
+    top: -16%;
+    right: -15%;
+    width: 72%;
+    height: 136%;
+    background: linear-gradient(132deg, #a60e19 0%, #e5222d 48%, #fa303b 100%);
+    clip-path: polygon(39% 0, 100% 0, 65% 100%, 0 100%);
+    transform: translateX(115%) skewX(-5deg);
+    animation: persona-slice-enter 720ms cubic-bezier(.16, 1, .3, 1) 90ms both;
+}
+.persona-number {
+    position: absolute;
+    z-index: 1;
+    right: 3%;
+    bottom: -.2em;
+    color: rgba(255, 255, 255, .16);
+    font-family: Impact, "Arial Black", sans-serif;
+    font-size: clamp(20rem, 51vw, 60rem);
+    font-style: italic;
+    font-weight: 1000;
+    letter-spacing: -.17em;
+    line-height: .8;
+    pointer-events: none;
+    transform: rotate(-8deg) scale(.88);
+    transform-origin: 70% 80%;
+    animation: persona-number-enter 600ms cubic-bezier(.16, 1, .3, 1) 180ms both;
+}
+.persona-copy {
+    position: absolute;
+    z-index: 2;
+    top: 51%;
+    left: clamp(28px, 10vw, 144px);
+    width: min(660px, 72vw);
+    transform: translateY(-48%);
+    animation: persona-copy-enter 520ms cubic-bezier(.16, 1, .3, 1) 170ms both;
+}
+.persona-kicker {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #f5f0eb;
+    font-size: .75rem;
+    font-weight: 900;
+    letter-spacing: .2em;
+}
+.persona-kicker::before {
+    width: 0;
+    height: 0;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 9px solid #ff3842;
+    content: "";
+}
+.persona-kicker span { color: #ff3842; }
+.persona-title {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    margin: 22px 0 18px;
+    color: #fff;
+    font-family: Impact, "Arial Black", sans-serif;
+    font-style: italic;
+    font-weight: 1000;
+    letter-spacing: -.075em;
+    line-height: .82;
+    transform: skewX(-5deg);
+}
+.persona-title-now { margin-left: .15em; font-size: clamp(2rem, 4.8vw, 4rem); letter-spacing: .02em; }
+.persona-title-loading {
+    position: relative;
+    display: inline-block;
+    padding: .035em .2em .11em .12em;
+    background: #e5222d;
+    clip-path: polygon(4% 0, 100% 0, 96% 100%, 0 88%);
+    font-size: clamp(4.5rem, 10vw, 8.2rem);
+    text-shadow: 5px 5px 0 #09090c;
+}
+.persona-ellipsis { color: #09090c; }
+.persona-message { margin-top: 22px; color: #d4ced0; font-size: clamp(.95rem, 1.4vw, 1.1rem); font-weight: 550; }
+.persona-progress {
+    width: min(470px, 70vw);
+    height: 10px;
+    margin-top: 35px;
+    padding: 2px;
+    border: 1px solid rgba(255, 255, 255, .68);
+    background: rgba(0, 0, 0, .38);
+    transform: skewX(-18deg);
+}
+.persona-progress span {
+    display: block;
+    width: 36%;
+    height: 100%;
+    background: repeating-linear-gradient(110deg, #e5222d 0 14px, #ff3842 14px 25px);
+    box-shadow: 0 0 12px rgba(229, 34, 45, .8);
+    animation: persona-progress-run 1.15s cubic-bezier(.55, 0, .22, 1) infinite alternate;
+}
+.persona-progress-labels {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    width: min(470px, 70vw);
+    margin-top: 10px;
+    color: #c5bfc1;
+    font-size: .62rem;
+    font-weight: 850;
+    letter-spacing: .16em;
+}
+.persona-footer { position: absolute; right: clamp(24px, 6vw, 88px); bottom: clamp(24px, 4.5vw, 64px); left: clamp(24px, 6vw, 88px); color: rgba(255, 255, 255, .78); }
+.persona-footer b { margin-left: 6px; color: #ff3842; }
 .light-loading { display: block; background: #171b2b; color: #fff; }
 .light-loading.closing { background: transparent; }
 .light-loading.closing .date-stage { animation: clear-scene 1.3s steps(1, end) both; }
@@ -375,7 +546,11 @@ onUnmounted(() => {
     animation: spin .8s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
-@keyframes pulse { to { opacity: .45; } }
+@keyframes persona-signal { 50% { opacity: .35; } }
+@keyframes persona-slice-enter { to { transform: translateX(0) skewX(-5deg); } }
+@keyframes persona-number-enter { to { transform: rotate(-8deg) scale(1); } }
+@keyframes persona-copy-enter { from { transform: translate(-34px, -48%) skewX(-3deg); } to { transform: translate(0, -48%) skewX(0); } }
+@keyframes persona-progress-run { to { transform: translateX(165%); } }
 @keyframes ripple {
     from { transform: translate(-50%, -50%) scale(.65); opacity: .85; }
     to { transform: translate(-50%, -50%) scale(1.55); opacity: 0; }
@@ -407,10 +582,29 @@ onUnmounted(() => {
     .timeline-dot { top: 13px; border-width: 2px; }
     .date-ripple { width: 70px; }
 }
+@media (max-width: 600px) {
+    .persona-loading { padding: 25px 22px; }
+    .persona-topbar { font-size: .56rem; letter-spacing: .14em; }
+    .persona-brand { gap: 8px; }
+    .persona-brand i { width: 9px; height: 9px; }
+    .persona-connection { gap: 6px; }
+    .persona-red-slice { top: -8%; right: -47%; width: 140%; height: 116%; opacity: .82; }
+    .persona-number { right: -8%; bottom: -.08em; font-size: clamp(18rem, 88vw, 34rem); }
+    .persona-copy { top: 48%; left: 22px; width: calc(100% - 44px); }
+    .persona-kicker { gap: 7px; font-size: .61rem; letter-spacing: .13em; }
+    .persona-title { gap: 5px; margin: 21px 0 15px; }
+    .persona-title-now { font-size: clamp(1.75rem, 8vw, 2.6rem); }
+    .persona-title-loading { font-size: clamp(3.5rem, 14vw, 5.8rem); }
+    .persona-message { margin-top: 18px; font-size: .92rem; }
+    .persona-progress { width: 100%; margin-top: 28px; }
+    .persona-progress-labels { width: 100%; font-size: .52rem; letter-spacing: .1em; }
+    .persona-footer { right: 22px; bottom: 25px; left: 22px; font-size: .52rem; letter-spacing: .12em; }
+}
 @media (prefers-reduced-motion: reduce) {
     .loading, .day-change-enter-active, .day-change-leave-active,
     .timeline, .timeline-day, .timeline-dot, .timeline-label { transition-duration: .01ms; }
-    .loading-spinner, .classic-loading > p,
+    .loading-spinner, .persona-red-slice, .persona-number, .persona-copy,
+    .persona-progress span, .persona-connection i,
     .light-loading.closing .date-stage, .light-loading.closing .closing-wipe,
     .phase-arrived .date-ripple, .phase-arrived .date-ripple::before,
     .phase-arrived .date-ripple::after { animation: none; }
