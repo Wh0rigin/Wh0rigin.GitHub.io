@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue';
+import { nextTick, onMounted, onUnmounted, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import { useModeStore } from '../../stores/mode';
 
 const modeStore = useModeStore();
+const route = useRoute();
+const router = useRouter();
 const isOpen = ref(false);
 const isAtTop = ref(true);
 
@@ -14,8 +17,12 @@ const closeMenu = () => {
     isOpen.value = false;
 };
 
-const scrollToSection = (sectionId: string) => {
+const scrollToSection = async (sectionId: string) => {
     closeMenu();
+    if (route.path !== '/') {
+        await router.push({ path: '/', hash: `#${sectionId}` });
+        await nextTick();
+    }
     document.getElementById(sectionId)?.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
@@ -40,6 +47,7 @@ onUnmounted(() => {
 
             <div class="nav-links">
                 <router-link to="/" class="nav-link">首页</router-link>
+                <router-link to="/replica" class="nav-link">REPLICA</router-link>
                 <a class="nav-link" href="#page2" @click.prevent="scrollToSection('page2')">关于</a>
             </div>
 
@@ -85,6 +93,7 @@ onUnmounted(() => {
         <Transition name="slide-fade">
             <div v-if="isOpen" id="mobile-menu" class="mobile-menu">
                 <router-link to="/" class="menu-link" @click="closeMenu">首页</router-link>
+                <router-link to="/replica" class="menu-link" @click="closeMenu">REPLICA</router-link>
                 <a class="menu-link" href="#page2" @click.prevent="scrollToSection('page2')">关于</a>
                 <a class="menu-link" href="https://github.com/Wh0rigin" target="_blank" rel="noreferrer">GitHub ↗</a>
             </div>
