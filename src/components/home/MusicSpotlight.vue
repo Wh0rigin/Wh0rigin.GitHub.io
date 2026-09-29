@@ -1,17 +1,20 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue';
 
-const touchMode = ref(false);
 const spotlightOpen = ref(false);
 const recordScene = ref<HTMLButtonElement | null>(null);
+const closeHintRef = ref<HTMLButtonElement | null>(null);
 const vinylRef = ref<HTMLElement | null>(null);
 const coverRef = ref<HTMLImageElement | null>(null);
 const spotlightWindowRef = ref<HTMLElement | null>(null);
 const viewport = ref({ width: 1, height: 1 });
 const artwork = ref({ vinylX: 0, vinylY: 0, vinylRadius: 0, coverX: 0, coverY: 0, coverWidth: 0, coverHeight: 0 });
-let touchModeQuery: MediaQueryList | undefined;
-let closeTimer: number | undefined;
 let geometryFrame = 0;
+let scrollSettleFrame = 0;
+let scrollLocked = false;
+let lockedScrollY = 0;
+let originalBodyStyle: string | null = null;
+let originalHtmlStyle: string | null = null;
 
 function updateSpotlightGeometry() {
     viewport.value = { width: window.innerWidth, height: window.innerHeight };
@@ -36,73 +39,137 @@ function scheduleGeometryUpdate() {
     geometryFrame = requestAnimationFrame(updateSpotlightGeometry);
 }
 
-function openSpotlight() {
-    if (touchMode.value) return;
-    if (closeTimer) window.clearTimeout(closeTimer);
-    spotlightOpen.value = true;
+function restoreInlineStyle(element: HTMLElement, style: string | null) {
+    if (style === null) element.removeAttribute('style');
+    else element.setAttribute('style', style);
+}
+
+function scrollImmediatelyTo(top: number) {
+    const root = document.documentElement;
+    const priorStyle = root.getAttribute('style');
+    root.style.scrollBehavior = 'auto';
+    window.scrollTo(0, top);
+    restoreInlineStyle(root, priorStyle);
+}
+
+function lockPageScroll() {
+    if (scrollLocked) return;
+    const body = document.body;
+    const root = document.documentElement;
+    scrollLocked = true;
+    lockedScrollY = window.scrollY;
+    originalBodyStyle = body.getAttribute('style');
+    originalHtmlStyle = root.getAttribute('style');
+
+    const bodyPaddingRight = Number.parseFloat(window.getComputedStyle(body).paddingRight) || 0;
+    const scrollbarWidth = Math.max(0, window.innerWidth - root.clientWidth);
+    root.style.overflow = 'hidden';
+    body.style.position = 'fixed';
+    body.style.top = `-${lockedScrollY}px`;
+    body.style.left = '0';
+    body.style.right = '0';
+    body.style.width = '100%';
+    body.style.overflow = 'hidden';
+    if (scrollbarWidth) body.style.paddingRight = `${bodyPaddingRight + scrollbarWidth}px`;
     scheduleGeometryUpdate();
 }
 
-function scheduleSpotlightClose() {
-    if (touchMode.value) return;
-    if (closeTimer) window.clearTimeout(closeTimer);
-    closeTimer = window.setTimeout(() => { spotlightOpen.value = false; }, 520);
+function unlockPageScroll(updateGeometry = true) {
+    if (!scrollLocked) return;
+    const body = document.body;
+    const root = document.documentElement;
+    const restoreTo = lockedScrollY;
+    scrollLocked = false;
+    restoreInlineStyle(body, originalBodyStyle);
+    restoreInlineStyle(root, originalHtmlStyle);
+    originalBodyStyle = null;
+    originalHtmlStyle = null;
+    scrollImmediatelyTo(restoreTo);
+    if (updateGeometry) scheduleGeometryUpdate();
 }
 
-function updateTouchMode(event?: MediaQueryListEvent) {
-    touchMode.value = event?.matches ?? touchModeQuery?.matches ?? false;
+function cancelPendingScrollLock() {
+    if (scrollSettleFrame) cancelAnimationFrame(scrollSettleFrame);
+    scrollSettleFrame = 0;
+}
+
+function lockAfterScrollSettles() {
+    cancelPendingScrollLock();
+    let previousY = window.scrollY;
+    let stableFrames = 0;
+    const startedAt = performance.now();
+
+    const checkScroll = () => {
+        if (!spotlightOpen.value) {
+            scrollSettleFrame = 0;
+            return;
+        }
+
+        const currentY = window.scrollY;
+        stableFrames = Math.abs(currentY - previousY) < 0.5 ? stableFrames + 1 : 0;
+        previousY = currentY;
+
+        if (stableFrames >= 6 || performance.now() - startedAt >= 2600) {
+            scrollSettleFrame = 0;
+            lockPageScroll();
+            return;
+        }
+        scrollSettleFrame = requestAnimationFrame(checkScroll);
+    };
+
+    scrollSettleFrame = requestAnimationFrame(checkScroll);
+}
+
+function openSpotlight() {
+    if (spotlightOpen.value) return;
+    spotlightOpen.value = true;
+    scheduleGeometryUpdate();
+    recordScene.value?.scrollIntoView({
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+        block: 'center',
+        inline: 'nearest',
+    });
+    lockAfterScrollSettles();
+}
+
+function closeSpotlight() {
+    if (!spotlightOpen.value) return;
     spotlightOpen.value = false;
-    if (closeTimer) window.clearTimeout(closeTimer);
+    cancelPendingScrollLock();
+    if (scrollLocked) unlockPageScroll();
+    else scrollImmediatelyTo(window.scrollY);
+    recordScene.value?.focus({ preventScroll: true });
 }
 
 function toggleSpotlight() {
-    if (!touchMode.value) return;
-    spotlightOpen.value = !spotlightOpen.value;
-    if (spotlightOpen.value) scheduleGeometryUpdate();
+    if (spotlightOpen.value) closeSpotlight();
+    else openSpotlight();
 }
 
-function isInsideSpotlightArea(x: number, y: number) {
-    const rectangles = [vinylRef.value, coverRef.value, spotlightWindowRef.value]
-        .map((element) => element?.getBoundingClientRect())
-        .filter((rect): rect is DOMRect => Boolean(rect));
+function closeFromHintPointer(event: PointerEvent) {
+    if (!spotlightOpen.value) return;
+    const rect = closeHintRef.value?.getBoundingClientRect();
+    if (!rect || event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) return;
 
-    return rectangles.some((rect) => x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom);
-}
-
-function trackSpotlightPointer(event: PointerEvent) {
-    if (touchMode.value || !spotlightOpen.value) return;
-    if (isInsideSpotlightArea(event.clientX, event.clientY)) {
-        if (closeTimer) window.clearTimeout(closeTimer);
-    } else {
-        scheduleSpotlightClose();
-    }
-}
-
-function closeSpotlightOnOutsideTap(event: PointerEvent) {
-    if (touchMode.value && spotlightOpen.value && !recordScene.value?.contains(event.target as Node)) {
-        spotlightOpen.value = false;
-    }
+    event.preventDefault();
+    event.stopPropagation();
+    closeSpotlight();
 }
 
 onMounted(() => {
-    touchModeQuery = window.matchMedia('(hover: none)');
-    updateTouchMode();
     updateSpotlightGeometry();
-    touchModeQuery.addEventListener('change', updateTouchMode);
-    document.addEventListener('pointerdown', closeSpotlightOnOutsideTap);
-    document.addEventListener('pointermove', trackSpotlightPointer, { passive: true });
+    document.addEventListener('pointerdown', closeFromHintPointer, true);
     window.addEventListener('resize', scheduleGeometryUpdate, { passive: true });
     window.addEventListener('scroll', scheduleGeometryUpdate, { passive: true });
 });
 
 onUnmounted(() => {
-    if (closeTimer) window.clearTimeout(closeTimer);
+    cancelPendingScrollLock();
     cancelAnimationFrame(geometryFrame);
-    touchModeQuery?.removeEventListener('change', updateTouchMode);
-    document.removeEventListener('pointerdown', closeSpotlightOnOutsideTap);
-    document.removeEventListener('pointermove', trackSpotlightPointer);
+    document.removeEventListener('pointerdown', closeFromHintPointer, true);
     window.removeEventListener('resize', scheduleGeometryUpdate);
     window.removeEventListener('scroll', scheduleGeometryUpdate);
+    if (scrollLocked) unlockPageScroll(false);
 });
 </script>
 
@@ -116,15 +183,11 @@ onUnmounted(() => {
             :aria-expanded="spotlightOpen"
             :aria-label="spotlightOpen ? '关闭 replica 聚光窗' : '查看 replica 专辑信息'"
             @click="toggleSpotlight"
-            @focus="openSpotlight"
-            @blur="scheduleSpotlightClose"
         >
             <div
                 ref="vinylRef"
                 class="vinyl-position"
                 aria-hidden="true"
-                @pointerenter="openSpotlight"
-                @pointerleave="scheduleSpotlightClose"
             >
                 <div class="vinyl-disc">
                     <div class="vinyl-label">
@@ -140,9 +203,8 @@ onUnmounted(() => {
                 src="/music/vaundy-replica.jpg"
                 alt="Vaundy《replica》专辑封面"
                 loading="lazy"
-                @pointerenter="openSpotlight"
-                @pointerleave="scheduleSpotlightClose"
             />
+            <span v-if="!spotlightOpen" class="record-hint" aria-hidden="true">Click me</span>
         </button>
 
         <Teleport to="body">
@@ -193,9 +255,9 @@ onUnmounted(() => {
                             <span class="spotlight-artist">VAUNDY <i>·</i> ALBUM</span>
                         </div>
                         <span class="spotlight-serial">THE WIRED WORLD <b>/</b> MUSIC ARCHIVE</span>
-                        <span v-if="touchMode" class="spotlight-hint">移开或重新点击唱片以关闭窗口</span>
                     </div>
                 </div>
+                <button ref="closeHintRef" class="spotlight-hint" type="button" @click.stop="closeSpotlight">Click to close</button>
             </div>
         </Teleport>
 
@@ -331,9 +393,22 @@ onUnmounted(() => {
 .record-scene {
     position: relative;
     display: grid;
-    min-height: 300px;
+    min-height: 340px;
     place-items: center;
     isolation: isolate;
+}
+
+.record-hint {
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    color: var(--accent-strong);
+    font-size: .7rem;
+    font-weight: 850;
+    letter-spacing: .2em;
+    line-height: 1;
+    transform: translateX(-50%);
+    white-space: nowrap;
 }
 
 .vinyl-position {
@@ -547,7 +622,29 @@ onUnmounted(() => {
 .spotlight-artist i { margin: 0 5px; font-style: normal; opacity: .68; }
 .spotlight-serial { position: absolute; right: clamp(24px, 4vw, 54px); bottom: clamp(14px, 2vw, 24px); color: rgba(255, 255, 255, .76); font-size: .52rem; font-weight: 850; letter-spacing: .14em; }
 .spotlight-serial b { margin: 0 5px; color: #fff; }
-.spotlight-hint { display: none; }
+.spotlight-hint {
+    position: absolute;
+    z-index: 3;
+    bottom: calc(10vh - clamp(64px, 7vh, 100px) + clamp(14px, 2vw, 24px));
+    left: calc(3vw + clamp(24px, 4vw, 54px));
+    padding: 5px 0;
+    border: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, .72);
+    color: rgba(255, 255, 255, .94);
+    background: transparent;
+    font: inherit;
+    font-size: .66rem;
+    font-weight: 800;
+    letter-spacing: .14em;
+    line-height: 1.2;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.spotlight-hint:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 4px;
+}
 
 :global(html[data-theme="light"] .spotlight-portal) {
     --spotlight-fill: linear-gradient(125deg, #0750bd 0%, #087cde 68%, #069fcf 100%);
@@ -669,7 +766,7 @@ h3 {
 
     .record-scene {
         width: min(100%, 390px);
-        min-height: 260px;
+        min-height: 315px;
         margin: 0 auto;
     }
 
@@ -703,24 +800,7 @@ h3 {
     .spotlight-copy > strong { font-size: clamp(3rem, 10vw, 5rem); }
     .spotlight-serial { right: 20px; bottom: 42px; font-size: .46rem; }
 
-    .spotlight-hint {
-        display: block;
-        position: absolute;
-        z-index: 8;
-        right: 18px;
-        bottom: 12px;
-        width: max-content;
-        max-width: calc(100% - 36px);
-        padding: 5px 10px;
-        border-bottom: 1px solid rgba(255, 255, 255, .72);
-        color: rgba(255, 255, 255, .92);
-        background: rgba(0, 0, 0, .18);
-        font-size: .66rem;
-        font-weight: 650;
-        letter-spacing: .04em;
-        text-align: center;
-        white-space: nowrap;
-    }
+    .spotlight-hint { left: calc(4vw + 18px); bottom: 28px; }
 }
 
 @media (max-width: 520px) {
@@ -730,7 +810,7 @@ h3 {
     }
 
     .record-scene {
-        min-height: 230px;
+        min-height: 272px;
     }
 
     .spotlight-layer,
