@@ -115,17 +115,20 @@ onUnmounted(() => {
                 <span class="persona-connection"><i aria-hidden="true"></i> SECURE CONNECTION</span>
             </div>
             <div class="persona-red-slice" aria-hidden="true"></div>
+            <div class="persona-paper-panel" aria-hidden="true"></div>
+            <div class="persona-halftone" aria-hidden="true"></div>
             <span class="persona-number" aria-hidden="true">05</span>
             <main class="persona-copy">
-                <p class="persona-kicker">NETWORK ACCESS <span>//</span> WH0RIGIN</p>
+                <p class="persona-kicker">PHANTOM SIGNAL <span>//</span> WH0RIGIN</p>
                 <h1 class="persona-title">
                     <span class="persona-title-now">NOW</span>
                     <span class="persona-title-loading">LOADING<span class="persona-ellipsis">...</span></span>
                 </h1>
-                <p class="persona-message">The Wired World is opening.</p>
+                <p class="persona-message">THE WIRED WORLD IS COMING INTO FOCUS.</p>
                 <div class="persona-progress" aria-hidden="true"><span></span></div>
-                <div class="persona-progress-labels"><span>ESTABLISHING CONNECTION</span><span>PLEASE WAIT</span></div>
+                <div class="persona-progress-labels"><span>ESTABLISHING CONNECTION</span><span>PLEASE WAIT <b>05</b></span></div>
             </main>
+            <div class="persona-side-note" aria-hidden="true"><span>WORLD / 05</span><b>ACCESS</b><i>IN PROGRESS</i></div>
             <div class="persona-footer"><span>PHANTOM LINK <b>05</b></span><span>WH0RIGIN // ONLINE</span></div>
         </div>
     </div>
@@ -154,23 +157,25 @@ onUnmounted(() => {
     padding: clamp(24px, 4.5vw, 64px) clamp(24px, 6vw, 88px);
     color: #fff;
     background:
-        radial-gradient(ellipse at 68% 52%, rgba(229, 34, 45, .16), transparent 43%),
-        #09090c;
+        radial-gradient(ellipse at 28% 48%, rgba(255, 31, 25, .3), transparent 44%),
+        #08080a;
     text-align: left;
 
     &::before {
         position: absolute;
-        z-index: 1;
+        z-index: 2;
         inset: 0;
         pointer-events: none;
-        background: repeating-linear-gradient(135deg, transparent 0 28px, rgba(255, 255, 255, .025) 28px 29px);
+        background:
+            repeating-linear-gradient(135deg, transparent 0 31px, rgba(255, 255, 255, .045) 31px 33px, transparent 33px 62px),
+            linear-gradient(115deg, rgba(0, 0, 0, .16), transparent 44%, rgba(0, 0, 0, .2));
         content: "";
     }
 }
 .persona-topbar,
 .persona-footer {
     position: relative;
-    z-index: 3;
+    z-index: 5;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -183,62 +188,106 @@ onUnmounted(() => {
 .persona-brand i {
     width: 12px;
     height: 12px;
-    background: #e5222d;
+    background: #ff201d;
     transform: rotate(45deg);
-    box-shadow: 3px 3px 0 #fff;
+    box-shadow: 3px 3px 0 #fff, 6px 6px 0 #08080a;
 }
-.persona-connection { display: inline-flex; align-items: center; gap: 9px; color: #c9c5c2; }
+.persona-connection {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 6px 9px;
+    color: #08080a;
+    background: #f3f0e8;
+    border: 2px solid #08080a;
+    box-shadow: 4px 4px 0 #ff201d;
+    transform: rotate(-2deg);
+}
 .persona-connection i {
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: #ff3842;
-    box-shadow: 0 0 12px rgba(255, 56, 66, .9);
+    background: #fff;
+    box-shadow: 0 0 12px rgba(255, 255, 255, .9);
     animation: persona-signal 900ms steps(2, end) infinite;
 }
 .persona-red-slice {
     position: absolute;
     z-index: 0;
-    top: -16%;
-    right: -15%;
-    width: 72%;
-    height: 136%;
-    background: linear-gradient(132deg, #a60e19 0%, #e5222d 48%, #fa303b 100%);
-    clip-path: polygon(39% 0, 100% 0, 65% 100%, 0 100%);
+    top: -18%;
+    left: -12%;
+    width: 76%;
+    height: 138%;
+    background: linear-gradient(145deg, #8f080b 0%, #e20d12 52%, #fa261d 100%);
+    clip-path: polygon(0 0, 100% 0, 71% 100%, 0 100%);
+    transform: translateX(-115%) skewX(-8deg);
+    animation: persona-slice-enter 760ms cubic-bezier(.12, 1, .26, 1) 70ms both;
+}
+.persona-paper-panel {
+    position: absolute;
+    z-index: 1;
+    top: -12%;
+    right: -8%;
+    width: 62%;
+    height: 124%;
+    border-left: 7px solid #08080a;
+    background-color: #f3f0e8;
+    background-image:
+        repeating-linear-gradient(133deg, transparent 0 35px, rgba(8, 8, 10, .95) 35px 40px, transparent 40px 71px),
+        repeating-linear-gradient(47deg, transparent 0 58px, rgba(8, 8, 10, .95) 58px 63px, transparent 63px 116px);
+    clip-path: polygon(29% 0, 100% 0, 100% 100%, 0 100%);
     transform: translateX(115%) skewX(-5deg);
-    animation: persona-slice-enter 720ms cubic-bezier(.16, 1, .3, 1) 90ms both;
+    animation: persona-paper-enter 820ms cubic-bezier(.12, 1, .26, 1) 120ms both;
+}
+.persona-halftone {
+    position: absolute;
+    z-index: 2;
+    top: 13%;
+    right: 5%;
+    width: clamp(170px, 27vw, 360px);
+    aspect-ratio: 1;
+    border: clamp(7px, 1.2vw, 16px) solid #08080a;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle, #111 1.4px, transparent 1.8px) 0 0 / 9px 9px,
+        #f3f0e8;
+    box-shadow: 8px 8px 0 #ff201d;
+    opacity: .92;
+    transform: scale(.55) rotate(-18deg);
+    animation: persona-halftone-enter 680ms cubic-bezier(.16, 1, .3, 1) 260ms both;
 }
 .persona-number {
     position: absolute;
-    z-index: 1;
-    right: 3%;
-    bottom: -.2em;
-    color: rgba(255, 255, 255, .16);
+    z-index: 3;
+    top: 21%;
+    right: 4%;
+    color: #08080a;
     font-family: Impact, "Arial Black", sans-serif;
-    font-size: clamp(20rem, 51vw, 60rem);
+    font-size: clamp(17rem, 35vw, 42rem);
     font-style: italic;
     font-weight: 1000;
-    letter-spacing: -.17em;
-    line-height: .8;
+    letter-spacing: -.13em;
+    line-height: .78;
     pointer-events: none;
-    transform: rotate(-8deg) scale(.88);
-    transform-origin: 70% 80%;
+    text-shadow: 5px 5px 0 #f3f0e8, 11px 11px 0 rgba(255, 32, 29, .9);
+    transform: rotate(8deg) scale(.8);
+    transform-origin: 58% 50%;
     animation: persona-number-enter 600ms cubic-bezier(.16, 1, .3, 1) 180ms both;
 }
 .persona-copy {
     position: absolute;
-    z-index: 2;
+    z-index: 4;
     top: 51%;
-    left: clamp(28px, 10vw, 144px);
-    width: min(660px, 72vw);
+    left: clamp(28px, 7vw, 104px);
+    width: min(690px, 70vw);
     transform: translateY(-48%);
-    animation: persona-copy-enter 520ms cubic-bezier(.16, 1, .3, 1) 170ms both;
+    animation: persona-copy-enter 520ms cubic-bezier(.16, 1, .3, 1) 150ms both;
 }
 .persona-kicker {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: #f5f0eb;
+    color: #fff;
     font-size: .75rem;
     font-weight: 900;
     letter-spacing: .2em;
@@ -251,13 +300,13 @@ onUnmounted(() => {
     border-left: 9px solid #ff3842;
     content: "";
 }
-.persona-kicker span { color: #ff3842; }
+.persona-kicker span { color: #08080a; text-shadow: 1px 0 #fff; }
 .persona-title {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 5px;
-    margin: 22px 0 18px;
+    margin: 20px 0 18px;
     color: #fff;
     font-family: Impact, "Arial Black", sans-serif;
     font-style: italic;
@@ -270,30 +319,32 @@ onUnmounted(() => {
 .persona-title-loading {
     position: relative;
     display: inline-block;
-    padding: .035em .2em .11em .12em;
-    background: #e5222d;
-    clip-path: polygon(4% 0, 100% 0, 96% 100%, 0 88%);
-    font-size: clamp(4.5rem, 10vw, 8.2rem);
-    text-shadow: 5px 5px 0 #09090c;
+    padding: .035em .18em .11em .12em;
+    color: #fff;
+    background: #08080a;
+    clip-path: polygon(3% 0, 100% 0, 96% 100%, 0 88%);
+    font-size: clamp(4.4rem, 9.6vw, 7.8rem);
+    text-shadow: 5px 4px 0 #ff201d;
+    box-shadow: 8px 8px 0 #fff;
 }
-.persona-ellipsis { color: #09090c; }
-.persona-message { margin-top: 22px; color: #d4ced0; font-size: clamp(.95rem, 1.4vw, 1.1rem); font-weight: 550; }
+.persona-ellipsis { color: #ff201d; }
+.persona-message { margin-top: 22px; color: #fff; font-size: clamp(.78rem, 1.1vw, .92rem); font-weight: 900; letter-spacing: .13em; }
 .persona-progress {
     width: min(470px, 70vw);
-    height: 10px;
-    margin-top: 35px;
+    height: 12px;
+    margin-top: 29px;
     padding: 2px;
-    border: 1px solid rgba(255, 255, 255, .68);
-    background: rgba(0, 0, 0, .38);
-    transform: skewX(-18deg);
+    border: 2px solid #08080a;
+    background: #f3f0e8;
+    box-shadow: 5px 5px 0 #08080a;
+    transform: skewX(-18deg) rotate(-1.5deg);
 }
 .persona-progress span {
     display: block;
-    width: 36%;
+    width: 38%;
     height: 100%;
-    background: repeating-linear-gradient(110deg, #e5222d 0 14px, #ff3842 14px 25px);
-    box-shadow: 0 0 12px rgba(229, 34, 45, .8);
-    animation: persona-progress-run 1.15s cubic-bezier(.55, 0, .22, 1) infinite alternate;
+    background: repeating-linear-gradient(110deg, #ff201d 0 15px, #f3f0e8 15px 21px, #ff201d 21px 34px);
+    animation: persona-progress-run 950ms cubic-bezier(.55, 0, .22, 1) infinite alternate;
 }
 .persona-progress-labels {
     display: flex;
@@ -301,13 +352,36 @@ onUnmounted(() => {
     gap: 14px;
     width: min(470px, 70vw);
     margin-top: 10px;
-    color: #c5bfc1;
-    font-size: .62rem;
+    color: #fff;
+    font-size: .61rem;
     font-weight: 850;
     letter-spacing: .16em;
 }
-.persona-footer { position: absolute; right: clamp(24px, 6vw, 88px); bottom: clamp(24px, 4.5vw, 64px); left: clamp(24px, 6vw, 88px); color: rgba(255, 255, 255, .78); }
-.persona-footer b { margin-left: 6px; color: #ff3842; }
+.persona-progress-labels b { margin-left: 4px; color: #ff201d; }
+.persona-side-note {
+    position: absolute;
+    z-index: 4;
+    right: clamp(22px, 5vw, 72px);
+    bottom: 22%;
+    display: grid;
+    gap: 2px;
+    padding: 12px 16px 10px;
+    color: #08080a;
+    background: #f3f0e8;
+    border: 3px solid #08080a;
+    box-shadow: 6px 6px 0 #ff201d;
+    font-size: .6rem;
+    font-weight: 900;
+    letter-spacing: .16em;
+    transform: rotate(-7deg);
+    animation: persona-stamp-enter 480ms cubic-bezier(.16, 1, .3, 1) 480ms both;
+}
+.persona-side-note b { font-size: 1.4rem; font-style: italic; letter-spacing: -.03em; }
+.persona-side-note i { font-size: .54rem; font-style: normal; }
+.persona-footer { position: absolute; right: clamp(24px, 6vw, 88px); bottom: clamp(24px, 4.5vw, 64px); left: clamp(24px, 6vw, 88px); color: rgba(255, 255, 255, .88); }
+.persona-footer span:first-child { padding: 7px 10px; background: #08080a; border-left: 4px solid #ff201d; }
+.persona-footer span:last-child { padding: 6px 9px; color: #08080a; background: #f3f0e8; border: 2px solid #08080a; box-shadow: 4px 4px 0 #ff201d; transform: rotate(2deg); }
+.persona-footer b { margin-left: 6px; color: #ff201d; }
 .light-loading { display: block; background: #171b2b; color: #fff; }
 .light-loading.closing { background: transparent; }
 .light-loading.closing .date-stage { animation: clear-scene 1.3s steps(1, end) both; }
@@ -547,10 +621,13 @@ onUnmounted(() => {
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes persona-signal { 50% { opacity: .35; } }
-@keyframes persona-slice-enter { to { transform: translateX(0) skewX(-5deg); } }
-@keyframes persona-number-enter { to { transform: rotate(-8deg) scale(1); } }
+@keyframes persona-slice-enter { to { transform: translateX(0) skewX(-8deg); } }
+@keyframes persona-paper-enter { to { transform: translateX(0) skewX(-5deg); } }
+@keyframes persona-halftone-enter { to { transform: scale(1) rotate(-8deg); } }
+@keyframes persona-number-enter { to { transform: rotate(8deg) scale(1); } }
 @keyframes persona-copy-enter { from { transform: translate(-34px, -48%) skewX(-3deg); } to { transform: translate(0, -48%) skewX(0); } }
 @keyframes persona-progress-run { to { transform: translateX(165%); } }
+@keyframes persona-stamp-enter { from { opacity: 0; transform: translate(24px, 12px) rotate(-7deg) scale(.82); } to { opacity: 1; transform: translate(0, 0) rotate(-7deg) scale(1); } }
 @keyframes ripple {
     from { transform: translate(-50%, -50%) scale(.65); opacity: .85; }
     to { transform: translate(-50%, -50%) scale(1.55); opacity: 0; }
@@ -588,23 +665,29 @@ onUnmounted(() => {
     .persona-brand { gap: 8px; }
     .persona-brand i { width: 9px; height: 9px; }
     .persona-connection { gap: 6px; }
-    .persona-red-slice { top: -8%; right: -47%; width: 140%; height: 116%; opacity: .82; }
-    .persona-number { right: -8%; bottom: -.08em; font-size: clamp(18rem, 88vw, 34rem); }
-    .persona-copy { top: 48%; left: 22px; width: calc(100% - 44px); }
+    .persona-red-slice { top: -10%; left: -34%; width: 116%; height: 120%; clip-path: polygon(0 0, 100% 0, 78% 100%, 0 100%); }
+    .persona-paper-panel { top: -4%; right: -35%; width: 76%; height: 108%; opacity: .74; }
+    .persona-halftone { top: 16%; right: -9%; width: 47vw; border-width: 6px; }
+    .persona-number { top: 20%; right: -11%; font-size: clamp(14rem, 58vw, 24rem); }
+    .persona-copy { top: 49%; left: 22px; width: calc(100% - 44px); }
     .persona-kicker { gap: 7px; font-size: .61rem; letter-spacing: .13em; }
     .persona-title { gap: 5px; margin: 21px 0 15px; }
     .persona-title-now { font-size: clamp(1.75rem, 8vw, 2.6rem); }
-    .persona-title-loading { font-size: clamp(3.5rem, 14vw, 5.8rem); }
-    .persona-message { margin-top: 18px; font-size: .92rem; }
+    .persona-title-loading { font-size: clamp(3.2rem, 13vw, 5.1rem); }
+    .persona-message { max-width: 85%; margin-top: 18px; font-size: .68rem; letter-spacing: .1em; }
     .persona-progress { width: 100%; margin-top: 28px; }
     .persona-progress-labels { width: 100%; font-size: .52rem; letter-spacing: .1em; }
     .persona-footer { right: 22px; bottom: 25px; left: 22px; font-size: .52rem; letter-spacing: .12em; }
+    .persona-side-note { right: 22px; bottom: 16%; padding: 7px 9px 6px; font-size: .47rem; }
+    .persona-side-note b { font-size: .98rem; }
+    .persona-side-note i { font-size: .42rem; }
 }
 @media (prefers-reduced-motion: reduce) {
     .loading, .day-change-enter-active, .day-change-leave-active,
     .timeline, .timeline-day, .timeline-dot, .timeline-label { transition-duration: .01ms; }
-    .loading-spinner, .persona-red-slice, .persona-number, .persona-copy,
-    .persona-progress span, .persona-connection i,
+    .loading-spinner, .persona-red-slice, .persona-paper-panel, .persona-halftone,
+    .persona-number, .persona-copy, .persona-progress span, .persona-connection i,
+    .persona-side-note,
     .light-loading.closing .date-stage, .light-loading.closing .closing-wipe,
     .phase-arrived .date-ripple, .phase-arrived .date-ripple::before,
     .phase-arrived .date-ripple::after { animation: none; }
