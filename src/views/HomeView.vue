@@ -787,17 +787,26 @@ h1 {
 }
 
 :global(html[data-theme="dark"] .hero .button-primary) {
+    position: relative;
+    isolation: isolate;
     border-radius: 0;
     color: #08080a;
+    background: #08080a;
+    clip-path: polygon(7% 0, 100% 0, 93% 100%, 0 88%);
+    transition: transform 180ms cubic-bezier(.2, .8, .2, 1);
+}
+
+:global(html[data-theme="dark"] .hero .button-primary::before) {
+    position: absolute;
+    z-index: -1;
+    inset: 2px;
     background: #f6f2ec;
     clip-path: polygon(7% 0, 100% 0, 93% 100%, 0 88%);
-    filter: drop-shadow(5px 6px 0 #08080a);
-    transition: transform 180ms cubic-bezier(.2, .8, .2, 1), filter 180ms ease;
+    content: "";
 }
 
 :global(html[data-theme="dark"] .hero .button-primary:hover) {
     transform: translate(-2px, -2px);
-    filter: drop-shadow(7px 8px 0 #08080a);
 }
 
 :global(html[data-theme="dark"] .hero .text-link) {
