@@ -596,6 +596,7 @@ h1 {
 :global(html[data-theme="light"] .hero h1) {
     gap: 0;
     color: #061849;
+    font-size: clamp(3.4rem, 7.1vw, 6.9rem);
     font-style: italic;
     font-weight: 950;
     letter-spacing: -0.085em;
@@ -707,8 +708,7 @@ h1 {
     top: -2%;
     bottom: -3%;
     left: -50vw;
-    width: calc(50vw + 62%);
-    border-right: 8px solid #f6f2ec;
+    width: calc(50vw + 64%);
     background:
         repeating-linear-gradient(135deg, transparent 0 34px, rgba(255, 255, 255, .075) 34px 36px, transparent 36px 68px),
         linear-gradient(145deg, #8f080d 0%, #e5222d 52%, #bd111b 100%);
@@ -997,9 +997,9 @@ h1 {
         bottom: auto;
         left: -24px;
         width: auto;
-        height: 52%;
+        height: 54%;
         border-right: 0;
-        border-bottom: 8px solid #f6f2ec;
+        border-bottom: 0;
         clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
     }
 
