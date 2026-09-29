@@ -162,7 +162,6 @@ const mouseup = () => {
                 <p class="hero-description">这里记录代码、灵感，以及每一次正在发生的探索。</p>
                 <div class="hero-actions">
                     <a class="button button-primary" href="#page2">
-                        <span class="button-mark" aria-hidden="true">◆</span>
                         <span class="button-label">认识我</span>
                         <svg aria-hidden="true" viewBox="0 0 20 20"><path d="M4 10h11M10 5l5 5-5 5" /></svg>
                     </a>
@@ -428,12 +427,6 @@ h1 {
     color: var(--theme-contrast);
     background: var(--accent);
     box-shadow: 0 10px 24px color-mix(in srgb, var(--accent) 25%, transparent);
-}
-
-.button-mark {
-    color: var(--accent-strong);
-    font-size: 0.68em;
-    line-height: 1;
 }
 
 .button-label {
@@ -807,22 +800,36 @@ h1 {
 }
 
 :global(html[data-theme="dark"] .hero .button-primary) {
+    position: relative;
+    isolation: isolate;
     border-radius: 0;
     color: #08080a;
-    background: #f6f2ec;
-    clip-path: polygon(7% 0, 100% 0, 93% 100%, 0 88%);
+    background: transparent;
     box-shadow: none;
-    filter: drop-shadow(7px 7px 0 #08080a);
-    transition: transform 180ms cubic-bezier(.2, .8, .2, 1), filter 180ms ease;
+    transition: transform 180ms cubic-bezier(.2, .8, .2, 1);
+}
+
+:global(html[data-theme="dark"] .hero .button-primary::before),
+:global(html[data-theme="dark"] .hero .button-primary::after) {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    clip-path: polygon(7% 0, 100% 0, 93% 100%, 0 88%);
+    content: "";
+}
+
+:global(html[data-theme="dark"] .hero .button-primary::before) {
+    background: #f6f2ec;
+}
+
+:global(html[data-theme="dark"] .hero .button-primary::after) {
+    z-index: -2;
+    background: #08080a;
+    transform: translate(7px, 7px);
 }
 
 :global(html[data-theme="dark"] .hero .button-primary:hover) {
     transform: translate(-2px, -2px);
-    filter: drop-shadow(9px 9px 0 #08080a);
-}
-
-:global(html[data-theme="dark"] .hero .button-mark) {
-    color: #e5222d;
 }
 
 :global(html[data-theme="dark"] .hero .button-label) {
