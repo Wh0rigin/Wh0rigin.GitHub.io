@@ -162,7 +162,8 @@ const mouseup = () => {
                 <p class="hero-description">这里记录代码、灵感，以及每一次正在发生的探索。</p>
                 <div class="hero-actions">
                     <a class="button button-primary" href="#page2">
-                        认识我
+                        <span class="button-mark" aria-hidden="true">◆</span>
+                        <span class="button-label">认识我</span>
                         <svg aria-hidden="true" viewBox="0 0 20 20"><path d="M4 10h11M10 5l5 5-5 5" /></svg>
                     </a>
                     <a class="text-link" href="https://github.com/Wh0rigin" target="_blank" rel="noreferrer">
@@ -175,11 +176,19 @@ const mouseup = () => {
             <div class="hero-visual">
                 <svg class="silhouette-filters" aria-hidden="true" width="0" height="0">
                     <defs>
-                        <filter id="hero-blue-silhouette" color-interpolation-filters="sRGB">
-                            <feColorMatrix type="matrix" values="0 0 0 0 0.09  0 0 0 0 0.56  0 0 0 0 0.85  0 0 0 1 0" />
+                        <filter id="hero-blue-silhouette" color-interpolation-filters="sRGB" x="-2%" y="-2%" width="104%" height="104%">
+                            <feMorphology in="SourceAlpha" operator="dilate" radius="2" result="expandedAlpha" />
+                            <feFlood flood-color="#001b67" result="outlineColor" />
+                            <feComposite in="outlineColor" in2="expandedAlpha" operator="in" result="outline" />
+                            <feColorMatrix type="matrix" values="0 0 0 0 0.09  0 0 0 0 0.56  0 0 0 0 0.85  0 0 0 1 0" result="silhouette" />
+                            <feMerge><feMergeNode in="outline" /><feMergeNode in="silhouette" /></feMerge>
                         </filter>
-                        <filter id="hero-red-silhouette" color-interpolation-filters="sRGB">
-                            <feColorMatrix type="matrix" values="0 0 0 0 0.90  0 0 0 0 0.13  0 0 0 0 0.18  0 0 0 1 0" />
+                        <filter id="hero-red-silhouette" color-interpolation-filters="sRGB" x="-2%" y="-2%" width="104%" height="104%">
+                            <feMorphology in="SourceAlpha" operator="dilate" radius="2" result="expandedAlpha" />
+                            <feFlood flood-color="#08080a" result="outlineColor" />
+                            <feComposite in="outlineColor" in2="expandedAlpha" operator="in" result="outline" />
+                            <feColorMatrix type="matrix" values="0 0 0 0 0.90  0 0 0 0 0.13  0 0 0 0 0.18  0 0 0 1 0" result="silhouette" />
+                            <feMerge><feMergeNode in="outline" /><feMergeNode in="silhouette" /></feMerge>
                         </filter>
                     </defs>
                 </svg>
@@ -419,6 +428,17 @@ h1 {
     color: var(--theme-contrast);
     background: var(--accent);
     box-shadow: 0 10px 24px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+.button-mark {
+    color: var(--accent-strong);
+    font-size: 0.68em;
+    line-height: 1;
+}
+
+.button-label {
+    font-style: italic;
+    letter-spacing: 0.08em;
 }
 
 .text-link {
@@ -793,7 +813,8 @@ h1 {
     color: #08080a;
     background: #08080a;
     clip-path: polygon(7% 0, 100% 0, 93% 100%, 0 88%);
-    transition: transform 180ms cubic-bezier(.2, .8, .2, 1);
+    filter: drop-shadow(6px 6px 0 #08080a);
+    transition: transform 180ms cubic-bezier(.2, .8, .2, 1), filter 180ms ease;
 }
 
 :global(html[data-theme="dark"] .hero .button-primary::before) {
@@ -807,6 +828,16 @@ h1 {
 
 :global(html[data-theme="dark"] .hero .button-primary:hover) {
     transform: translate(-2px, -2px);
+    filter: drop-shadow(8px 8px 0 #08080a);
+}
+
+:global(html[data-theme="dark"] .hero .button-mark) {
+    color: #e5222d;
+}
+
+:global(html[data-theme="dark"] .hero .button-label) {
+    font-weight: 950;
+    letter-spacing: 0.13em;
 }
 
 :global(html[data-theme="dark"] .hero .text-link) {
