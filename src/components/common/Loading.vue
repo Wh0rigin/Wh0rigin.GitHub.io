@@ -89,7 +89,7 @@ onUnmounted(() => {
                         <span class="timeline-label">
                             <span class="timeline-number">{{ item.date }}</span>
                             <span class="timeline-weekday">{{ item.weekday }}</span>
-                            <span v-if="highlightedDay === item.date" class="date-ripple"></span>
+                            <span v-if="phase === 'arrived' && highlightedDay === item.date" class="date-ripple"></span>
                         </span>
                         <span class="timeline-dot"></span>
                     </div>
@@ -279,6 +279,7 @@ onUnmounted(() => {
     aspect-ratio: 1;
     border: 2px solid rgba(173, 223, 255, .65);
     border-radius: 50%;
+    opacity: 0;
     pointer-events: none;
     transform: translate(-50%, -50%);
 }
@@ -289,8 +290,8 @@ onUnmounted(() => {
     width: 100%;
     content: '';
 }
-.date-ripple::before { transform: translate(-50%, -50%) scale(1.35); opacity: .45; }
-.date-ripple::after { transform: translate(-50%, -50%) scale(1.7); opacity: .22; }
+.date-ripple::before { transform: translate(-50%, -50%) scale(1.35); }
+.date-ripple::after { transform: translate(-50%, -50%) scale(1.7); }
 .phase-arrived .date-ripple,
 .phase-arrived .date-ripple::before,
 .phase-arrived .date-ripple::after {
