@@ -1,23 +1,29 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useModeStore } from '../../stores/mode';
 import FlipTextCarousel from './FlipTextCarousel.vue';
 
 type Phase = 'waiting' | 'moving' | 'arrived' | 'dim' | 'finished';
 const modeStore = useModeStore();
 const phase = ref<Phase>('waiting');
-const day = ref(13);
-const highlightedDay = ref<number | null>(13);
-const timelineDays = [
-    { date: 10, weekday: 'SUN' },
-    { date: 11, weekday: 'MON' },
-    { date: 12, weekday: 'TUE' },
-    { date: 13, weekday: 'WED' },
-    { date: 14, weekday: 'THU' },
-    { date: 15, weekday: 'FRI' },
-    { date: 16, weekday: 'SAT' },
-    { date: 17, weekday: 'SUN' },
-];
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+const yesterday = new Date(today);
+yesterday.setDate(yesterday.getDate() - 1);
+const displayedDate = ref(yesterday);
+const day = computed(() => displayedDate.value.getDate());
+const monthName = computed(() => displayedDate.value.toLocaleString('en-US', { month: 'long' }).toUpperCase());
+const weekdayName = computed(() => displayedDate.value.toLocaleString('en-US', { weekday: 'long' }).toUpperCase());
+const highlightedDate = ref<number | null>(yesterday.getTime());
+const timelineDays = Array.from({ length: 8 }, (_, index) => {
+    const date = new Date(today);
+    date.setDate(date.getDate() + index - 4);
+    return {
+        timestamp: date.getTime(),
+        date: date.getDate(),
+        weekday: date.toLocaleString('en-US', { weekday: 'short' }).toUpperCase(),
+    };
+});
 let active = true;
 const timers: Array<ReturnType<typeof setTimeout>> = [];
 let removeLoadListener: (() => void) | undefined;
@@ -42,12 +48,12 @@ onMounted(async () => {
     await Promise.all([waitForLoad(), delay(1600)]);
     if (!active) return;
     if (modeStore.theme === 'light') {
-        highlightedDay.value = null;
+        highlightedDate.value = null;
         phase.value = 'moving';
         await delay(900);
         if (!active) return;
-        day.value = 14;
-        highlightedDay.value = 14;
+        displayedDate.value = today;
+        highlightedDate.value = today.getTime();
         phase.value = 'arrived';
         await delay(950);
         if (!active) return;
@@ -79,18 +85,18 @@ onUnmounted(() => {
                         <line x1="0" y1="86" x2="100" y2="8" />
                     </svg>
                     <div class="opening-date">
-                        <div class="date-year">2002 <span>NOVEMBER</span></div>
+                        <div class="date-year">{{ displayedDate.getFullYear() }} <span>{{ monthName }}</span></div>
                         <Transition name="day-change" mode="out-in">
-                            <span :key="day" class="date-number">{{ day }}</span>
+                            <span :key="displayedDate.getTime()" class="date-number">{{ day }}</span>
                         </Transition>
-                        <span class="date-weekday">{{ day === 13 ? 'WEDNESDAY' : 'THURSDAY' }}</span>
+                        <span class="date-weekday">{{ weekdayName }}</span>
                     </div>
                     <div class="timeline" :class="{ advanced: phase !== 'waiting' }">
-                        <div v-for="(item, index) in timelineDays" :key="item.date" class="timeline-day" :class="{ selected: highlightedDay === item.date, past: item.date < (phase === 'moving' ? day + 1 : day) }" :style="{ '--x': `${10 + index * 11.5}%`, '--y': `${78 - index * 9}%` }">
+                        <div v-for="(item, index) in timelineDays" :key="item.timestamp" class="timeline-day" :class="{ selected: highlightedDate === item.timestamp, past: item.timestamp < (phase === 'moving' ? today.getTime() : displayedDate.getTime()) }" :style="{ '--x': `${10 + index * 11.5}%`, '--y': `${78 - index * 9}%` }">
                             <span class="timeline-label">
                                 <span class="timeline-number">{{ item.date }}</span>
                                 <span class="timeline-weekday">{{ item.weekday }}</span>
-                                <span v-if="phase === 'arrived' && highlightedDay === item.date" class="date-ripple"></span>
+                                <span v-if="phase === 'arrived' && highlightedDate === item.timestamp" class="date-ripple"></span>
                             </span>
                             <span class="timeline-dot"></span>
                         </div>
