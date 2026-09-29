@@ -4,15 +4,78 @@ import { onMounted, onUnmounted, ref } from 'vue';
 const touchMode = ref(false);
 const spotlightOpen = ref(false);
 const recordScene = ref<HTMLButtonElement | null>(null);
+const vinylRef = ref<HTMLElement | null>(null);
+const coverRef = ref<HTMLImageElement | null>(null);
+const spotlightWindowRef = ref<HTMLElement | null>(null);
+const viewport = ref({ width: 1, height: 1 });
+const artwork = ref({ vinylX: 0, vinylY: 0, vinylRadius: 0, coverX: 0, coverY: 0, coverWidth: 0, coverHeight: 0 });
 let touchModeQuery: MediaQueryList | undefined;
+let closeTimer: number | undefined;
+let geometryFrame = 0;
+
+function updateSpotlightGeometry() {
+    viewport.value = { width: window.innerWidth, height: window.innerHeight };
+    const vinylRect = vinylRef.value?.getBoundingClientRect();
+    const coverRect = coverRef.value?.getBoundingClientRect();
+
+    if (vinylRect) {
+        artwork.value.vinylX = vinylRect.left + vinylRect.width / 2;
+        artwork.value.vinylY = vinylRect.top + vinylRect.height / 2;
+        artwork.value.vinylRadius = Math.max(vinylRect.width, vinylRect.height) / 2 + 5;
+    }
+    if (coverRect) {
+        artwork.value.coverX = coverRect.left - 4;
+        artwork.value.coverY = coverRect.top - 4;
+        artwork.value.coverWidth = coverRect.width + 8;
+        artwork.value.coverHeight = coverRect.height + 8;
+    }
+}
+
+function scheduleGeometryUpdate() {
+    cancelAnimationFrame(geometryFrame);
+    geometryFrame = requestAnimationFrame(updateSpotlightGeometry);
+}
+
+function openSpotlight() {
+    if (touchMode.value) return;
+    if (closeTimer) window.clearTimeout(closeTimer);
+    spotlightOpen.value = true;
+    scheduleGeometryUpdate();
+}
+
+function scheduleSpotlightClose() {
+    if (touchMode.value) return;
+    if (closeTimer) window.clearTimeout(closeTimer);
+    closeTimer = window.setTimeout(() => { spotlightOpen.value = false; }, 520);
+}
 
 function updateTouchMode(event?: MediaQueryListEvent) {
     touchMode.value = event?.matches ?? touchModeQuery?.matches ?? false;
-    if (!touchMode.value) spotlightOpen.value = false;
+    spotlightOpen.value = false;
+    if (closeTimer) window.clearTimeout(closeTimer);
 }
 
 function toggleSpotlight() {
-    if (touchMode.value) spotlightOpen.value = !spotlightOpen.value;
+    if (!touchMode.value) return;
+    spotlightOpen.value = !spotlightOpen.value;
+    if (spotlightOpen.value) scheduleGeometryUpdate();
+}
+
+function isInsideSpotlightArea(x: number, y: number) {
+    const rectangles = [vinylRef.value, coverRef.value, spotlightWindowRef.value]
+        .map((element) => element?.getBoundingClientRect())
+        .filter((rect): rect is DOMRect => Boolean(rect));
+
+    return rectangles.some((rect) => x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom);
+}
+
+function trackSpotlightPointer(event: PointerEvent) {
+    if (touchMode.value || !spotlightOpen.value) return;
+    if (isInsideSpotlightArea(event.clientX, event.clientY)) {
+        if (closeTimer) window.clearTimeout(closeTimer);
+    } else {
+        scheduleSpotlightClose();
+    }
 }
 
 function closeSpotlightOnOutsideTap(event: PointerEvent) {
@@ -24,28 +87,45 @@ function closeSpotlightOnOutsideTap(event: PointerEvent) {
 onMounted(() => {
     touchModeQuery = window.matchMedia('(hover: none)');
     updateTouchMode();
+    updateSpotlightGeometry();
     touchModeQuery.addEventListener('change', updateTouchMode);
     document.addEventListener('pointerdown', closeSpotlightOnOutsideTap);
+    document.addEventListener('pointermove', trackSpotlightPointer, { passive: true });
+    window.addEventListener('resize', scheduleGeometryUpdate, { passive: true });
+    window.addEventListener('scroll', scheduleGeometryUpdate, { passive: true });
 });
 
 onUnmounted(() => {
+    if (closeTimer) window.clearTimeout(closeTimer);
+    cancelAnimationFrame(geometryFrame);
     touchModeQuery?.removeEventListener('change', updateTouchMode);
     document.removeEventListener('pointerdown', closeSpotlightOnOutsideTap);
+    document.removeEventListener('pointermove', trackSpotlightPointer);
+    window.removeEventListener('resize', scheduleGeometryUpdate);
+    window.removeEventListener('scroll', scheduleGeometryUpdate);
 });
 </script>
 
 <template>
-    <article class="music-card" :class="{ 'spotlight-pinned': spotlightOpen }" aria-labelledby="music-title">
+    <article class="music-card" aria-labelledby="music-title">
         <button
             ref="recordScene"
             class="record-scene"
             type="button"
             aria-controls="music-spotlight-window"
-            :aria-expanded="touchMode ? spotlightOpen : undefined"
+            :aria-expanded="spotlightOpen"
             :aria-label="spotlightOpen ? '关闭 replica 聚光窗' : '查看 replica 专辑信息'"
             @click="toggleSpotlight"
+            @focus="openSpotlight"
+            @blur="scheduleSpotlightClose"
         >
-            <div class="vinyl-position" aria-hidden="true">
+            <div
+                ref="vinylRef"
+                class="vinyl-position"
+                aria-hidden="true"
+                @pointerenter="openSpotlight"
+                @pointerleave="scheduleSpotlightClose"
+            >
                 <div class="vinyl-disc">
                     <div class="vinyl-label">
                         <span>replica</span>
@@ -55,27 +135,69 @@ onUnmounted(() => {
                 </div>
             </div>
             <img
+                ref="coverRef"
                 class="album-cover"
                 src="/music/vaundy-replica.jpg"
                 alt="Vaundy《replica》专辑封面"
                 loading="lazy"
+                @pointerenter="openSpotlight"
+                @pointerleave="scheduleSpotlightClose"
             />
-            <span v-if="touchMode && spotlightOpen" class="spotlight-hint">移开或重新点击唱片以关闭窗口</span>
         </button>
 
-        <div id="music-spotlight-window" class="spotlight-stack" aria-hidden="true">
-            <span class="spotlight-layer spotlight-layer-back"></span>
-            <span class="spotlight-layer spotlight-layer-front"></span>
-            <div class="spotlight-window">
-                <span class="spotlight-rays" aria-hidden="true"></span>
-                <div class="spotlight-copy">
-                    <p>PERSONAL FAVORITE <span>— 01</span></p>
-                    <strong>replica</strong>
-                    <span class="spotlight-artist">VAUNDY <i>·</i> ALBUM</span>
+        <Teleport to="body">
+            <div class="spotlight-portal" :class="{ 'is-open': spotlightOpen }" :aria-hidden="!spotlightOpen">
+                <svg
+                    class="spotlight-mask-defs"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    :width="viewport.width"
+                    :height="viewport.height"
+                    :viewBox="`0 0 ${viewport.width} ${viewport.height}`"
+                >
+                    <defs>
+                        <mask
+                            id="spotlight-artwork-cutout"
+                            maskUnits="userSpaceOnUse"
+                            maskContentUnits="userSpaceOnUse"
+                            x="0"
+                            y="0"
+                            :width="viewport.width"
+                            :height="viewport.height"
+                        >
+                            <rect width="100%" height="100%" fill="white" />
+                            <circle :cx="artwork.vinylX" :cy="artwork.vinylY" :r="artwork.vinylRadius" fill="black" />
+                            <rect
+                                :x="artwork.coverX"
+                                :y="artwork.coverY"
+                                :width="artwork.coverWidth"
+                                :height="artwork.coverHeight"
+                                rx="12"
+                                fill="black"
+                            />
+                        </mask>
+                    </defs>
+                </svg>
+                <div class="spotlight-veil"></div>
+                <div
+                    id="music-spotlight-window"
+                    class="spotlight-stack"
+                >
+                    <span class="spotlight-layer spotlight-layer-back"></span>
+                    <span class="spotlight-layer spotlight-layer-front"></span>
+                    <div ref="spotlightWindowRef" class="spotlight-window">
+                        <span class="spotlight-rays" aria-hidden="true"></span>
+                        <div class="spotlight-copy">
+                            <p>PERSONAL FAVORITE <span>— 01</span></p>
+                            <strong>replica</strong>
+                            <span class="spotlight-artist">VAUNDY <i>·</i> ALBUM</span>
+                        </div>
+                        <span class="spotlight-serial">THE WIRED WORLD <b>/</b> MUSIC ARCHIVE</span>
+                        <span v-if="touchMode" class="spotlight-hint">移开或重新点击唱片以关闭窗口</span>
+                    </div>
                 </div>
-                <span class="spotlight-serial">THE WIRED WORLD <b>/</b> MUSIC ARCHIVE</span>
             </div>
-        </div>
+        </Teleport>
 
         <div class="music-copy">
             <p class="eyebrow"><span aria-hidden="true">♫</span> MUSIC I LOVE</p>
@@ -305,24 +427,59 @@ onUnmounted(() => {
     transform: translateY(-52%) rotate(-3deg) scale(1.025);
 }
 
-.spotlight-stack {
-    position: absolute;
-    z-index: 2;
-    top: 5%;
-    right: 3.5%;
-    width: 64%;
-    height: 88%;
+.spotlight-mask-defs {
+    position: fixed;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.spotlight-portal {
+    position: fixed;
+    z-index: 1300;
+    inset: 0;
+    isolation: isolate;
     opacity: 0;
     pointer-events: none;
-    transform: translate(28px, -22px) scale(.97);
-    transition: opacity 260ms ease, transform 500ms cubic-bezier(.16, 1, .3, 1), visibility 500ms;
+    transition: opacity 280ms ease, visibility 280ms ease;
     visibility: hidden;
+    --spotlight-cutout: url("#spotlight-artwork-cutout");
 }
+
+.spotlight-portal.is-open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.spotlight-veil,
+.spotlight-stack {
+    position: absolute;
+    inset: 0;
+    -webkit-mask: var(--spotlight-cutout);
+    mask: var(--spotlight-cutout);
+}
+
+.spotlight-veil {
+    background: rgba(5, 8, 18, .4);
+    opacity: 0;
+    transition: opacity 320ms ease;
+}
+
+.spotlight-portal.is-open .spotlight-veil { opacity: 1; }
+
+.spotlight-stack { pointer-events: none; }
 
 .spotlight-layer,
 .spotlight-window {
     position: absolute;
-    inset: 0;
+    top: clamp(86px, 12vh, 132px);
+    right: clamp(14px, 5vw, 76px);
+    width: min(62vw, 850px);
+    height: min(43vh, 430px);
     clip-path: polygon(13% 0, 100% 0, 100% 100%, 0 100%);
     transition: clip-path 560ms cubic-bezier(.16, 1, .3, 1), transform 560ms cubic-bezier(.16, 1, .3, 1);
 }
@@ -330,13 +487,13 @@ onUnmounted(() => {
 .spotlight-layer-back {
     z-index: 0;
     background: var(--spotlight-back);
-    transform: translate(4px, 5px) skewY(-.4deg);
+    transform: translate(4px, 5px) skewY(-.4deg) translate(34px, -20px) scale(.97);
 }
 
 .spotlight-layer-front {
     z-index: 1;
     background: var(--spotlight-front);
-    transform: translate(2px, 3px) skewY(-.2deg);
+    transform: translate(2px, 3px) skewY(-.2deg) translate(34px, -20px) scale(.97);
 }
 
 .spotlight-window {
@@ -344,11 +501,18 @@ onUnmounted(() => {
     display: flex;
     align-items: flex-end;
     overflow: hidden;
-    padding: clamp(26px, 4vw, 52px) clamp(25px, 5vw, 66px) clamp(28px, 4vw, 48px) clamp(58px, 9vw, 118px);
+    padding: clamp(28px, 4vw, 52px) clamp(28px, 5vw, 68px) clamp(32px, 4vw, 48px) clamp(62px, 9vw, 118px);
     color: #fff;
     background: var(--spotlight-fill);
     filter: drop-shadow(0 18px 22px rgba(0, 0, 0, .22));
+    pointer-events: none;
+    transform: translate(34px, -20px) scale(.97);
+    transition: clip-path 560ms cubic-bezier(.16, 1, .3, 1), transform 560ms cubic-bezier(.16, 1, .3, 1);
 }
+
+.spotlight-portal.is-open .spotlight-layer-back { transform: translate(13px, 13px) skewY(-1deg); }
+.spotlight-portal.is-open .spotlight-layer-front { transform: translate(7px, 7px) skewY(-.5deg); }
+.spotlight-portal.is-open .spotlight-window { clip-path: polygon(9% 0, 100% 0, 100% 100%, 0 100%); transform: translate(0) scale(1); }
 
 .spotlight-rays {
     position: absolute;
@@ -369,75 +533,26 @@ onUnmounted(() => {
     text-shadow: 2px 3px 0 rgba(0, 0, 0, .2);
 }
 
-.spotlight-copy > p {
-    margin-bottom: 6px;
-    font-size: clamp(.57rem, .85vw, .72rem);
-    font-weight: 900;
-    letter-spacing: .18em;
-}
-
+.spotlight-copy > p { margin-bottom: 6px; font-size: clamp(.57rem, .85vw, .72rem); font-weight: 900; letter-spacing: .18em; }
 .spotlight-copy > p span { opacity: .72; }
-
-.spotlight-copy > strong {
-    display: block;
-    font-size: clamp(2.7rem, 6vw, 6rem);
-    font-style: italic;
-    font-weight: 950;
-    letter-spacing: -.09em;
-    line-height: .92;
-}
-
-.spotlight-artist {
-    display: block;
-    margin-top: 11px;
-    font-size: clamp(.62rem, .95vw, .8rem);
-    font-weight: 900;
-    letter-spacing: .2em;
-}
-
+.spotlight-copy > strong { display: block; font-size: clamp(2.7rem, 6vw, 6rem); font-style: italic; font-weight: 950; letter-spacing: -.09em; line-height: .92; }
+.spotlight-artist { display: block; margin-top: 11px; font-size: clamp(.62rem, .95vw, .8rem); font-weight: 900; letter-spacing: .2em; }
 .spotlight-artist i { margin: 0 5px; font-style: normal; opacity: .68; }
-
-.spotlight-serial {
-    position: absolute;
-    right: clamp(24px, 4vw, 54px);
-    bottom: clamp(14px, 2vw, 24px);
-    color: rgba(255, 255, 255, .76);
-    font-size: .52rem;
-    font-weight: 850;
-    letter-spacing: .14em;
-}
-
+.spotlight-serial { position: absolute; right: clamp(24px, 4vw, 54px); bottom: clamp(14px, 2vw, 24px); color: rgba(255, 255, 255, .76); font-size: .52rem; font-weight: 850; letter-spacing: .14em; }
 .spotlight-serial b { margin: 0 5px; color: #fff; }
+.spotlight-hint { display: none; }
 
-:global(html[data-theme="light"] .spotlight-stack) {
+:global(html[data-theme="light"] .spotlight-portal) {
     --spotlight-fill: linear-gradient(125deg, #0750bd 0%, #087cde 68%, #069fcf 100%);
     --spotlight-front: #20dce8;
     --spotlight-back: #003b9e;
 }
 
-:global(html[data-theme="dark"] .spotlight-stack) {
+:global(html[data-theme="dark"] .spotlight-portal) {
     --spotlight-fill: linear-gradient(125deg, #8f080f 0%, #d71925 57%, #fb3038 100%);
     --spotlight-front: #10090b;
     --spotlight-back: #650910;
 }
-
-.record-scene:focus-visible + .spotlight-stack,
-.spotlight-pinned .spotlight-stack {
-    opacity: 1;
-    transform: translate(0, 0) scale(1);
-    visibility: visible;
-}
-
-.record-scene:focus-visible + .spotlight-stack .spotlight-layer-back,
-.spotlight-pinned .spotlight-layer-back { transform: translate(13px, 13px) skewY(-1deg); }
-
-.record-scene:focus-visible + .spotlight-stack .spotlight-layer-front,
-.spotlight-pinned .spotlight-layer-front { transform: translate(7px, 7px) skewY(-.5deg); }
-
-.record-scene:focus-visible + .spotlight-stack .spotlight-window,
-.spotlight-pinned .spotlight-window { clip-path: polygon(9% 0, 100% 0, 100% 100%, 0 100%); }
-
-.spotlight-hint { display: none; }
 
 .music-copy {
     max-width: 520px;
@@ -565,11 +680,12 @@ h3 {
         max-width: none;
     }
 
-    .spotlight-stack {
-        top: 24%;
-        right: 2%;
-        width: 82%;
-        height: 68%;
+    .spotlight-layer,
+    .spotlight-window {
+        top: clamp(82px, 11vh, 108px);
+        right: 12px;
+        width: min(88vw, 540px);
+        height: clamp(200px, 31vh, 290px);
     }
 
     .spotlight-window {
@@ -581,23 +697,22 @@ h3 {
     .spotlight-serial { right: 20px; bottom: 14px; font-size: .46rem; }
 
     .spotlight-hint {
+        display: block;
         position: absolute;
         z-index: 8;
-        left: 50%;
-        bottom: 2px;
+        right: 18px;
+        bottom: 10px;
         width: max-content;
-        max-width: calc(100% - 16px);
+        max-width: calc(100% - 36px);
         padding: 5px 10px;
-        border-bottom: 2px solid var(--accent-strong);
-        color: var(--text);
-        background: var(--surface);
-        box-shadow: 3px 3px 0 color-mix(in srgb, var(--accent) 55%, transparent);
+        border-bottom: 1px solid rgba(255, 255, 255, .72);
+        color: rgba(255, 255, 255, .92);
+        background: rgba(0, 0, 0, .18);
         font-size: .66rem;
         font-weight: 650;
         letter-spacing: .04em;
         text-align: center;
         white-space: nowrap;
-        transform: translateX(-50%) skewX(-4deg);
     }
 }
 
@@ -611,7 +726,15 @@ h3 {
         min-height: 230px;
     }
 
-    .spotlight-stack { height: 39%; }
+    .spotlight-layer,
+    .spotlight-window {
+        top: clamp(78px, 10vh, 94px);
+        right: 4vw;
+        width: 92vw;
+        height: clamp(190px, 29vh, 250px);
+    }
+
+    .spotlight-window { padding: 24px 18px 45px 48px; }
 
     .vinyl-position {
         width: min(70vw, 240px);
@@ -630,6 +753,8 @@ h3 {
 
 @media (prefers-reduced-motion: reduce) {
     .vinyl-disc { animation: none; }
+    .spotlight-portal,
+    .spotlight-veil,
     .spotlight-stack,
     .spotlight-layer,
     .spotlight-window,
@@ -637,16 +762,7 @@ h3 {
 }
 
 @media (hover: hover) and (pointer: fine) {
-    .record-scene:hover + .spotlight-stack,
-    .record-scene:focus-visible + .spotlight-stack { opacity: 1; visibility: visible; }
-
-    .record-scene:hover + .spotlight-stack { transform: translate(0, 0) scale(1); }
-
-    .record-scene:hover + .spotlight-stack .spotlight-layer-back { transform: translate(13px, 13px) skewY(-1deg); }
-    .record-scene:hover + .spotlight-stack .spotlight-layer-front { transform: translate(7px, 7px) skewY(-.5deg); }
-
-    .record-scene:hover + .spotlight-stack .spotlight-window,
-    .record-scene:focus-visible + .spotlight-stack .spotlight-window { clip-path: polygon(9% 0, 100% 0, 100% 100%, 0 100%); }
+    .spotlight-layer { pointer-events: none; }
 
     .record-scene:hover .album-cover { box-shadow: 0 22px 46px rgba(13, 15, 23, .4); transform: translateY(-52%) rotate(-3deg) scale(1.025); }
 }
