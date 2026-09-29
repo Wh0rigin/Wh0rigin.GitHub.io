@@ -476,10 +476,10 @@ onUnmounted(() => {
 .spotlight-layer,
 .spotlight-window {
     position: absolute;
-    top: clamp(86px, 12vh, 132px);
-    right: clamp(14px, 5vw, 76px);
-    width: min(62vw, 850px);
-    height: min(43vh, 430px);
+    top: clamp(64px, 7vh, 100px);
+    right: clamp(12px, 3vw, 48px);
+    width: 94vw;
+    height: 90vh;
     clip-path: polygon(13% 0, 100% 0, 100% 100%, 0 100%);
     transition: clip-path 560ms cubic-bezier(.16, 1, .3, 1), transform 560ms cubic-bezier(.16, 1, .3, 1);
 }
@@ -682,10 +682,10 @@ h3 {
 
     .spotlight-layer,
     .spotlight-window {
-        top: clamp(82px, 11vh, 108px);
-        right: 12px;
-        width: min(88vw, 540px);
-        height: clamp(200px, 31vh, 290px);
+        top: clamp(72px, 9vh, 96px);
+        right: 4vw;
+        width: 92vw;
+        height: calc(100vh - clamp(72px, 9vh, 96px) - 16px);
     }
 
     .spotlight-window {
@@ -694,14 +694,14 @@ h3 {
     }
 
     .spotlight-copy > strong { font-size: clamp(3rem, 10vw, 5rem); }
-    .spotlight-serial { right: 20px; bottom: 14px; font-size: .46rem; }
+    .spotlight-serial { right: 20px; bottom: 42px; font-size: .46rem; }
 
     .spotlight-hint {
         display: block;
         position: absolute;
         z-index: 8;
         right: 18px;
-        bottom: 10px;
+        bottom: 12px;
         width: max-content;
         max-width: calc(100% - 36px);
         padding: 5px 10px;
@@ -728,13 +728,13 @@ h3 {
 
     .spotlight-layer,
     .spotlight-window {
-        top: clamp(78px, 10vh, 94px);
+        top: clamp(70px, 9vh, 90px);
         right: 4vw;
         width: 92vw;
-        height: clamp(190px, 29vh, 250px);
+        height: calc(100vh - clamp(70px, 9vh, 90px) - 14px);
     }
 
-    .spotlight-window { padding: 24px 18px 45px 48px; }
+    .spotlight-window { padding: 24px 18px 86px 48px; }
 
     .vinyl-position {
         width: min(70vw, 240px);
