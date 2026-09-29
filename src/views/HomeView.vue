@@ -339,7 +339,7 @@ h1 {
     flex-direction: column;
     gap: 4px;
     color: var(--text);
-    font-size: clamp(3rem, 6.2vw, 5.5rem);
+    font-size: clamp(3.2rem, 6.7vw, 6.3rem);
     font-weight: 800;
     letter-spacing: -0.065em;
     line-height: 1.12;
@@ -582,7 +582,6 @@ h1 {
 :global(html[data-theme="light"] .hero h1) {
     gap: 0;
     color: #061849;
-    font-size: clamp(3.2rem, 6.7vw, 6.3rem);
     font-style: italic;
     font-weight: 950;
     letter-spacing: -0.085em;
@@ -885,21 +884,21 @@ h1 {
 }
 
 @media (max-width: 520px) {
+    :global(html[data-theme="light"] .hero::after),
+    :global(html[data-theme="dark"] .hero::after) {
+        font-size: clamp(12rem, 38vw, 23rem);
+    }
+
     :global(html[data-theme="dark"] .hero::after) {
         top: 11%;
         left: 48%;
         color: rgba(229, 34, 45, 0.33);
-        font-size: clamp(8rem, 40vw, 13rem);
     }
 
     :global(html[data-theme="light"] .hero::before) {
         right: -18px;
         left: -18px;
         height: 61%;
-    }
-
-    :global(html[data-theme="light"] .hero h1) {
-        font-size: clamp(2.8rem, 13vw, 4.3rem);
     }
 
     :global(html[data-theme="light"] .hero-visual) {
@@ -949,7 +948,7 @@ h1 {
     }
 
     h1 {
-        font-size: clamp(2.8rem, 14vw, 4rem);
+        font-size: clamp(2.8rem, 13vw, 4.3rem);
     }
 
     .hero-actions {
