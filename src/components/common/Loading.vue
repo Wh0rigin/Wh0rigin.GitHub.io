@@ -53,7 +53,7 @@ onMounted(async () => {
         if (!active) return;
         displayedDate.value = today;
         phase.value = 'settled';
-        await delay(220);
+        await delay(380);
         if (!active) return;
         highlightedDate.value = today.getTime();
         phase.value = 'arrived';
@@ -497,6 +497,7 @@ onUnmounted(() => {
     letter-spacing: -.16em;
     line-height: .85;
 }
+.phase-settled .date-number { animation: date-number-arrive 340ms cubic-bezier(.16, 1, .3, 1) both; }
 .date-weekday {
     position: absolute;
     top: 13vw;
@@ -630,6 +631,11 @@ onUnmounted(() => {
     from { transform: translate(-50%, -50%) scale(.65); opacity: .85; }
     to { transform: translate(-50%, -50%) scale(1.55); opacity: 0; }
 }
+@keyframes date-number-arrive {
+    0% { opacity: 0; filter: blur(4px); transform: translateY(12px) scale(.96); }
+    65% { opacity: 1; filter: blur(0); transform: translateY(-2px) scale(1.015); }
+    100% { opacity: 1; filter: blur(0); transform: translateY(0) scale(1); }
+}
 @keyframes clear-scene {
     0%, 49% { opacity: 1; }
     50%, 100% { opacity: 0; }
@@ -684,7 +690,7 @@ onUnmounted(() => {
     .loading, .timeline, .timeline-day, .timeline-dot, .timeline-label { transition-duration: .01ms; }
     .loading-spinner, .persona-red-slice, .persona-paper-panel, .persona-halftone,
     .persona-number, .persona-copy, .persona-progress span, .persona-connection i,
-    .persona-side-note,
+    .persona-side-note, .phase-settled .date-number,
     .light-loading.closing .date-stage, .light-loading.closing .closing-wipe,
     .phase-arrived .date-ripple, .phase-arrived .date-ripple::before,
     .phase-arrived .date-ripple::after { animation: none; }
