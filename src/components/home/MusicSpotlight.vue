@@ -480,7 +480,7 @@ onUnmounted(() => {
     right: clamp(12px, 3vw, 48px);
     width: 94vw;
     height: 90vh;
-    clip-path: polygon(13% 0, 100% 0, 100% 100%, 0 100%);
+    clip-path: polygon(82% 0, 100% 0, 100% 0, 82% 0);
     transition: clip-path 560ms cubic-bezier(.16, 1, .3, 1), transform 560ms cubic-bezier(.16, 1, .3, 1);
 }
 
@@ -510,19 +510,26 @@ onUnmounted(() => {
     transition: clip-path 560ms cubic-bezier(.16, 1, .3, 1), transform 560ms cubic-bezier(.16, 1, .3, 1);
 }
 
-.spotlight-portal.is-open .spotlight-layer-back { transform: translate(13px, 13px) skewY(-1deg); }
-.spotlight-portal.is-open .spotlight-layer-front { transform: translate(7px, 7px) skewY(-.5deg); }
-.spotlight-portal.is-open .spotlight-window { clip-path: polygon(9% 0, 100% 0, 100% 100%, 0 100%); transform: translate(0) scale(1); }
+.spotlight-portal.is-open .spotlight-layer-back {
+    clip-path: polygon(76% 0, 100% 0, 100% 100%, 0 100%);
+    transform: translate(13px, 13px) skewY(-1deg);
+}
+
+.spotlight-portal.is-open .spotlight-layer-front {
+    clip-path: polygon(79% 0, 100% 0, 100% 100%, 0 100%);
+    transform: translate(7px, 7px) skewY(-.5deg);
+}
+
+.spotlight-portal.is-open .spotlight-window {
+    clip-path: polygon(82% 0, 100% 0, 100% 100%, 0 100%);
+    transform: translate(0) scale(1);
+}
 
 .spotlight-rays {
     position: absolute;
-    top: -40%;
-    right: -13%;
-    width: 68%;
-    height: 180%;
-    opacity: .2;
-    background: repeating-linear-gradient(112deg, transparent 0 35px, rgba(255,255,255,.8) 36px 38px, transparent 39px 78px);
-    transform: rotate(-10deg);
+    inset: -8%;
+    opacity: .16;
+    background: repeating-conic-gradient(from -28deg at 84% 7%, transparent 0deg 15deg, rgba(255,255,255,.68) 15.5deg 16deg, transparent 16.5deg 31deg);
 }
 
 .spotlight-copy {
