@@ -72,28 +72,28 @@ onMounted(() => {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --page-bg: #eef8ff;
-  --surface: rgba(255, 255, 255, 0.9);
-  --surface-muted: #dcefff;
-  --text: #102e52;
-  --text-muted: #607b9d;
-  --border: rgba(16, 107, 174, 0.18);
-  --accent: #178fd8;
-  --accent-strong: #075eab;
-  --accent-soft: #d8efff;
-  --mint: #37cbd8;
-  --shadow: 0 24px 70px rgba(19, 91, 151, 0.14);
-  --footer-surface: #dcefff;
-  --panel-radius: 26px;
-  --panel-border-width: 1px;
-  --theme-glow: rgba(44, 175, 238, 0.22);
+  --page-bg: #063493;
+  --surface: #faffff;
+  --surface-muted: #d5f8ff;
+  --text: #061b54;
+  --text-muted: #355b90;
+  --border: #0c6fc5;
+  --accent: #10cbe5;
+  --accent-strong: #096bd5;
+  --accent-soft: #bbf3ff;
+  --mint: #31f3ee;
+  --shadow: 9px 9px 0 rgba(0, 27, 111, 0.8), 0 28px 48px rgba(0, 20, 80, 0.28);
+  --footer-surface: #001b64;
+  --footer-icon: #ffffff;
+  --panel-radius: 3px;
+  --panel-border-width: 2px;
+  --theme-glow: rgba(49, 243, 238, 0.2);
   --theme-contrast: #ffffff;
   --page-pattern:
-    radial-gradient(circle at 12% 18%, rgba(70, 194, 246, 0.18), transparent 28%),
-    radial-gradient(circle at 84% 24%, rgba(111, 215, 235, 0.15), transparent 24%),
-    linear-gradient(rgba(39, 145, 211, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(39, 145, 211, 0.045) 1px, transparent 1px);
-  --page-pattern-size: auto, auto, 44px 44px, 44px 44px;
+    radial-gradient(ellipse at 72% -14%, rgba(55, 255, 243, 0.9), transparent 40%),
+    radial-gradient(ellipse at 90% 26%, rgba(26, 173, 232, 0.45), transparent 34%),
+    linear-gradient(180deg, #0aace4 0%, #0879d1 22%, #064aa7 55%, #001d79 100%);
+  --page-pattern-size: auto;
   --terminal-surface: #ffffff;
   --terminal-border: rgba(12, 116, 190, 0.2);
   --terminal-divider: rgba(12, 116, 190, 0.14);
@@ -118,6 +118,7 @@ html[data-theme="dark"] {
   --mint: #f6eee3;
   --shadow: 12px 14px 0 rgba(0, 0, 0, 0.42), 0 24px 70px rgba(0, 0, 0, 0.34);
   --footer-surface: #111114;
+  --footer-icon: var(--text);
   --panel-radius: 5px;
   --panel-border-width: 2px;
   --theme-glow: rgba(229, 34, 45, 0.28);

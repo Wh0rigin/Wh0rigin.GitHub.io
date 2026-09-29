@@ -249,6 +249,74 @@ header.at-top {
     display: none;
 }
 
+:global(html[data-theme="light"] header:not(.at-top)) {
+    border-bottom: 3px solid #23e8ed;
+    background: rgba(0, 39, 130, 0.93);
+    box-shadow: 0 5px 0 rgba(0, 23, 96, 0.25);
+}
+
+:global(html[data-theme="light"] header:not(.at-top) .brand),
+:global(html[data-theme="light"] header:not(.at-top) .brand-prefix) {
+    color: #ffffff;
+}
+
+:global(html[data-theme="light"] header:not(.at-top) .brand-accent) {
+    background: linear-gradient(105deg, #ffffff, #3efaf3);
+    background-clip: text;
+    -webkit-background-clip: text;
+}
+
+:global(html[data-theme="light"] .brand-text) {
+    font-style: italic;
+    font-weight: 950;
+    letter-spacing: 0.08em;
+    transform: skewX(-7deg);
+}
+
+:global(html[data-theme="light"] .nav-link) {
+    color: #ffffff;
+    font-style: italic;
+    font-weight: 850;
+    text-shadow: 2px 2px 0 rgba(0, 28, 116, 0.6);
+}
+
+:global(html[data-theme="light"] .nav-link:hover),
+:global(html[data-theme="light"] .nav-link:focus-visible) {
+    color: #43fff1;
+}
+
+:global(html[data-theme="light"] .github-link) {
+    border: 2px solid #ffffff;
+    border-radius: 0;
+    color: #ffffff;
+    background: #003490;
+    box-shadow: 5px 5px 0 #1de3e8;
+    font-style: italic;
+    font-weight: 850;
+    transform: skewX(-7deg);
+}
+
+:global(html[data-theme="light"] .github-link:hover) {
+    color: #001b64;
+    background: #39f5ef;
+    transform: translate(2px, 2px) skewX(-7deg);
+}
+
+:global(html[data-theme="light"] .icon-button) {
+    border: 2px solid #ffffff;
+    border-radius: 1px;
+    color: #ffffff;
+    background: #0045a6;
+    box-shadow: 4px 4px 0 #1de3e8;
+    transform: skewX(-7deg);
+}
+
+:global(html[data-theme="light"] .icon-button:hover) {
+    color: #001b64;
+    background: #39f5ef;
+    transform: translate(2px, 2px) skewX(-7deg);
+}
+
 :global(html[data-theme="dark"] header:not(.at-top)) {
     border-bottom: 3px solid var(--accent);
     background: color-mix(in srgb, #09090c 92%, transparent);
@@ -299,6 +367,19 @@ header.at-top {
 }
 
 @media (max-width: 720px) {
+    :global(html[data-theme="light"] header.at-top .icon-button) {
+        border-color: #003490;
+        color: #003490;
+        background: #ffffff;
+    }
+
+    :global(html[data-theme="light"] .mobile-menu) {
+        border: 2px solid #003490;
+        border-radius: 1px;
+        background: #faffff;
+        box-shadow: 7px 7px 0 #1de3e8;
+    }
+
     .navbar {
         width: calc(100% - 32px);
         min-height: 64px;

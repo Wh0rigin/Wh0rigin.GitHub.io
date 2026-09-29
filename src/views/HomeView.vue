@@ -528,6 +528,166 @@ h1 {
     scroll-margin-top: 88px;
 }
 
+/* The light theme borrows the reference's blue stage, white cutout and slanted UI. */
+:global(html[data-theme="light"] .hero::before) {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: -50vw;
+    width: calc(50vw + 56%);
+    background: #faffff;
+    clip-path: polygon(0 0, 100% 0, 94% 66%, 100% 100%, 0 100%);
+    content: "";
+}
+
+:global(html[data-theme="light"] .hero::after) {
+    position: absolute;
+    z-index: -1;
+    top: 2%;
+    left: -13vw;
+    color: rgba(0, 33, 113, 0.1);
+    font-size: clamp(13rem, 32vw, 33rem);
+    font-style: italic;
+    font-weight: 950;
+    letter-spacing: -0.17em;
+    line-height: 1;
+    transform: rotate(-11deg);
+    pointer-events: none;
+    content: "03";
+}
+
+:global(html[data-theme="light"] .hero-copy) {
+    max-width: 520px;
+    animation: hero-rise 650ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+:global(html[data-theme="light"] .hero .eyebrow) {
+    width: fit-content;
+    padding: 8px 14px;
+    color: #ffffff;
+    background: #061b54;
+    font-weight: 850;
+    letter-spacing: 0.22em;
+    transform: skewX(-10deg);
+}
+
+:global(html[data-theme="light"] .eyebrow-dot) {
+    border-radius: 0;
+    background: var(--mint);
+    box-shadow: none;
+    transform: rotate(45deg);
+}
+
+:global(html[data-theme="light"] .hero h1) {
+    gap: 0;
+    color: #061849;
+    font-size: clamp(3.2rem, 6.7vw, 6.3rem);
+    font-style: italic;
+    font-weight: 950;
+    letter-spacing: -0.085em;
+    line-height: 1.04;
+    text-shadow: 4px 4px 0 rgba(21, 205, 233, 0.24);
+    transform: skewX(-7deg);
+}
+
+:global(html[data-theme="light"] .headline-accent) {
+    margin-top: 0.11em;
+    padding: 0.03em 0.22em 0.11em;
+    color: #ffffff;
+    background: linear-gradient(110deg, #002270, #0869c7 72%, #0ecfe5);
+    clip-path: polygon(4% 0, 100% 0, 95% 100%, 0 92%);
+    text-shadow: 4px 4px 0 rgba(0, 24, 89, 0.8);
+    transform: translateX(0.1em) rotate(-2deg);
+    -webkit-text-fill-color: #ffffff;
+}
+
+:global(html[data-theme="light"] .headline-accent::after) {
+    right: 9%;
+    bottom: 0.035em;
+    left: 12%;
+    height: 0.035em;
+    border-radius: 0;
+    background: #3af8f4;
+    transform: scaleX(1);
+    animation: none;
+}
+
+:global(html[data-theme="light"] .hero-description) {
+    max-width: 25em;
+    color: #284477;
+    font-weight: 650;
+}
+
+:global(html[data-theme="light"] .hero .button-primary) {
+    border: 2px solid #001b67;
+    border-radius: 0;
+    color: #ffffff;
+    background: #003eaa;
+    box-shadow: 7px 7px 0 #22e8ed;
+    transform: skewX(-10deg);
+}
+
+:global(html[data-theme="light"] .hero .button-primary:hover) {
+    box-shadow: 10px 10px 0 #22e8ed;
+    transform: translate(-2px, -2px) skewX(-10deg);
+}
+
+:global(html[data-theme="light"] .hero-caption) {
+    color: #0b4e9f;
+    font-style: italic;
+    font-weight: 900;
+    letter-spacing: 0.24em;
+}
+
+:global(html[data-theme="light"] .hero-caption span) {
+    height: 5px;
+    background: #05bfdc;
+    transform: skewX(-30deg);
+}
+
+:global(html[data-theme="light"] .hero-visual) {
+    filter: drop-shadow(16px 22px 0 rgba(0, 24, 112, 0.35));
+}
+
+:global(html[data-theme="light"] .hero-visual::before) {
+    width: 100%;
+    max-width: 520px;
+    border: 0;
+    border-radius: 0;
+    background: linear-gradient(138deg, rgba(84, 255, 245, 0.85), rgba(86, 212, 248, 0.3) 43%, rgba(255, 255, 255, 0.58) 76%);
+    clip-path: polygon(12% 0, 100% 7%, 88% 100%, 0 83%);
+    animation: day-shard-drift 8s ease-in-out infinite alternate;
+}
+
+:global(html[data-theme="light"] .motif-ring) {
+    border: 0;
+    border-radius: 0;
+    background: rgba(95, 250, 249, 0.18);
+    box-shadow: none;
+    clip-path: polygon(14% 0, 100% 20%, 83% 100%, 0 70%);
+}
+
+:global(html[data-theme="light"] .motif-sweep) {
+    height: 14px;
+    background: linear-gradient(90deg, transparent, rgba(145, 255, 248, 0.6), transparent);
+    opacity: 0.7;
+    transform: rotate(-23deg) skewX(-24deg);
+}
+
+:global(html[data-theme="light"] .about-section::before) {
+    position: absolute;
+    z-index: -1;
+    inset: 0 -7vw 0 -7vw;
+    background: linear-gradient(135deg, rgba(36, 227, 239, 0.23), transparent 50%, rgba(0, 18, 105, 0.38));
+    clip-path: polygon(0 5%, 100% 0, 94% 100%, 4% 96%);
+    content: "";
+}
+
+@keyframes day-shard-drift {
+    to { transform: translate(14px, -10px) rotate(3deg); }
+}
+
 :global(html[data-theme="dark"] .hero-copy) {
     animation-name: hero-snap;
 }
@@ -653,6 +813,22 @@ h1 {
 }
 
 @media (max-width: 820px) {
+    :global(html[data-theme="light"] .hero::before) {
+        top: 0;
+        right: -24px;
+        bottom: auto;
+        left: -24px;
+        width: auto;
+        height: 59%;
+        clip-path: polygon(0 0, 100% 0, 100% 89%, 0 100%);
+    }
+
+    :global(html[data-theme="light"] .hero::after) {
+        top: 1%;
+        left: -12%;
+        font-size: clamp(12rem, 38vw, 23rem);
+    }
+
     .hero {
         min-height: auto;
         grid-template-columns: 1fr;
@@ -686,6 +862,28 @@ h1 {
 }
 
 @media (max-width: 520px) {
+    :global(html[data-theme="light"] .hero::before) {
+        right: -18px;
+        left: -18px;
+        height: 61%;
+    }
+
+    :global(html[data-theme="light"] .hero h1) {
+        font-size: clamp(2.8rem, 13vw, 4.3rem);
+    }
+
+    :global(html[data-theme="light"] .hero-visual) {
+        filter: drop-shadow(8px 12px 0 rgba(0, 24, 112, 0.27));
+    }
+
+    :global(html[data-theme="light"] .hero-caption) {
+        width: fit-content;
+        padding: 7px 11px;
+        color: #ffffff;
+        background: #003c9d;
+        transform: skewX(-8deg);
+    }
+
     .motif-ring-two,
     .motif-sweep-two {
         display: none;

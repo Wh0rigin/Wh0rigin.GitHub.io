@@ -42,6 +42,41 @@
     }
 }
 
+:global(html[data-theme="light"] .intro-card) {
+    border: 3px solid #003b9e;
+    box-shadow: 11px 11px 0 #19d9e9, 17px 17px 0 #002578;
+}
+
+:global(html[data-theme="light"] .intro-card::before) {
+    top: 0;
+    right: 0;
+    left: auto;
+    width: 88px;
+    height: 88px;
+    background: #17ddec;
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+}
+
+:global(html[data-theme="light"] .intro-card:hover) {
+    border-color: #00bfdc;
+    box-shadow: 7px 7px 0 #19d9e9, 13px 13px 0 #002578;
+    transform: translate(4px, 4px);
+}
+
+:global(html[data-theme="light"] .intro-card h2) {
+    font-style: italic;
+    font-weight: 900;
+    transform: skewX(-4deg);
+}
+
+:global(html[data-theme="light"] .intro-card .eyebrow) {
+    width: fit-content;
+    padding: 6px 10px;
+    color: #ffffff;
+    background: #003c9d;
+    transform: skewX(-8deg);
+}
+
 :global(html[data-theme="dark"] .intro-card) {
     border-color: rgba(255, 255, 255, 0.7);
     box-shadow: 10px 10px 0 var(--accent), 18px 18px 0 #000000;

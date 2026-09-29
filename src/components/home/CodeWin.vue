@@ -95,6 +95,28 @@
     animation: blink 1.2s steps(2, start) infinite;
 }
 
+:global(html[data-theme="light"] .terminal) {
+    border: 3px solid #003b9e;
+    box-shadow: 11px 11px 0 #19d9e9, 17px 17px 0 #002578;
+}
+
+:global(html[data-theme="light"] .terminal:hover) {
+    border-color: #00bfdc;
+    box-shadow: 7px 7px 0 #19d9e9, 13px 13px 0 #002578;
+    transform: translate(4px, 4px);
+}
+
+:global(html[data-theme="light"] .terminal-header) {
+    border-bottom: 3px solid #0dd5e5;
+    background: #003c9d;
+}
+
+:global(html[data-theme="light"] .window-title) {
+    color: #ffffff;
+    font-style: italic;
+    font-weight: 750;
+}
+
 :global(html[data-theme="dark"] .terminal) {
     box-shadow: 10px 10px 0 #000000, 14px 14px 0 color-mix(in srgb, var(--accent) 55%, transparent);
 }

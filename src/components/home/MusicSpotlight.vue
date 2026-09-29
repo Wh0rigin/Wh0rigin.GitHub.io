@@ -82,6 +82,30 @@
     }
 }
 
+:global(html[data-theme="light"] .music-card) {
+    border: 3px solid #003b9e;
+    background: linear-gradient(112deg, #faffff 0 72%, #c6f7ff 72%);
+    box-shadow: 11px 11px 0 #19d9e9, 17px 17px 0 #002578;
+}
+
+:global(html[data-theme="light"] .music-card::before) {
+    top: -20%;
+    right: -5%;
+    width: 35%;
+    border: 0;
+    border-radius: 0;
+    background: #0cafe2;
+    clip-path: polygon(30% 0, 100% 0, 80% 100%, 0 75%);
+    opacity: 0.18;
+    animation: music-jagged 12s ease-in-out infinite alternate;
+}
+
+:global(html[data-theme="light"] .music-card h3) {
+    font-style: italic;
+    font-weight: 900;
+    transform: skewX(-5deg);
+}
+
 .record-scene,
 .music-copy {
     position: relative;
