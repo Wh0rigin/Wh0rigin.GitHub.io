@@ -2,7 +2,7 @@
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useModeStore } from '../../stores/mode';
 
-type Phase = 'waiting' | 'moving' | 'arrived' | 'dim' | 'finished';
+type Phase = 'waiting' | 'moving' | 'settled' | 'arrived' | 'dim' | 'finished';
 const modeStore = useModeStore();
 const phase = ref<Phase>('waiting');
 const today = new Date();
@@ -49,9 +49,12 @@ onMounted(async () => {
     if (modeStore.theme === 'light') {
         highlightedDate.value = null;
         phase.value = 'moving';
-        await delay(900);
+        await delay(960);
         if (!active) return;
         displayedDate.value = today;
+        phase.value = 'settled';
+        await delay(220);
+        if (!active) return;
         highlightedDate.value = today.getTime();
         phase.value = 'arrived';
         await delay(950);
@@ -85,9 +88,7 @@ onUnmounted(() => {
                     </svg>
                     <div class="opening-date">
                         <div class="date-year">{{ displayedDate.getFullYear() }} <span>{{ monthName }}</span></div>
-                        <Transition name="day-change" mode="out-in">
-                            <span :key="displayedDate.getTime()" class="date-number">{{ day }}</span>
-                        </Transition>
+                        <span class="date-number">{{ day }}</span>
                         <span class="date-weekday">{{ weekdayName }}</span>
                     </div>
                     <div class="timeline" :class="{ advanced: phase !== 'waiting' }">
@@ -506,9 +507,6 @@ onUnmounted(() => {
     transform: rotate(var(--band-angle));
     transform-origin: left center;
 }
-.day-change-enter-active, .day-change-leave-active { transition: opacity 300ms ease, transform 300ms ease; }
-.day-change-enter-from { opacity: 0; transform: translateX(70px) skewX(-12deg); }
-.day-change-leave-to { opacity: 0; transform: translateX(-70px) skewX(-12deg); }
 .timeline {
     position: absolute;
     z-index: 3;
@@ -683,8 +681,7 @@ onUnmounted(() => {
     .persona-side-note i { font-size: .42rem; }
 }
 @media (prefers-reduced-motion: reduce) {
-    .loading, .day-change-enter-active, .day-change-leave-active,
-    .timeline, .timeline-day, .timeline-dot, .timeline-label { transition-duration: .01ms; }
+    .loading, .timeline, .timeline-day, .timeline-dot, .timeline-label { transition-duration: .01ms; }
     .loading-spinner, .persona-red-slice, .persona-paper-panel, .persona-halftone,
     .persona-number, .persona-copy, .persona-progress span, .persona-connection i,
     .persona-side-note,
