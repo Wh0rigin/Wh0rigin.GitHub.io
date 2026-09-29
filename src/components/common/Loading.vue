@@ -73,25 +73,27 @@ onUnmounted(() => {
     <div class="loading" :class="[`phase-${phase}`, { 'light-loading': modeStore.theme === 'light' }]" aria-label="页面加载中">
         <template v-if="modeStore.theme === 'light'">
             <div class="date-stage" aria-hidden="true">
-                <div class="blue-band"></div>
-                <svg class="date-line" viewBox="0 0 100 100" preserveAspectRatio="none">
-                    <line x1="0" y1="86" x2="100" y2="8" />
-                </svg>
-                <div class="opening-date">
-                    <div class="date-year">2002 <span>NOVEMBER</span></div>
-                    <Transition name="day-change" mode="out-in">
-                        <span :key="day" class="date-number">{{ day }}</span>
-                    </Transition>
-                    <span class="date-weekday">{{ day === 13 ? 'WEDNESDAY' : 'THURSDAY' }}</span>
-                </div>
-                <div class="timeline" :class="{ advanced: phase !== 'waiting' }">
-                    <div v-for="(item, index) in timelineDays" :key="item.date" class="timeline-day" :class="{ selected: highlightedDay === item.date }" :style="{ '--x': `${10 + index * 11.5}%`, '--y': `${78 - index * 9}%` }">
-                        <span class="timeline-label">
-                            <span class="timeline-number">{{ item.date }}</span>
-                            <span class="timeline-weekday">{{ item.weekday }}</span>
-                            <span v-if="phase === 'arrived' && highlightedDay === item.date" class="date-ripple"></span>
-                        </span>
-                        <span class="timeline-dot"></span>
+                <div class="date-composition">
+                    <div class="blue-band"></div>
+                    <svg class="date-line" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <line x1="0" y1="86" x2="100" y2="8" />
+                    </svg>
+                    <div class="opening-date">
+                        <div class="date-year">2002 <span>NOVEMBER</span></div>
+                        <Transition name="day-change" mode="out-in">
+                            <span :key="day" class="date-number">{{ day }}</span>
+                        </Transition>
+                        <span class="date-weekday">{{ day === 13 ? 'WEDNESDAY' : 'THURSDAY' }}</span>
+                    </div>
+                    <div class="timeline" :class="{ advanced: phase !== 'waiting' }">
+                        <div v-for="(item, index) in timelineDays" :key="item.date" class="timeline-day" :class="{ selected: highlightedDay === item.date }" :style="{ '--x': `${10 + index * 11.5}%`, '--y': `${78 - index * 9}%` }">
+                            <span class="timeline-label">
+                                <span class="timeline-number">{{ item.date }}</span>
+                                <span class="timeline-weekday">{{ item.weekday }}</span>
+                                <span v-if="phase === 'arrived' && highlightedDay === item.date" class="date-ripple"></span>
+                            </span>
+                            <span class="timeline-dot"></span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -148,6 +150,11 @@ onUnmounted(() => {
     isolation: isolate;
     background: linear-gradient(160deg, #191d2d, #141825);
 }
+.date-composition {
+    position: absolute;
+    inset: 0;
+    transform: translate(8vw, 6vh);
+}
 .blue-band {
     position: absolute;
     top: 41.5%;
@@ -176,8 +183,8 @@ onUnmounted(() => {
 .opening-date {
     position: absolute;
     z-index: 3;
-    top: 15%;
-    left: 25vw;
+    top: 13%;
+    left: 20vw;
     display: grid;
     align-content: start;
     width: 28vw;
@@ -337,6 +344,7 @@ onUnmounted(() => {
 }
 @media (max-width: 700px) {
     .date-stage { --band-angle: 22deg; }
+    .date-composition { transform: translate(4vw, 3vh); }
     .blue-band { top: calc(39% + 20px); left: -32%; width: 165%; height: 220px; }
     .opening-date { top: 18%; left: 34vw; }
     .date-year { top: 126px; left: -32vw; }
