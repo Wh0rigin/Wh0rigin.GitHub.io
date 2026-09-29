@@ -107,6 +107,7 @@ onUnmounted(() => {
                 <span>LOADING</span>
                 <span class="loading-spinner" aria-hidden="true"></span>
             </div>
+            <div class="closing-wipe-underlay" aria-hidden="true"></div>
             <div class="closing-wipe" aria-hidden="true"></div>
         </template>
         <div v-else class="classic-loading">
@@ -140,19 +141,27 @@ onUnmounted(() => {
 .light-loading.closing { background: transparent; }
 .light-loading.closing .date-stage { animation: clear-scene 1.3s steps(1, end) both; }
 .light-loading.closing .loading-indicator { opacity: 0; transition: opacity 160ms ease; }
+.closing-wipe-underlay,
 .closing-wipe {
     position: absolute;
-    z-index: 6;
     top: 0;
     bottom: 0;
     left: -35vw;
     width: 170vw;
-    background: linear-gradient(110deg, #0346a8 0%, #086ed5 48%, #13c7df 100%);
     clip-path: polygon(8% 0, 100% 0, 92% 100%, 0 100%);
     opacity: 0;
     pointer-events: none;
     transform: translate3d(-120%, 0, 0) skewX(-9deg);
     will-change: transform;
+}
+.closing-wipe-underlay {
+    z-index: 6;
+    background: #16d9e8;
+    translate: clamp(10px, 1.5vw, 22px) clamp(10px, 1.5vw, 22px);
+}
+.closing-wipe {
+    z-index: 7;
+    background: linear-gradient(110deg, #0346a8 0%, #086ed5 48%, #13c7df 100%);
 }
 .closing-wipe::after {
     position: absolute;
@@ -164,6 +173,7 @@ onUnmounted(() => {
     box-shadow: 0 0 28px rgba(122, 255, 255, .8);
     content: '';
 }
+.light-loading.closing .closing-wipe-underlay,
 .light-loading.closing .closing-wipe {
     opacity: 1;
     animation: blue-screen-wipe 1.3s cubic-bezier(.78, .02, .2, 1) both;
@@ -405,6 +415,7 @@ onUnmounted(() => {
     .phase-arrived .date-ripple, .phase-arrived .date-ripple::before,
     .phase-arrived .date-ripple::after { animation: none; }
     .light-loading.closing .date-stage { opacity: 0; animation: none; }
+    .light-loading.closing .closing-wipe-underlay,
     .light-loading.closing .closing-wipe { display: none; }
 }
 </style>
