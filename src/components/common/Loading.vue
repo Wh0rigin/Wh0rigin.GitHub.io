@@ -186,7 +186,7 @@ onUnmounted(() => {
 }
 .date-year {
     position: absolute;
-    top: 12vw;
+    top: 9vw;
     left: -17vw;
     display: flex;
     align-items: end;
@@ -207,7 +207,7 @@ onUnmounted(() => {
 }
 .date-weekday {
     position: absolute;
-    top: 16vw;
+    top: 13vw;
     left: -17vw;
     font-size: clamp(.8rem, 1.2vw, 1.1rem);
     font-weight: 800;
@@ -333,8 +333,8 @@ onUnmounted(() => {
 @media (max-width: 700px) {
     .blue-band { top: calc(39% + 20px); left: -32%; width: 165%; height: 220px; transform: rotate(22deg); }
     .opening-date { top: 18%; left: 34vw; }
-    .date-year { top: 150px; left: -32vw; }
-    .date-weekday { top: 190px; left: -32vw; }
+    .date-year { top: 126px; left: -32vw; }
+    .date-weekday { top: 166px; left: -32vw; }
     .date-number { font-size: clamp(6rem, 31vw, 9rem); }
     .timeline-number { font-size: clamp(1.2rem, 6vw, 2rem); }
     .timeline-weekday { font-size: .55rem; }
