@@ -141,6 +141,7 @@ onUnmounted(() => {
 .light-loading.phase-dim::after,
 .light-loading.phase-finished::after { opacity: 1; }
 .date-stage {
+    --band-angle: 14deg;
     position: absolute;
     inset: 0;
     overflow: hidden;
@@ -154,7 +155,7 @@ onUnmounted(() => {
     width: 120%;
     height: clamp(115px, 20vw, 255px);
     background: linear-gradient(90deg, #0750a7, #0876cf 54%, #0450ac);
-    transform: rotate(14deg);
+    transform: rotate(var(--band-angle));
     box-shadow: 0 12px 0 rgba(0, 0, 0, .1);
 }
 .date-line {
@@ -194,6 +195,8 @@ onUnmounted(() => {
     font-size: clamp(1.5rem, 3.5vw, 3rem);
     font-weight: 950;
     letter-spacing: -.06em;
+    transform: rotate(var(--band-angle));
+    transform-origin: left center;
 }
 .date-year span { padding-bottom: 4px; font-size: clamp(.6rem, 1vw, .85rem); letter-spacing: .12em; }
 .date-number {
@@ -212,6 +215,8 @@ onUnmounted(() => {
     font-size: clamp(.8rem, 1.2vw, 1.1rem);
     font-weight: 800;
     letter-spacing: .27em;
+    transform: rotate(var(--band-angle));
+    transform-origin: left center;
 }
 .day-change-enter-active, .day-change-leave-active { transition: opacity 300ms ease, transform 300ms ease; }
 .day-change-enter-from { opacity: 0; transform: translateX(70px) skewX(-12deg); }
@@ -331,7 +336,8 @@ onUnmounted(() => {
     to { transform: translate(-50%, -50%) scale(1.55); opacity: 0; }
 }
 @media (max-width: 700px) {
-    .blue-band { top: calc(39% + 20px); left: -32%; width: 165%; height: 220px; transform: rotate(22deg); }
+    .date-stage { --band-angle: 22deg; }
+    .blue-band { top: calc(39% + 20px); left: -32%; width: 165%; height: 220px; }
     .opening-date { top: 18%; left: 34vw; }
     .date-year { top: 126px; left: -32vw; }
     .date-weekday { top: 166px; left: -32vw; }
