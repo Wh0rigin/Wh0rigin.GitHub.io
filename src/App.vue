@@ -144,6 +144,18 @@ html[data-theme="dark"] {
   scroll-behavior: smooth;
 }
 
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
 body {
   min-width: 320px;
   background-color: var(--page-bg);
