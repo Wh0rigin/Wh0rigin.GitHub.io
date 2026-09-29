@@ -175,8 +175,8 @@ onUnmounted(() => {
 .opening-date {
     position: absolute;
     z-index: 3;
-    top: 11%;
-    left: clamp(32px, 8vw, 150px);
+    top: 13%;
+    left: 20vw;
     display: grid;
     align-content: start;
     width: 28vw;
@@ -185,26 +185,30 @@ onUnmounted(() => {
     filter: drop-shadow(4px 7px 0 rgba(4, 22, 64, .25));
 }
 .date-year {
+    position: absolute;
+    top: 12vw;
+    left: -17vw;
     display: flex;
     align-items: end;
     gap: 10px;
     font-size: clamp(1.5rem, 3.5vw, 3rem);
     font-weight: 950;
     letter-spacing: -.06em;
-    transform: translate(18.7vw, 12.5vw);
 }
 .date-year span { padding-bottom: 4px; font-size: clamp(.6rem, 1vw, .85rem); letter-spacing: .12em; }
 .date-number {
     display: block;
     margin-left: -.075em;
-    font-size: clamp(9rem, 24vw, 24rem);
+    font-size: clamp(9rem, 20vw, 22rem);
     font-weight: 950;
     font-style: italic;
     letter-spacing: -.16em;
     line-height: .85;
 }
 .date-weekday {
-    margin: 16px 0 0 8px;
+    position: absolute;
+    top: 16vw;
+    left: -17vw;
     font-size: clamp(.8rem, 1.2vw, 1.1rem);
     font-weight: 800;
     letter-spacing: .27em;
@@ -328,9 +332,10 @@ onUnmounted(() => {
 }
 @media (max-width: 700px) {
     .blue-band { top: calc(39% + 20px); left: -32%; width: 165%; height: 220px; transform: rotate(22deg); }
-    .opening-date { top: 19%; left: 8%; }
-    .date-year { transform: translate(55vw, 27vh); }
-    .date-number { font-size: clamp(9rem, 43vw, 17rem); }
+    .opening-date { top: 18%; left: 34vw; }
+    .date-year { top: 150px; left: -32vw; }
+    .date-weekday { top: 190px; left: -32vw; }
+    .date-number { font-size: clamp(6rem, 31vw, 9rem); }
     .timeline-number { font-size: clamp(1.2rem, 6vw, 2rem); }
     .timeline-weekday { font-size: .55rem; }
     .timeline-label { bottom: 0; left: -35px; }
