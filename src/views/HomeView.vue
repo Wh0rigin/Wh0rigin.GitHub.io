@@ -784,19 +784,20 @@ h1 {
     padding-right: 23px;
     padding-left: 23px;
     border-radius: 2px;
-    border: 2px solid #08080a;
-    clip-path: polygon(7% 0, 100% 0, 93% 100%, 0 88%);
 }
 
 :global(html[data-theme="dark"] .hero .button-primary) {
+    border-radius: 0;
     color: #08080a;
     background: #f6f2ec;
-    box-shadow: 7px 7px 0 #08080a, 11px 11px 0 #f6f2ec;
+    clip-path: polygon(7% 0, 100% 0, 93% 100%, 0 88%);
+    filter: drop-shadow(5px 6px 0 #08080a);
+    transition: transform 180ms cubic-bezier(.2, .8, .2, 1), filter 180ms ease;
 }
 
 :global(html[data-theme="dark"] .hero .button-primary:hover) {
     transform: translate(-2px, -2px);
-    box-shadow: 9px 9px 0 #08080a, 14px 14px 0 #f6f2ec;
+    filter: drop-shadow(7px 8px 0 #08080a);
 }
 
 :global(html[data-theme="dark"] .hero .text-link) {
