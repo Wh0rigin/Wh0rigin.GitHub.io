@@ -149,7 +149,7 @@ onUnmounted(() => {
 }
 .blue-band {
     position: absolute;
-    top: 30%;
+    top: 41.5%;
     left: -10%;
     width: 120%;
     height: clamp(115px, 20vw, 255px);
@@ -326,8 +326,8 @@ onUnmounted(() => {
     to { transform: translate(-50%, -50%) scale(1.55); opacity: 0; }
 }
 @media (max-width: 700px) {
-    .blue-band { top: 39%; left: -32%; width: 165%; height: 155px; transform: rotate(22deg); }
-    .opening-date { top: 16%; left: 8%; }
+    .blue-band { top: calc(39% + 20px); left: -32%; width: 165%; height: 220px; transform: rotate(22deg); }
+    .opening-date { top: 19%; left: 8%; }
     .date-number { font-size: clamp(9rem, 43vw, 17rem); }
     .timeline-number { font-size: clamp(1.2rem, 6vw, 2rem); }
     .timeline-weekday { font-size: .55rem; }
