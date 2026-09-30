@@ -153,6 +153,46 @@ const mouseup = () => {
         </div>
 
         <section id="top" class="hero" aria-labelledby="hero-title">
+            <div class="hero-water" aria-hidden="true">
+                <svg class="water-scene" viewBox="0 0 800 900" preserveAspectRatio="xMidYMid slice">
+                    <defs>
+                        <linearGradient id="water-depth" x2="0" y2="1">
+                            <stop stop-color="#16e3ef" />
+                            <stop offset=".27" stop-color="#087bdc" />
+                            <stop offset=".7" stop-color="#063cc2" />
+                            <stop offset="1" stop-color="#090b89" />
+                        </linearGradient>
+                        <linearGradient id="water-light" x2="0" y2="1">
+                            <stop stop-color="#b6fff6" stop-opacity=".52" />
+                            <stop offset="1" stop-color="#60f9ff" stop-opacity="0" />
+                        </linearGradient>
+                    </defs>
+                    <path fill="url(#water-depth)" d="M0 0h800v900H0z" />
+                    <g class="water-rays" fill="url(#water-light)">
+                        <path d="M220 0h42L105 790H0z" />
+                        <path d="M425 0h28l165 900H352z" />
+                        <path d="M680 0h34l86 640V900H625z" />
+                    </g>
+                    <g class="water-surface" fill="#59fff4">
+                        <path d="M0 26l105 15 64-19 101 7-33 21-111 3-53 24L0 63zM332 11l90 20 74-9 68 15-27 19-107-11-71 13-52-19zM614 66l62-18 124 21v31l-99-17-72 13-61-11zM98 105l78-17 49 9 95-12 22 18-106 24-73-5-51 16-65-14zM371 135l98-20 57 9 50-11 64 22-39 14-78-8-53 19-99-10zM652 177l53-20 95 15v22l-74-5-49 12-59-9zM0 185l96-24 62 8 53-12 65 20-48 15-67-4-81 23L0 205z" />
+                    </g>
+                    <g class="water-ripples" fill="none" stroke="#adfff7">
+                        <ellipse cx="438" cy="108" rx="116" ry="23" stroke-width="7" />
+                        <ellipse cx="438" cy="108" rx="172" ry="38" stroke-width="3" />
+                        <ellipse cx="438" cy="108" rx="237" ry="54" stroke-width="2" />
+                    </g>
+                    <g class="water-fragments" fill="#5ceffb">
+                        <path d="M126 280l19-15 16 23-19 18zM641 338l24 8-8 28-19-9zM583 645l17-12 12 21-21 11zM231 746l12-21 22 12-14 18z" />
+                        <path d="M305 189l21-11 17 7-8 13-21 3zM703 484l15-13 22 13-9 18-18-4z" />
+                    </g>
+                    <g class="water-bubbles" fill="none" stroke="#b9fffc" stroke-width="2">
+                        <circle cx="657" cy="561" r="9" /><circle cx="681" cy="525" r="4" />
+                        <circle cx="173" cy="447" r="6" /><circle cx="184" cy="419" r="3" />
+                        <circle cx="536" cy="785" r="5" /><circle cx="550" cy="758" r="2" />
+                    </g>
+                    <path class="water-current" d="M728 70C615 229 813 373 678 558S627 796 708 922" fill="none" stroke="#5aeef9" stroke-width="2" />
+                </svg>
+            </div>
             <div class="hero-copy">
                 <p class="eyebrow"><span class="eyebrow-dot"></span> Welcome to</p>
                 <h1 id="hero-title">
@@ -662,6 +702,7 @@ h1 {
 
 :global(html[data-theme="light"] .hero-visual) {
     filter: drop-shadow(16px 22px 0 rgba(0, 24, 112, 0.35));
+    animation: day-submerge 7.5s ease-in-out infinite alternate;
 }
 
 :global(html[data-theme="light"] .hero-visual-number) {
@@ -669,13 +710,68 @@ h1 {
 }
 
 :global(html[data-theme="light"] .hero-visual::before) {
-    width: 100%;
-    max-width: 520px;
-    border: 0;
-    border-radius: 0;
-    background: linear-gradient(138deg, rgba(84, 255, 245, 0.85), rgba(86, 212, 248, 0.3) 43%, rgba(255, 255, 255, 0.58) 76%);
-    clip-path: polygon(12% 0, 100% 7%, 88% 100%, 0 83%);
-    animation: day-shard-drift 8s ease-in-out infinite alternate;
+    display: none;
+}
+
+.hero-water {
+    display: none;
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: 46%;
+    right: calc(50% - 50vw);
+    overflow: hidden;
+    pointer-events: none;
+    clip-path: polygon(13% 0, 100% 0, 100% 100%, 0 100%, 9% 66%, 3% 39%);
+}
+
+:global(html[data-theme="light"] .hero-water) { display: block; }
+
+.water-scene { width: 100%; height: 100%; }
+.water-surface { opacity: .72; animation: surface-drift 9s ease-in-out infinite alternate; }
+.water-rays { opacity: .6; animation: water-shimmer 7s ease-in-out infinite alternate; }
+.water-ripples { transform-origin: 438px 108px; animation: water-impact 5s ease-out infinite; }
+.water-fragments { opacity: .25; animation: underwater-rise 11s ease-in-out infinite alternate; }
+.water-bubbles { opacity: .55; animation: underwater-rise 8s ease-in-out infinite alternate-reverse; }
+.water-current { opacity: .18; }
+
+@keyframes surface-drift {
+    to { transform: translate(-22px, 7px) scaleX(1.04); }
+}
+@keyframes water-shimmer {
+    to { opacity: .3; transform: translateX(18px) skewX(-3deg); }
+}
+@keyframes water-impact {
+    0% { opacity: 0; transform: scale(.68); }
+    18% { opacity: .6; }
+    100% { opacity: 0; transform: scale(1.22); }
+}
+@keyframes underwater-rise {
+    to { transform: translate(14px, -38px); }
+}
+@keyframes day-submerge {
+    from { transform: translate(-4px, -8px) rotate(-1deg); }
+    to { transform: translate(5px, 12px) rotate(1deg); }
+}
+
+@media (max-width: 820px) {
+    .hero-water {
+        top: 43%;
+        left: -24px;
+        right: -24px;
+        clip-path: polygon(0 11%, 100% 0, 100% 100%, 0 100%);
+    }
+}
+
+@media (max-width: 520px) {
+    .hero-water { top: 52%; left: -18px; right: -18px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .water-scene > g { animation: none; }
+    .water-ripples { opacity: .35; }
+    :global(html[data-theme="light"] .hero-visual) { animation: none; }
 }
 
 :global(html[data-theme="light"] .motif-ring) {
