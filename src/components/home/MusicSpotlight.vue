@@ -124,9 +124,10 @@ function openSpotlight() {
     if (spotlightOpen.value) return;
     spotlightOpen.value = true;
     scheduleGeometryUpdate();
+    const compactViewport = window.matchMedia('(max-width: 820px)').matches;
     recordScene.value?.scrollIntoView({
         behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
-        block: 'center',
+        block: compactViewport ? 'start' : 'center',
         inline: 'nearest',
     });
     lockAfterScrollSettles();
@@ -249,6 +250,10 @@ onUnmounted(() => {
                     <span class="spotlight-layer spotlight-layer-front"></span>
                     <div ref="spotlightWindowRef" class="spotlight-window">
                         <span class="spotlight-rays" aria-hidden="true"></span>
+                        <blockquote class="spotlight-quote">
+                            <p>我们往往认为原创的东西就有价值，但实际上，即使是原创的东西，也是经过过去的积累而诞生的“复制品”。流行音乐也是通过理解这一点的基础上，从而创造出一些美好而有趣的东西的。换一句话而言“原作就是从复制品的历史中诞生的。”将它称为复制品听起来很廉价，但我希望它有价值。</p>
+                            <cite>Vaundy <i>·</i> replica</cite>
+                        </blockquote>
                         <div class="spotlight-copy">
                             <p>PERSONAL FAVORITE <span>— 01</span></p>
                             <strong>replica</strong>
@@ -615,6 +620,45 @@ onUnmounted(() => {
     text-shadow: 2px 3px 0 rgba(0, 0, 0, .2);
 }
 
+.spotlight-quote {
+    position: absolute;
+    z-index: 1;
+    left: clamp(260px, 39vw, 790px);
+    right: clamp(220px, 22vw, 390px);
+    bottom: clamp(108px, 18vh, 190px);
+    max-width: 700px;
+    margin: 0;
+    padding-left: 14px;
+    border-left: 2px solid rgba(255, 255, 255, .78);
+    color: rgba(255, 255, 255, .96);
+    text-align: left;
+    text-shadow: 1px 2px 0 rgba(0, 0, 0, .2);
+}
+
+.spotlight-quote p {
+    margin: 0;
+    font-size: clamp(.9rem, 1.05vw, 1.05rem);
+    font-weight: 600;
+    letter-spacing: .035em;
+    line-height: 1.82;
+}
+
+.spotlight-quote cite {
+    display: block;
+    margin-top: 10px;
+    color: rgba(255, 255, 255, .76);
+    font-size: .64rem;
+    font-style: normal;
+    font-weight: 850;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+}
+
+.spotlight-quote cite i {
+    margin: 0 4px;
+    font-style: normal;
+}
+
 .spotlight-copy > p { margin-bottom: 6px; font-size: clamp(.57rem, .85vw, .72rem); font-weight: 900; letter-spacing: .18em; }
 .spotlight-copy > p span { opacity: .72; }
 .spotlight-copy > strong { display: block; font-size: clamp(2.7rem, 6vw, 6rem); font-style: italic; font-weight: 950; letter-spacing: -.09em; line-height: .92; }
@@ -768,6 +812,7 @@ h3 {
         width: min(100%, 390px);
         min-height: 315px;
         margin: 0 auto;
+        scroll-margin-top: clamp(70px, 10vh, 90px);
     }
 
     .vinyl-position {
@@ -800,6 +845,18 @@ h3 {
     .spotlight-copy > strong { font-size: clamp(3rem, 10vw, 5rem); }
     .spotlight-serial { right: 20px; bottom: 42px; font-size: .46rem; }
 
+    .spotlight-quote {
+        left: clamp(130px, 37vw, 370px);
+        right: 22px;
+        bottom: clamp(154px, 21vh, 180px);
+        padding-left: 10px;
+    }
+
+    .spotlight-quote p {
+        font-size: clamp(.66rem, 1.65vw, .88rem);
+        line-height: 1.5;
+    }
+
     .spotlight-hint { left: calc(4vw + 18px); bottom: 28px; }
 }
 
@@ -821,7 +878,7 @@ h3 {
         height: calc(100vh - clamp(70px, 9vh, 90px) - 14px);
     }
 
-    .spotlight-window { padding: 24px 18px 86px 48px; }
+    .spotlight-window { padding: 24px 18px 60px 48px; }
 
     .vinyl-position {
         width: min(70vw, 240px);
