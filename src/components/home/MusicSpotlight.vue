@@ -209,7 +209,7 @@ onUnmounted(() => {
         </button>
 
         <Teleport to="body">
-            <div class="spotlight-portal" :class="{ 'is-open': spotlightOpen }" :aria-hidden="!spotlightOpen">
+            <div class="spotlight-portal" :class="{ 'is-open': spotlightOpen }" :aria-hidden="!spotlightOpen" :style="{ '--spotlight-artwork-bottom': `${Math.max(artwork.vinylY + artwork.vinylRadius, artwork.coverY + artwork.coverHeight)}px` }">
                 <svg
                     class="spotlight-mask-defs"
                     aria-hidden="true"
@@ -250,10 +250,6 @@ onUnmounted(() => {
                     <span class="spotlight-layer spotlight-layer-front"></span>
                     <div ref="spotlightWindowRef" class="spotlight-window">
                         <span class="spotlight-rays" aria-hidden="true"></span>
-                        <blockquote class="spotlight-quote">
-                            <p>我们往往认为原创的东西就有价值，但实际上，即使是原创的东西，也是经过过去的积累而诞生的“复制品”。流行音乐也是通过理解这一点的基础上，从而创造出一些美好而有趣的东西的。换一句话而言“原作就是从复制品的历史中诞生的。”将它称为复制品听起来很廉价，但我希望它有价值。</p>
-                            <cite>Vaundy <i>·</i> replica</cite>
-                        </blockquote>
                         <div class="spotlight-copy">
                             <p>PERSONAL FAVORITE <span>— 01</span></p>
                             <strong>replica</strong>
@@ -262,6 +258,13 @@ onUnmounted(() => {
                         <span class="spotlight-serial">THE WIRED WORLD <b>/</b> MUSIC ARCHIVE</span>
                     </div>
                 </div>
+                <blockquote class="spotlight-quote">
+                    <cite class="spotlight-speaker">Vaundy <span>ON REPLICA</span></cite>
+                    <div class="spotlight-dialogue-body" tabindex="0" aria-label="Vaundy 关于 replica 的引言">
+                        <p>我们往往认为原创的东西就有价值，但实际上，即使是原创的东西，也是经过过去的积累而诞生的“复制品”。流行音乐也是通过理解这一点的基础上，从而创造出一些美好而有趣的东西的。换一句话而言“原作就是从复制品的历史中诞生的。”将它称为复制品听起来很廉价，但我希望它有价值。</p>
+                    </div>
+                    <span class="spotlight-dialogue-arrow" aria-hidden="true"></span>
+                </blockquote>
                 <button ref="closeHintRef" class="spotlight-hint" type="button" @click.stop="closeSpotlight">Click to close</button>
             </div>
         </Teleport>
@@ -622,41 +625,108 @@ onUnmounted(() => {
 
 .spotlight-quote {
     position: absolute;
-    z-index: 1;
-    left: clamp(260px, 39vw, 790px);
-    right: clamp(220px, 22vw, 390px);
-    bottom: clamp(108px, 18vh, 190px);
-    max-width: 700px;
+    z-index: 3;
+    left: 43vw;
+    right: 8vw;
+    bottom: clamp(150px, 22vh, 230px);
     margin: 0;
-    padding-left: 14px;
-    border-left: 2px solid rgba(255, 255, 255, .78);
-    color: rgba(255, 255, 255, .96);
+    padding: 12px;
+    color: var(--dialogue-ink);
     text-align: left;
-    text-shadow: 1px 2px 0 rgba(0, 0, 0, .2);
+    filter: drop-shadow(7px 9px 0 rgba(0, 0, 0, .35));
+    opacity: 0;
+    transform: translate(28px, 14px) rotate(-1deg) scale(.97);
+    transition: opacity 220ms ease, transform 420ms cubic-bezier(.16, 1, .3, 1);
+    --dialogue-shape: polygon(6% 7%, 97% 0, 100% 91%, 14% 100%, 6% 83%, 0 72%, 7% 69%);
+}
+
+.spotlight-quote::before,
+.spotlight-quote::after {
+    position: absolute;
+    inset: 0;
+    clip-path: var(--dialogue-shape);
+    background: var(--dialogue-ink);
+    content: "";
+}
+
+.spotlight-quote::after {
+    inset: 5px;
+    background: var(--dialogue-paper);
+}
+
+.spotlight-portal.is-open .spotlight-quote {
+    opacity: 1;
+    transform: translate(0) rotate(-1deg) scale(1);
+    transition-delay: 160ms;
+}
+
+.spotlight-dialogue-body {
+    position: relative;
+    z-index: 1;
+    padding: clamp(30px, 2.8vw, 40px) clamp(30px, 3vw, 42px) 40px clamp(44px, 5vw, 70px);
+    background: transparent;
+    pointer-events: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--dialogue-ink) var(--dialogue-paper);
+}
+
+.spotlight-dialogue-body:focus-visible {
+    outline: 2px dashed var(--dialogue-ink);
+    outline-offset: -18px;
 }
 
 .spotlight-quote p {
     margin: 0;
-    font-size: clamp(.9rem, 1.05vw, 1.05rem);
-    font-weight: 600;
-    letter-spacing: .035em;
-    line-height: 1.82;
+    font-size: clamp(.88rem, 1.15vw, 1.08rem);
+    font-weight: 650;
+    letter-spacing: .02em;
+    line-height: 1.75;
 }
 
-.spotlight-quote cite {
-    display: block;
-    margin-top: 10px;
-    color: rgba(255, 255, 255, .76);
-    font-size: .64rem;
+.spotlight-speaker {
+    position: absolute;
+    z-index: 2;
+    top: -22px;
+    left: 7%;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 8px 22px;
+    border: 3px solid var(--dialogue-ink);
+    color: var(--dialogue-ink);
+    background: var(--dialogue-paper);
+    font-size: clamp(1rem, 1.6vw, 1.35rem);
     font-style: normal;
-    font-weight: 850;
-    letter-spacing: .16em;
-    text-transform: uppercase;
+    font-weight: 900;
+    letter-spacing: -.025em;
+    transform: rotate(-7deg) skewX(-9deg);
+    box-shadow: 5px 5px 0 var(--dialogue-ink);
 }
 
-.spotlight-quote cite i {
-    margin: 0 4px;
-    font-style: normal;
+.spotlight-speaker span {
+    font-size: .55rem;
+    letter-spacing: .12em;
+}
+
+.spotlight-dialogue-arrow {
+    position: absolute;
+    z-index: 2;
+    right: -12px;
+    bottom: 14px;
+    width: 62px;
+    height: 42px;
+    background: var(--dialogue-ink);
+    clip-path: polygon(0 100%, 78% 0, 100% 80%);
+    transform: rotate(-8deg);
+}
+
+.spotlight-dialogue-arrow::after {
+    position: absolute;
+    inset: 7px;
+    background: var(--dialogue-paper);
+    clip-path: polygon(0 100%, 78% 0, 100% 80%);
+    content: "";
 }
 
 .spotlight-copy > p { margin-bottom: 6px; font-size: clamp(.57rem, .85vw, .72rem); font-weight: 900; letter-spacing: .18em; }
@@ -691,12 +761,16 @@ onUnmounted(() => {
 }
 
 :global(html[data-theme="light"] .spotlight-portal) {
+    --dialogue-paper: #ffffff;
+    --dialogue-ink: #111111;
     --spotlight-fill: linear-gradient(125deg, #0750bd 0%, #087cde 68%, #069fcf 100%);
     --spotlight-front: #20dce8;
     --spotlight-back: #003b9e;
 }
 
 :global(html[data-theme="dark"] .spotlight-portal) {
+    --dialogue-paper: #08090c;
+    --dialogue-ink: #ffffff;
     --spotlight-fill: linear-gradient(125deg, #8f080f 0%, #d71925 57%, #fb3038 100%);
     --spotlight-front: #10090b;
     --spotlight-back: #650910;
@@ -846,15 +920,40 @@ h3 {
     .spotlight-serial { right: 20px; bottom: 42px; font-size: .46rem; }
 
     .spotlight-quote {
-        left: clamp(130px, 37vw, 370px);
-        right: 22px;
-        bottom: clamp(154px, 21vh, 180px);
-        padding-left: 10px;
+        --dialogue-top: max(42vh, calc(var(--spotlight-artwork-bottom) + 28px));
+        top: var(--dialogue-top);
+        left: 5vw;
+        right: 5vw;
+        bottom: auto;
+        max-height: calc(100vh - var(--dialogue-top) - 146px);
+        padding: 9px;
+        display: flex;
+        transform: translate(18px, 12px) rotate(-1deg);
+    }
+
+    .spotlight-dialogue-body {
+        min-height: 0;
+        width: 100%;
+        overflow-y: auto;
+        padding: 26px 30px 36px 38px;
     }
 
     .spotlight-quote p {
-        font-size: clamp(.66rem, 1.65vw, .88rem);
-        line-height: 1.5;
+        font-size: .82rem;
+        line-height: 1.65;
+    }
+
+    .spotlight-speaker {
+        top: -19px;
+        padding: 6px 14px;
+        font-size: 1rem;
+    }
+
+    .spotlight-dialogue-arrow {
+        right: -5px;
+        bottom: 10px;
+        width: 46px;
+        height: 32px;
     }
 
     .spotlight-hint { left: calc(4vw + 18px); bottom: 28px; }
@@ -902,6 +1001,7 @@ h3 {
     .spotlight-stack,
     .spotlight-layer,
     .spotlight-window,
+    .spotlight-quote,
     .album-cover { transition-duration: .01ms; }
 }
 
