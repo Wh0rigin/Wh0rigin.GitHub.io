@@ -10,6 +10,7 @@ import FeaturedProjects from '../components/home/FeaturedProjects.vue';
 import MusicSpotlight from '../components/home/MusicSpotlight.vue';
 import AcgInterests from '../components/home/AcgInterests.vue';
 import WiredImage from '../components/ui/WiredImage.vue';
+import WiredTelevisionArt from '../components/ui/WiredTelevisionArt.vue';
 
 const modeStore = useModeStore();
 const baseIndex = modeStore.mode;
@@ -180,6 +181,7 @@ onUnmounted(() => {
                         </filter>
                     </defs>
                 </svg>
+                <WiredTelevisionArt v-if="modeStore.theme === 'golden'" class="hero-golden-television" id-prefix="hero-tv" />
                 <span class="hero-visual-number" aria-hidden="true">{{ modeStore.theme === 'golden' ? '04' : '05' }}</span>
                 <WiredImage class="logo logo-original" :src="heroImage.src" :srcset="heroImage.srcset" :sizes="heroImageSizes" fetchpriority="high" alt="连线世界主题插画" :width="heroImage.width" :height="heroImage.height" loading="eager" keep-previous @ready="heroReady" @mousedown="mousedown" @mouseup="mouseup" @mouseleave="mouseup" />
                 <img v-if="heroLoadedSrc" class="logo logo-silhouette" alt="" aria-hidden="true" draggable="false" :src="heroLoadedSrc" />

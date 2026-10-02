@@ -10,12 +10,13 @@
 - [WiredBadge：风格化标签](#wiredbadge)——栏目标签、DEMO 标记、技术栈。
 - [WiredAccent：层叠文字](#wiredaccent)——突出标题中的关键词。
 - [WiredImage：图片占位与淡入](#wiredimage)——封面、校徽、插画和装饰图片。
+- [WiredTelevisionArt：复古电视矢量图](#wiredtelevisionart)——黄色主题首页装饰与页脚彩蛋。
 - [WiredPanel：面板与辅助样式](#wiredpanel)——卡片、容器、栏目小标题、标签列表。
 - [WiredProse：长文排版](#wiredprose)——博客正文、列表、引用。
 - [三个主题的整体效果](#主题预览)。
 - [调整局部尺寸与颜色](#调整局部尺寸)。
 
-其中前四项是 Vue 组件；面板和正文是可以直接加到 HTML 元素上的共用 CSS 样式。截图来自现有组件在本地页面中的实际渲染，静态图片不展示悬停和焦点动效。
+其中前五项是 Vue 组件；面板和正文是可以直接加到 HTML 元素上的共用 CSS 样式。截图来自现有组件在本地页面中的实际渲染，静态图片不展示悬停和焦点动效。
 
 ## 文件分工
 
@@ -175,6 +176,32 @@ import WiredImage from '../components/ui/WiredImage.vue';
 ![失败封面保留尺寸，并提供点击重试](../../../docs/images/ui/wired-image-retry.jpg)
 
 </details>
+
+## WiredTelevisionArt
+
+**复古电视矢量图。** 与页脚彩蛋共用天线、曲面屏幕、彩色条纹、旋钮和支脚。黄色主题首页把电视放在人物插画后方，替代原先的圆形底板。源码：[WiredTelevisionArt.vue](WiredTelevisionArt.vue)。
+
+![黄色主题首页的复古电视装饰](../../../docs/images/ui/wired-television-art.jpg)
+
+```vue
+<script setup lang="ts">
+import WiredTelevisionArt from '../components/ui/WiredTelevisionArt.vue';
+</script>
+
+<template>
+  <WiredTelevisionArt class="channel-art" id-prefix="my-channel" />
+  <WiredTelevisionArt class="channel-art" id-prefix="my-tuned-channel" tuned />
+</template>
+
+<style scoped>
+.channel-art { width: 180px; }
+</style>
+```
+
+- `idPrefix` 必填，同一页面的每个实例使用不同值，避免 SVG 屏幕裁切和网格定义冲突。
+- `tuned` 默认关闭；开启时显示 `HELLO WORLD!`，旋转旋钮并播放一次扫屏动画。
+- 这是装饰组件，默认对辅助技术隐藏；需要点击操作时由外层按钮提供名称和事件。页脚的主题切换仍由 `WiredTelevision.vue` 处理。
+- 通过根元素的 `class` 或 `style` 调整大小、角度和阴影；矢量图本身无需额外图片请求。
 
 ## WiredPanel
 

@@ -147,12 +147,18 @@ html[data-theme="golden"] .hero-visual {
   animation-duration: 8s;
 }
 html[data-theme="golden"] .hero-visual::before {
-  display: block;
-  width: 100%;
-  border: 6px solid #191814;
-  background: #fffdf2;
-  box-shadow: 12px 12px 0 #40b968, 20px 20px 0 #fffdf2;
-  animation: none;
+  display: none;
+}
+html[data-theme="golden"] .hero-golden-television {
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  width: 134%;
+  height: auto;
+  pointer-events: none;
+  transform: translate(-50%, -50%) rotate(-6deg);
+  filter: drop-shadow(9px 9px 0 #40b968) drop-shadow(5px 5px 0 #fffdf2);
 }
 html[data-theme="golden"] .hero-visual-number {
   position: absolute;
@@ -269,7 +275,7 @@ html[data-theme="golden"] .television-hint { color: #ffe32d; }
 }
 @media (max-width: 520px) {
   html[data-theme="golden"] .hero h1 { font-size: clamp(2.8rem, 13vw, 4.3rem); }
-  html[data-theme="golden"] .hero-visual::before { width: 100%; border-width: 4px; box-shadow: 7px 7px 0 #40b968, 12px 12px 0 #fffdf2; }
+  html[data-theme="golden"] .hero-golden-television { width: 132%; filter: drop-shadow(4px 4px 0 #40b968) drop-shadow(3px 3px 0 #fffdf2); }
   html[data-theme="golden"] .hero-visual-number { top: -8%; right: -18%; font-size: clamp(12rem, 52vw, 19rem); -webkit-text-stroke-width: 3px; }
   html[data-theme="golden"] .golden-channel { font-size: .45rem; padding: 5px 8px; }
   html[data-theme="golden"] .golden-channel b { font-size: .56rem; }
