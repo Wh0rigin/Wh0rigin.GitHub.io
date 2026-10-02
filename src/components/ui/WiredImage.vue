@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
+import { computed, nextTick, onMounted, onUnmounted, ref, useAttrs, watch } from 'vue';
 import { clearImageFailure, imageRetryVersion, markImageFailed } from '../../composables/loadingExperience';
 
 const props = withDefaults(defineProps<{
@@ -21,14 +21,25 @@ const emit = defineEmits<{
     (event: 'error', src: string): void;
 }>();
 const imageElement = ref<HTMLImageElement | null>(null);
+const wrapperElement = ref<HTMLElement | null>(null);
+const enclosingAction = ref<HTMLElement | null>(null);
 const state = ref<'loading' | 'ready' | 'error'>('loading');
+const retryInFlight = ref(false);
+const attrs = useAttrs();
+const isDecorative = computed(() => attrs['aria-hidden'] === true || attrs['aria-hidden'] === 'true');
+const blocksImageAction = computed(() => state.value === 'error' || retryInFlight.value);
+const standaloneRetry = computed(() => blocksImageAction.value && !enclosingAction.value && !isDecorative.value);
+const loadingLabel = computed(() => `${props.alt || '图片'}（${state.value === 'error' ? '加载失败，点击重试' : retryInFlight.value ? '正在重试' : '加载中'}）`);
 const lastReadySrc = ref('');
 const lastReadyImage = ref('');
 const previousSrc = ref('');
 const attempt = ref(0);
+const retrySource = ref('');
 const recoveryId = Symbol('image');
 const hasPrevious = computed(() => props.keepPrevious && !!previousSrc.value && previousSrc.value !== props.src);
 let generation = 0;
+let previousActionDescription: string | null = null;
+let appliedActionDescription: string | undefined;
 
 async function reveal(image = imageElement.value) {
     if (!image || image !== imageElement.value || !image.complete || !image.naturalWidth) return;
@@ -40,6 +51,7 @@ async function reveal(image = imageElement.value) {
     lastReadySrc.value = props.src;
     lastReadyImage.value = image.currentSrc || props.src;
     state.value = 'ready';
+    retryInFlight.value = false;
     clearImageFailure(recoveryId);
     emit('ready', lastReadyImage.value);
 }
@@ -47,6 +59,7 @@ async function reveal(image = imageElement.value) {
 function fail(image: HTMLImageElement) {
     if (image !== imageElement.value) return;
     state.value = 'error';
+    retryInFlight.value = false;
     markImageFailed(recoveryId);
     emit('error', props.src);
 }
@@ -63,30 +76,107 @@ watch(() => props.src, () => {
     clearImageFailure(recoveryId);
     previousSrc.value = props.keepPrevious ? lastReadyImage.value : '';
     state.value = 'loading';
+    retryInFlight.value = false;
+    retrySource.value = '';
     void nextTick(inspectCachedImage);
 }, { immediate: true, flush: 'sync' });
 
-watch(imageRetryVersion, () => {
+function retryImage() {
     if (state.value !== 'error') return;
+    // Request the failed responsive variant again, bypassing cached broken bytes.
+    // Keep external URLs intact because they can contain signatures.
+    const source = imageElement.value?.currentSrc || props.src;
+    try {
+        const url = new URL(source, document.baseURI);
+        if (url.origin === location.origin && /^https?:$/.test(url.protocol)) {
+            url.searchParams.set('_wired_retry', `${Date.now()}-${attempt.value + 1}`);
+            retrySource.value = url.href;
+        }
+    } catch { /* Let the browser handle unsupported or malformed URLs. */ }
     generation += 1;
     clearImageFailure(recoveryId);
     state.value = 'loading';
+    retryInFlight.value = true;
     attempt.value += 1;
     void nextTick(inspectCachedImage);
-});
+}
+watch(imageRetryVersion, retryImage);
 
-onMounted(inspectCachedImage);
-onUnmounted(() => { generation += 1; clearImageFailure(recoveryId); });
+function stopImageAction(event: Event) {
+    if (!blocksImageAction.value) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+}
+function retryFromClick(event: MouseEvent) {
+    if (!blocksImageAction.value) return;
+    stopImageAction(event);
+    retryImage();
+}
+function retryFromKeyboard(event: KeyboardEvent) {
+    if (!blocksImageAction.value || !['Enter', ' '].includes(event.key)) return;
+    stopImageAction(event);
+    retryImage();
+}
+function interceptEnclosingClick(event: MouseEvent) {
+    if (event.target instanceof Node && wrapperElement.value?.contains(event.target)) retryFromClick(event);
+}
+function interceptEnclosingKey(event: KeyboardEvent) {
+    if (event.target === enclosingAction.value) retryFromKeyboard(event);
+}
+function restoreActionDescription() {
+    const action = enclosingAction.value;
+    if (!action || !appliedActionDescription) return;
+    if (action.getAttribute('aria-description') === appliedActionDescription) {
+        if (previousActionDescription === null) action.removeAttribute('aria-description');
+        else action.setAttribute('aria-description', previousActionDescription);
+    }
+    appliedActionDescription = undefined;
+}
+function updateActionDescription() {
+    const action = enclosingAction.value;
+    if (!action) return;
+    if (!blocksImageAction.value) { restoreActionDescription(); return; }
+    if (!appliedActionDescription) previousActionDescription = action.getAttribute('aria-description');
+    appliedActionDescription = state.value === 'error'
+        ? `${props.alt || '图片'}加载失败，按 Enter 或空格重试图片。`
+        : '图片正在重试，请稍候。';
+    action.setAttribute('aria-description', appliedActionDescription);
+}
+watch([state, retryInFlight], updateActionDescription, { flush: 'post' });
+
+onMounted(() => {
+    // Reuse a surrounding link/button for keyboard input, without nesting buttons.
+    enclosingAction.value = wrapperElement.value?.parentElement?.closest<HTMLElement>('a[href], button, [role="button"]') ?? null;
+    enclosingAction.value?.addEventListener('click', interceptEnclosingClick, true);
+    enclosingAction.value?.addEventListener('keydown', interceptEnclosingKey, true);
+    updateActionDescription();
+    inspectCachedImage();
+});
+onUnmounted(() => {
+    generation += 1;
+    clearImageFailure(recoveryId);
+    restoreActionDescription();
+    enclosingAction.value?.removeEventListener('click', interceptEnclosingClick, true);
+    enclosingAction.value?.removeEventListener('keydown', interceptEnclosingKey, true);
+});
 </script>
 
 <template>
     <span
+        ref="wrapperElement"
         class="wired-image"
         :class="[`is-${state}`, { 'wired-image--fill': fill, 'wired-image--compact': compact, 'has-previous': hasPrevious }]"
         :style="{ '--wired-image-ratio': `${width} / ${height}` }"
         :aria-busy="state === 'loading' || undefined"
-        :role="state !== 'ready' && !hasPrevious && alt ? 'img' : undefined"
-        :aria-label="state !== 'ready' && !hasPrevious && alt ? `${alt}（${state === 'error' ? '暂未加载' : '加载中'}）` : undefined"
+        :role="standaloneRetry ? 'button' : state !== 'ready' && !hasPrevious && alt ? 'img' : undefined"
+        :tabindex="standaloneRetry ? 0 : undefined"
+        :aria-disabled="standaloneRetry && retryInFlight || undefined"
+        :aria-label="blocksImageAction || state !== 'ready' && !hasPrevious && alt ? loadingLabel : undefined"
+        :title="state === 'error' ? '点击重试这张图片' : retryInFlight ? '正在重试这张图片' : undefined"
+        @click.capture="retryFromClick"
+        @keydown.capture="retryFromKeyboard"
+        @mousedown.capture="stopImageAction"
+        @mouseup.capture="stopImageAction"
     >
         <span class="wired-image-placeholder" aria-hidden="true">
             <span class="image-placeholder-cut"></span>
@@ -97,8 +187,9 @@ onUnmounted(() => { generation += 1; clearImageFailure(recoveryId); });
                 <span class="image-placeholder-glyph">
                     <svg class="image-symbol-photo" viewBox="0 0 40 40"><path d="M6 8h28v24H6zM6 27l9-9 8 8 5-5 6 6" /><circle cx="26" cy="15" r="2" /></svg>
                     <svg class="image-symbol-tv" viewBox="0 0 40 40"><path d="m12 4 8 7 8-7M5 12h30v23H5zM9 16h19v15H9zM31 18v6" /><circle cx="31" cy="29" r="1" /></svg>
+                    <svg v-if="state === 'error'" class="image-symbol-retry" viewBox="0 0 40 40"><path d="M30 14a12 12 0 1 0 2 13M30 6v9H21" /></svg>
                 </span>
-                <span class="image-placeholder-caption">{{ state === 'error' ? '图片暂未加载' : 'NOW LOADING' }}</span>
+                <span class="image-placeholder-caption">{{ state === 'error' ? '点击重试' : 'NOW LOADING' }}</span>
                 <span class="image-placeholder-bars"><i></i><i></i><i></i></span>
             </span>
         </span>
@@ -108,12 +199,12 @@ onUnmounted(() => { generation += 1; clearImageFailure(recoveryId); });
             :key="`${src}:${attempt}`"
             ref="imageElement"
             class="wired-image-content"
-            :src="src"
+            :src="retrySource || src"
             :alt="alt"
             :width="width"
             :height="height"
             :loading="loading"
-            :srcset="srcset"
+            :srcset="retrySource ? undefined : srcset"
             :sizes="sizes"
             :fetchpriority="fetchpriority"
             decoding="async"
@@ -122,12 +213,16 @@ onUnmounted(() => { generation += 1; clearImageFailure(recoveryId); });
             @load="reveal($event.target as HTMLImageElement)"
             @error="fail($event.target as HTMLImageElement)"
         />
+        <span v-if="hasPrevious && state === 'error'" class="image-retry-badge" aria-hidden="true">↻ 点击重试</span>
     </span>
 </template>
 
 <style scoped>
 .wired-image { position: relative; display: block; width: 100%; aspect-ratio: var(--wired-image-ratio); isolation: isolate; }
 .wired-image--fill { height: 100%; aspect-ratio: auto; }
+.wired-image.is-error { cursor: pointer; pointer-events: auto; }
+.wired-image[role="button"]:focus-visible { outline: 3px solid var(--accent-strong); outline-offset: 5px; }
+.image-retry-badge { position: absolute; z-index: 2; right: 8px; bottom: 8px; padding: 5px 9px; color: var(--text); background: var(--surface); border: 1px solid var(--border); box-shadow: 3px 3px 0 var(--accent); font-size: .7rem; font-weight: 750; }
 .wired-image-content, .wired-image-previous { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: var(--ui-image-fit, contain); }
 .wired-image-content { opacity: 0; transition: opacity 420ms var(--ease-out); }
 .is-ready .wired-image-content { opacity: 1; }
@@ -155,6 +250,9 @@ onUnmounted(() => { generation += 1; clearImageFailure(recoveryId); });
 .image-placeholder-glyph { position: relative; display: grid; place-items: center; width: 41%; min-width: 34px; max-width: 104px; aspect-ratio: 1.16; color: var(--image-stage-ink); background: var(--image-stage-paper); box-shadow: 4px 5px 0 var(--image-stage-layer), 7px 8px 0 var(--image-stage-shadow); transform: rotate(-8deg) skewX(-5deg); }
 .image-placeholder-glyph svg { display: block; width: 66%; height: auto; fill: none; stroke: currentColor; stroke-width: 1.8; transform: skewX(5deg) rotate(8deg); }
 .image-placeholder-glyph .image-symbol-tv { display: none; }
+.wired-image.is-error .image-placeholder-glyph .image-symbol-photo,
+.wired-image.is-error .image-placeholder-glyph .image-symbol-tv { display: none; }
+.wired-image.is-error .image-placeholder-glyph .image-symbol-retry { display: block; }
 .image-placeholder-caption { padding: 4px 7px; color: var(--image-stage-paper); background: var(--image-stage-ink); font: italic 950 clamp(.49rem, 5.8cqi, 1.1rem)/1.2 var(--font-display); letter-spacing: .035em; white-space: nowrap; transform: rotate(-5deg) skewX(-8deg); box-shadow: 3px 3px 0 var(--image-stage-layer); }
 .image-placeholder-bars { display: flex; gap: 4px; transform: skewX(-18deg); }
 .image-placeholder-bars i { width: clamp(5px, 5cqi, 12px); height: 4px; background: currentColor; animation: image-pulse 1.2s ease-in-out infinite; }
