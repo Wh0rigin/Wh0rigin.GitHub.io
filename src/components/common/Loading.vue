@@ -30,6 +30,7 @@ let stopNavigationWatch: (() => void) | undefined;
 let previousOverflow = '';
 let scrollLocked = false;
 const allowSkip = ref(false);
+const skipHintDismissed = ref(false);
 
 function delay(ms: number) {
     return new Promise<void>((resolve) => timers.push(setTimeout(resolve, ms)));
@@ -94,7 +95,10 @@ onUnmounted(() => {
 
 <template>
     <div class="loading" :class="[`phase-${phase}`, { 'light-loading': modeStore.theme === 'light', closing: modeStore.theme === 'light' && (phase === 'dim' || phase === 'finished') }]" :aria-hidden="phase === 'finished' || undefined" :inert="phase === 'finished' || undefined" aria-label="页面加载中">
-        <button v-if="allowSkip && navigationLoad.initialSettled && !navigationLoad.error && phase !== 'finished'" class="loading-skip" @click="finish">进入页面 <span aria-hidden="true">→</span></button>
+        <div v-if="allowSkip && navigationLoad.initialSettled && !navigationLoad.error && phase !== 'finished'" class="loading-skip" :class="{ 'hint-dismissed': skipHintDismissed }" @mouseenter="skipHintDismissed = false" @focusin="skipHintDismissed = false" @keydown.esc="skipHintDismissed = true">
+            <button type="button" class="loading-skip-text" aria-describedby="loading-skip-note" @click="finish">不想等了，直接进入页面</button>
+            <span id="loading-skip-note" class="loading-skip-note" role="tooltip">资源可能尚未加载完成，提前进入可能影响浏览体验。</span>
+        </div>
         <template v-if="modeStore.theme === 'light'">
             <div class="date-stage" aria-hidden="true">
                 <div class="date-composition">
@@ -163,10 +167,13 @@ onUnmounted(() => {
     transition: opacity 800ms ease, visibility 800ms ease;
 }
 .phase-finished { opacity: 0; visibility: hidden; pointer-events: none; }
-.loading-skip { position: absolute; z-index: 20; bottom: max(28px, env(safe-area-inset-bottom)); left: clamp(24px, 6vw, 88px); padding: 10px 18px; color: #101421; background: #faffff; border: 0; box-shadow: 5px 5px 0 #0acbe5; font-size: .85rem; font-weight: 850; cursor: pointer; transform: skewX(-8deg); }
-.loading-skip:focus-visible { outline: 3px solid #f7de00; outline-offset: 6px; }
-:global(html[data-theme="dark"] .loading-skip) { box-shadow: 5px 5px 0 #e5222d; }
-.loading-skip span { margin-left: 12px; }
+.loading-skip { position: absolute; z-index: 20; bottom: max(18px, env(safe-area-inset-bottom)); left: clamp(24px, 6vw, 88px); }
+.loading-skip-text { display: block; min-height: 44px; padding: 10px 0; color: #e0e5ef; background: none; border: 0; box-shadow: none; font: 400 .75rem/1.6 var(--font-body); letter-spacing: .025em; cursor: pointer; text-underline-offset: 4px; text-decoration-thickness: 1px; transition: color 160ms ease; }
+.loading-skip-text:hover, .loading-skip-text:focus-visible { color: #fff; text-decoration: underline; }
+.loading-skip-text:focus-visible { outline: 1px solid #b9d8ef; outline-offset: 4px; }
+.loading-skip-note { position: absolute; bottom: calc(100% + 2px); left: 0; box-sizing: border-box; width: max-content; max-width: 420px; padding: 9px 12px; color: #edf1f8; background: #0b1120f5; border: 1px solid #ffffff26; border-radius: 3px; font: 400 .72rem/1.7 var(--font-body); letter-spacing: 0; opacity: 0; visibility: hidden; transform: translateY(4px); transition: opacity 160ms ease, transform 160ms ease, visibility 160ms; }
+.loading-skip:not(.hint-dismissed):hover .loading-skip-note, .loading-skip:not(.hint-dismissed):focus-within .loading-skip-note { opacity: 1; visibility: visible; transform: translateY(0); }
+.light-loading.closing .loading-skip { opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 160ms ease; }
 .persona-loading {
     position: relative;
     display: block;
@@ -399,7 +406,7 @@ onUnmounted(() => {
 }
 .persona-side-note b { font-size: 1.4rem; font-style: italic; letter-spacing: -.03em; }
 .persona-side-note i { font-size: .54rem; font-style: normal; }
-.persona-footer { position: absolute; right: clamp(24px, 6vw, 88px); bottom: clamp(24px, 4.5vw, 64px); left: clamp(24px, 6vw, 88px); color: rgba(255, 255, 255, .88); }
+.persona-footer { position: absolute; right: clamp(24px, 6vw, 88px); bottom: clamp(72px, 6vw, 96px); left: clamp(24px, 6vw, 88px); color: rgba(255, 255, 255, .88); }
 .persona-footer span:first-child { padding: 7px 10px; background: #08080a; border-left: 4px solid #ff201d; }
 .persona-footer span:last-child { padding: 6px 9px; color: #08080a; background: #f3f0e8; border: 2px solid #08080a; box-shadow: 4px 4px 0 #ff201d; transform: rotate(2deg); }
 .persona-footer b { margin-left: 6px; color: #ff201d; }
@@ -684,6 +691,11 @@ onUnmounted(() => {
     .date-ripple { width: 70px; }
 }
 @media (max-width: 600px) {
+    .loading-skip { right: 24px; bottom: max(12px, env(safe-area-inset-bottom)); left: 24px; }
+    .loading-skip-text { margin: 0 auto; font-size: .72rem; }
+    .loading-skip-note { left: 50%; max-width: 100%; transform: translate(-50%, 4px); }
+    .loading-skip:not(.hint-dismissed):hover .loading-skip-note, .loading-skip:not(.hint-dismissed):focus-within .loading-skip-note { transform: translate(-50%, 0); }
+    .loading-indicator { bottom: 72px; }
     .persona-loading { padding: 25px 22px; }
     .persona-topbar { font-size: .56rem; letter-spacing: .14em; }
     .persona-brand { gap: 8px; }
@@ -701,8 +713,8 @@ onUnmounted(() => {
     .persona-message { max-width: 85%; margin-top: 18px; font-size: .68rem; letter-spacing: .1em; }
     .persona-progress { width: 100%; margin-top: 28px; }
     .persona-progress-labels { width: 100%; font-size: .52rem; letter-spacing: .1em; }
-    .persona-footer { right: 22px; bottom: 25px; left: 22px; font-size: .52rem; letter-spacing: .12em; }
-    .persona-side-note { right: 22px; bottom: 16%; padding: 7px 9px 6px; font-size: .47rem; }
+    .persona-footer { right: 22px; bottom: 80px; left: 22px; font-size: .52rem; letter-spacing: .12em; }
+    .persona-side-note { right: 22px; bottom: max(16%, 120px); padding: 7px 9px 6px; font-size: .47rem; }
     .persona-side-note b { font-size: .98rem; }
     .persona-side-note i { font-size: .42rem; }
 }
