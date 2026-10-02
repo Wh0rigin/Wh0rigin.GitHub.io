@@ -35,7 +35,7 @@ onUnmounted(() => {
 
 <template>
     <header class="site-header" :class="{ 'at-top': isAtTop && !isBlog }">
-        <nav class="navbar" aria-label="主导航">
+        <nav class="navbar wired-container" aria-label="主导航">
             <router-link to="/" class="brand" aria-label="The Wired World home" @click="closeMenu">
                 <span class="brand-text"><span class="brand-prefix">THE</span> <span class="brand-accent">WIRED WORLD</span></span>
             </router-link>
@@ -121,10 +121,7 @@ onUnmounted(() => {
 }
 
 .navbar {
-    width: calc(100% - 48px);
-    max-width: 1120px;
     min-height: 72px;
-    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -406,7 +403,7 @@ onUnmounted(() => {
     }
 
     .navbar {
-        width: calc(100% - 32px);
+        --ui-container-gutter: 32px;
         min-height: 64px;
         gap: 12px;
     }

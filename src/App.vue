@@ -4,6 +4,8 @@ import { ref,onMounted,Ref } from 'vue';
 import Header from './components/common/Header.vue';
 import Footer from './components/common/Footer.vue';
 import Loading from './components/common/Loading.vue';
+import './styles/tokens.css';
+import './styles/primitives.css';
 import './styles/golden-theme.css';
 
 import { useModeStore } from './stores/mode.ts'
@@ -67,79 +69,6 @@ onMounted(() => {
 </template>
 
 <style>
-:root {
-  color-scheme: light;
-  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  --page-bg: #063493;
-  --surface: #faffff;
-  --surface-muted: #d5f8ff;
-  --text: #061b54;
-  --text-muted: #355b90;
-  --border: #0c6fc5;
-  --accent: #10cbe5;
-  --accent-strong: #096bd5;
-  --accent-soft: #bbf3ff;
-  --mint: #31f3ee;
-  --shadow: 9px 9px 0 rgba(0, 27, 111, 0.8), 0 28px 48px rgba(0, 20, 80, 0.28);
-  --footer-surface: #001b64;
-  --footer-icon: #ffffff;
-  --panel-radius: 3px;
-  --panel-border-width: 2px;
-  --theme-glow: rgba(49, 243, 238, 0.2);
-  --theme-contrast: #ffffff;
-  --page-pattern:
-    radial-gradient(ellipse at 72% -14%, rgba(55, 255, 243, 0.9), transparent 40%),
-    radial-gradient(ellipse at 90% 26%, rgba(26, 173, 232, 0.45), transparent 34%),
-    linear-gradient(180deg, #0aace4 0%, #0879d1 22%, #064aa7 55%, #001d79 100%);
-  --page-pattern-size: auto;
-  --terminal-surface: #ffffff;
-  --terminal-border: rgba(12, 116, 190, 0.2);
-  --terminal-divider: rgba(12, 116, 190, 0.14);
-  --terminal-text: #183858;
-  --terminal-muted: #66809f;
-  --terminal-prompt: #0787b5;
-  --terminal-cursor: #116fc2;
-}
-
-html[data-theme="dark"] {
-  color-scheme: dark;
-
-  --page-bg: #09090c;
-  --surface: #151519;
-  --surface-muted: #212126;
-  --text: #f6f2ec;
-  --text-muted: #b9adb2;
-  --border: rgba(255, 255, 255, 0.16);
-  --accent: #e5222d;
-  --accent-strong: #ff3842;
-  --accent-soft: #351015;
-  --mint: #f6eee3;
-  --shadow: 12px 14px 0 rgba(0, 0, 0, 0.42), 0 24px 70px rgba(0, 0, 0, 0.34);
-  --footer-surface: #111114;
-  --footer-icon: var(--text);
-  --panel-radius: 5px;
-  --panel-border-width: 2px;
-  --theme-glow: rgba(229, 34, 45, 0.28);
-  --theme-contrast: #050506;
-  --page-pattern:
-    radial-gradient(circle, rgba(255, 255, 255, 0.075) 0 1px, transparent 1.5px),
-    linear-gradient(118deg, transparent 0 57%, rgba(229, 34, 45, 0.085) 57% 66%, transparent 66%),
-    linear-gradient(62deg, transparent 0 72%, rgba(255, 255, 255, 0.025) 72% 73%, transparent 73%);
-  --page-pattern-size: 18px 18px, 100% 100%, 100% 100%;
-  --terminal-surface: #0d0d10;
-  --terminal-border: rgba(255, 56, 66, 0.72);
-  --terminal-divider: rgba(255, 56, 66, 0.32);
-  --terminal-text: #f5f0ea;
-  --terminal-muted: #c8b9bd;
-  --terminal-prompt: #ff3842;
-  --terminal-cursor: #ffffff;
-}
-
 * {
   box-sizing: border-box;
   margin: 0;

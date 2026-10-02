@@ -154,7 +154,7 @@ const mouseup = () => {
             <span class="motif-sweep motif-sweep-two"></span>
         </div>
 
-        <section id="top" class="hero" aria-labelledby="hero-title">
+        <section id="top" class="hero wired-container" aria-labelledby="hero-title">
             <div class="hero-golden" aria-hidden="true">
                 <svg class="golden-rainbow" viewBox="0 0 1000 900" preserveAspectRatio="xMidYMid slice">
                     <g fill="none" stroke-width="15">
@@ -264,7 +264,7 @@ const mouseup = () => {
             </div>
         </section>
 
-        <section id="page2" class="about-section" aria-label="关于 Wh0rigin">
+        <section id="page2" class="about-section wired-container" aria-label="关于 Wh0rigin">
             <WhoIntro />
             <CodeWin />
             <EducationJourney />
@@ -376,11 +376,8 @@ const mouseup = () => {
 .hero {
     position: relative;
     z-index: 1;
-    width: calc(100% - 48px);
-    max-width: 1120px;
     min-height: 100vh;
     min-height: 100svh;
-    margin: 0 auto;
     padding: 116px 0 60px;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -602,9 +599,6 @@ h1 {
 .about-section {
     position: relative;
     z-index: 1;
-    width: calc(100% - 48px);
-    max-width: 1120px;
-    margin: 0 auto;
     padding: 42px 0 112px;
     display: grid;
     grid-template-columns: 1fr 0.92fr;
@@ -1213,7 +1207,7 @@ h1 {
 
     .hero,
     .about-section {
-        width: calc(100% - 36px);
+        --ui-container-gutter: 36px;
     }
 
     .hero {

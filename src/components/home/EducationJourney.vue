@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import WiredBadge from '../ui/WiredBadge.vue';
 import hangzhouEmblem from '../../assets/education/hangzhou-normal.png';
 import wanliEmblem from '../../assets/education/zhejiang-wanli.png';
 
@@ -32,13 +33,13 @@ const education = [
     <section id="education" class="education-section" aria-labelledby="education-title">
         <div class="education-heading">
             <div>
-                <p class="education-eyebrow">Education</p>
+                <WiredBadge as="p" class="education-eyebrow">Education</WiredBadge>
                 <h3 id="education-title">教育经历</h3>
             </div>
             <span class="education-motto" aria-hidden="true">KEEP<br />LEARNING.</span>
         </div>
 
-        <ol class="education-list">
+        <ol class="education-list wired-panel">
             <li v-for="item in education" :key="item.degree" class="education-row" :class="{ 'is-current': item.current }">
                 <div class="degree-artwork">
                     <span class="degree-caption" aria-hidden="true">{{ item.current ? 'MASTER' : 'BACHELOR' }}</span>
@@ -96,17 +97,12 @@ const education = [
 }
 
 .education-eyebrow {
-    display: inline-block;
     margin-bottom: 12px;
-    padding: 5px 11px;
-    color: #fff;
-    background: var(--education-accent);
-    font-size: .72rem;
-    font-weight: 850;
-    letter-spacing: .19em;
-    text-transform: uppercase;
-    transform: skewX(-10deg);
-    box-shadow: 4px 4px 0 var(--education-layer);
+    --ui-badge-padding: 5px 11px;
+    --ui-badge-bg: var(--education-accent);
+    --ui-badge-size: .72rem;
+    --ui-badge-tracking: .19em;
+    --ui-badge-shadow: 4px 4px 0 var(--education-layer);
 }
 
 h3 {
@@ -132,9 +128,12 @@ h3 {
 .education-list {
     position: relative;
     list-style: none;
-    border: 3px solid var(--education-ink);
-    background: var(--education-paper);
-    box-shadow: 11px 11px 0 var(--education-layer), 17px 17px 0 var(--education-ink);
+    --ui-panel-color: var(--text);
+    --ui-panel-bg: var(--education-paper);
+    --ui-panel-border-width: 3px;
+    --ui-panel-border: var(--education-ink);
+    --ui-panel-back: var(--education-ink);
+    --ui-panel-shadow: 11px 11px 0 var(--education-layer), 17px 17px 0 var(--ui-panel-back);
 }
 
 .education-row {
@@ -386,8 +385,10 @@ h4 {
 }
 
 :global(html[data-theme="dark"] .education-list) {
-    border: 2px solid rgba(255, 255, 255, .7);
-    box-shadow: 10px 10px 0 #e5222d, 18px 18px 0 #000;
+    --ui-panel-border-width: 2px;
+    --ui-panel-border: rgba(255, 255, 255, .7);
+    --ui-panel-back: #000;
+    --ui-panel-shadow: 10px 10px 0 var(--education-layer), 18px 18px 0 var(--ui-panel-back);
 }
 
 :global(html[data-theme="dark"] .degree-artwork::after) {
@@ -446,8 +447,8 @@ h4 {
     .education-major { margin-top: 10px; font-size: 1.15rem; letter-spacing: -.02em; }
     .major-english { font-size: .6rem; letter-spacing: .025em; }
     .education-status { padding: 2px 6px; font-size: .6rem; }
-    .education-list { box-shadow: 6px 6px 0 var(--education-layer), 11px 11px 0 var(--education-ink); }
-    :global(html[data-theme="dark"] .education-list) { box-shadow: 6px 6px 0 #e5222d, 11px 11px 0 #000; }
+    .education-list { --ui-panel-shadow: 6px 6px 0 var(--education-layer), 11px 11px 0 var(--ui-panel-back); }
+    :global(html[data-theme="dark"] .education-list) { --ui-panel-shadow: 6px 6px 0 var(--education-layer), 11px 11px 0 var(--ui-panel-back); }
 }
 
 @media (prefers-reduced-motion: reduce) {

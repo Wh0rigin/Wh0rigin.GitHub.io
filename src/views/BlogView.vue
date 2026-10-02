@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { posts, formatPostDate } from '../content/posts';
 import BlogArtwork from '../components/blog/BlogArtwork.vue';
+import WiredAccent from '../components/ui/WiredAccent.vue';
+import WiredBadge from '../components/ui/WiredBadge.vue';
 import '../styles/blog.css';
 
 const entries = [...posts].sort((a, b) => b.date.localeCompare(a.date));
@@ -8,15 +10,15 @@ const entries = [...posts].sort((a, b) => b.date.localeCompare(a.date));
 
 <template>
     <main class="blog-page blog-index" id="top">
-        <div class="blog-shell">
+        <div class="blog-shell wired-container">
             <header class="journal-heading">
                 <div>
-                    <p class="journal-kicker"><span></span> THE WIRED WORLD / JOURNAL</p>
+                    <p class="journal-kicker wired-kicker"><span class="wired-kicker-mark" aria-hidden="true"></span> THE WIRED WORLD / JOURNAL</p>
                     <h1 class="journal-title" lang="en">BLOG<span class="journal-title-shadow" aria-hidden="true">BLOG</span><sup>01—</sup></h1>
-                    <p class="journal-tagline">想法，<span>继续连线。</span></p>
+                    <p class="journal-tagline">想法，<WiredAccent class="journal-title-accent">继续连线。</WiredAccent></p>
                 </div>
                 <div class="journal-intro">
-                    <span class="journal-stamp">FIELD NOTES</span>
+                    <WiredBadge variant="outline" flat class="journal-stamp">FIELD NOTES</WiredBadge>
                     <p>代码里的尝试，耳机里的音乐，<br>还有生活中值得留下的片段。</p>
                     <span class="journal-coordinate">WH0RIGIN / PERSONAL ARCHIVE</span>
                 </div>
@@ -29,14 +31,14 @@ const entries = [...posts].sort((a, b) => b.date.localeCompare(a.date));
                 </div>
                 <ol class="entry-list">
                     <li v-for="post in entries" :key="post.slug">
-                        <router-link :to="`/blog/${post.slug}`" class="entry-link" :aria-label="`阅读 ${post.title}`">
+                        <router-link :to="`/blog/${post.slug}`" class="entry-link wired-panel wired-panel--interactive" :aria-label="`阅读 ${post.title}`">
                             <div class="entry-art"><BlogArtwork :issue="post.issue" /></div>
                             <div class="entry-copy">
-                                <div class="entry-meta"><span>{{ post.category }}</span><span v-if="post.demo" class="demo-label">DEMO / 第一篇</span><span class="entry-issue">NO. {{ post.issue }}</span></div>
+                                <div class="entry-meta"><span>{{ post.category }}</span><WiredBadge v-if="post.demo" variant="soft" flat class="demo-label">DEMO / 第一篇</WiredBadge><span class="entry-issue">NO. {{ post.issue }}</span></div>
                                 <h3>{{ post.title }}</h3>
                                 <p class="entry-summary">{{ post.summary }}</p>
-                                <ul class="entry-tags" aria-label="文章标签"><li v-for="tag in post.tags" :key="tag"># {{ tag }}</li></ul>
-                                <div class="entry-bottom"><span><time :datetime="post.date">{{ formatPostDate(post.date) }}</time><i>·</i>约 {{ post.readMinutes }} 分钟</span><span class="entry-read">阅读手记 <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6" /></svg></span></div>
+                                <ul class="entry-tags wired-tags" aria-label="文章标签"><li v-for="tag in post.tags" :key="tag"># {{ tag }}</li></ul>
+                                <div class="entry-bottom"><span><time :datetime="post.date">{{ formatPostDate(post.date) }}</time><i>·</i>约 {{ post.readMinutes }} 分钟</span><span class="entry-read">阅读手记 <svg class="wired-action-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6" /></svg></span></div>
                             </div>
                         </router-link>
                     </li>

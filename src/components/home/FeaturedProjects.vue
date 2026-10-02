@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import WiredAction from '../ui/WiredAction.vue';
+import WiredBadge from '../ui/WiredBadge.vue';
+import WiredAccent from '../ui/WiredAccent.vue';
 const projects = [
     {
         number: '01',
@@ -51,21 +54,18 @@ const projects = [
     <section id="projects" class="projects-section" aria-labelledby="projects-title">
         <div class="projects-heading">
             <div>
-                <p class="projects-eyebrow">Selected work / Open source</p>
-                <h3 id="projects-title">代码里的<span class="projects-title-accent"><i class="projects-title-underlay" aria-hidden="true"></i>一些想法</span></h3>
+                <WiredBadge as="p" class="projects-eyebrow">Selected work / Open source</WiredBadge>
+                <h3 id="projects-title">代码里的<WiredAccent :depth="3" class="projects-title-accent">一些想法</WiredAccent></h3>
                 <p class="projects-intro">从开发工具到视觉识别，这是我想与你分享的几个开源项目。</p>
             </div>
-            <a class="all-projects" href="https://github.com/Wh0rigin?tab=repositories" target="_blank" rel="noopener noreferrer">
-                <span>全部仓库</span>
-                <svg aria-hidden="true" viewBox="0 0 20 20"><path d="M5 15 15 5M5 5h10v10" /></svg>
-            </a>
+            <WiredAction variant="paper" arrow="up-right" class="all-projects" href="https://github.com/Wh0rigin?tab=repositories" target="_blank" rel="noopener noreferrer">全部仓库</WiredAction>
         </div>
 
         <ol class="projects-grid">
             <li v-for="project in projects" :key="project.repo" class="project-item">
-                <article class="project-card">
+                <article class="project-card wired-panel wired-panel--interactive">
                     <div class="project-topline">
-                        <span class="project-category">{{ project.category }}</span>
+                        <WiredBadge flat class="project-category">{{ project.category }}</WiredBadge>
                         <span class="project-number" aria-hidden="true">{{ project.number }}</span>
                     </div>
 
@@ -92,16 +92,13 @@ const projects = [
 
                     <p class="project-headline">{{ project.headline }}</p>
                     <p class="project-description">{{ project.description }}</p>
-                    <ul class="project-tags" aria-label="技术与工具">
-                        <li v-for="tag in project.tags" :key="tag">{{ tag }}</li>
+                    <ul class="project-tags wired-tags" aria-label="技术与工具">
+                        <WiredBadge v-for="tag in project.tags" :key="tag" as="li" variant="tag" flat class="project-tag">{{ tag }}</WiredBadge>
                     </ul>
 
                     <div class="project-footer">
                         <p class="project-detail">{{ project.detail }}</p>
-                        <a class="project-link" :href="`https://github.com/Wh0rigin/${project.repo}`" target="_blank" rel="noopener noreferrer" :aria-label="`在 GitHub 查看 ${project.repo}（新标签页打开）`">
-                            <span>查看项目</span>
-                            <svg aria-hidden="true" viewBox="0 0 20 20"><path d="M5 15 15 5M5 5h10v10" /></svg>
-                        </a>
+                        <WiredAction arrow="up-right" class="project-link" :href="`https://github.com/Wh0rigin/${project.repo}`" target="_blank" rel="noopener noreferrer" :aria-label="`在 GitHub 查看 ${project.repo}（新标签页打开）`">查看项目</WiredAction>
                     </div>
                 </article>
             </li>
@@ -115,16 +112,14 @@ const projects = [
     grid-column: 1 / -1;
     min-width: 0;
     scroll-margin-top: 100px;
-    --project-accent: #003eaa;
-    --project-layer: #19d9e9;
-    --project-ink: #002578;
-    --project-paper: #faffff;
-    --project-text: #142957;
-    --project-muted: #526886;
-    --project-tint: #e9faff;
-    --project-line: rgba(0, 59, 158, .19);
-    --title-middle: #19d9e9;
-    --title-underlay: #002578;
+    --project-accent: var(--ui-accent);
+    --project-layer: var(--ui-layer);
+    --project-ink: var(--ui-ink);
+    --project-muted: var(--ui-muted);
+    --project-tint: var(--ui-tint);
+    --project-line: var(--ui-line);
+    --title-middle: var(--ui-layer);
+    --title-underlay: var(--ui-ink);
     --title-offset: 8px;
 }
 
@@ -137,17 +132,10 @@ const projects = [
 }
 
 .projects-eyebrow {
-    display: inline-block;
     margin-bottom: 16px;
-    padding: 6px 11px;
-    color: #fff;
-    background: var(--project-accent);
-    box-shadow: 4px 4px 0 var(--project-layer);
-    font-size: .7rem;
-    font-weight: 850;
-    letter-spacing: .15em;
-    text-transform: uppercase;
-    transform: skewX(-10deg);
+    --ui-badge-size: .7rem;
+    --ui-badge-bg: var(--project-accent);
+    --ui-badge-shadow: 4px 4px 0 var(--project-layer);
 }
 
 h3 {
@@ -161,39 +149,15 @@ h3 {
 }
 
 .projects-title-accent {
-    position: relative;
-    isolation: isolate;
-    display: inline-block;
     margin-left: .15em;
-    padding: .03em .23em .04em;
-    transform: rotate(-2deg) skewX(-5deg);
-}
-
-.projects-title-accent::before,
-.projects-title-accent::after,
-.projects-title-underlay {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    clip-path: polygon(3% 5%, 100% 0, 96% 93%, 0 100%);
-    content: '';
-}
-
-.projects-title-accent::before {
-    z-index: -1;
-    background: var(--project-accent);
-}
-
-.projects-title-accent::after {
-    z-index: -2;
-    background: var(--title-middle);
-    transform: translate(var(--title-offset), var(--title-offset)) rotate(1.5deg);
-}
-
-.projects-title-underlay {
-    z-index: -3;
-    background: var(--title-underlay);
-    transform: translate(calc(var(--title-offset) * 1.65), calc(var(--title-offset) * 1.65)) rotate(-.7deg);
+    --ui-accent-padding: .03em .23em .04em;
+    --ui-accent-transform: rotate(-2deg) skewX(-5deg);
+    --ui-accent-shape: polygon(3% 5%, 100% 0, 96% 93%, 0 100%);
+    --ui-accent-bg: var(--project-accent);
+    --ui-accent-layer: var(--title-middle);
+    --ui-accent-back: var(--title-underlay);
+    --ui-accent-offset: var(--title-offset);
+    --ui-accent-layer-angle: 1.5deg;
 }
 
 .projects-intro {
@@ -205,27 +169,15 @@ h3 {
 
 .all-projects {
     flex-shrink: 0;
-    display: inline-flex;
-    align-items: center;
-    gap: 14px;
-    min-height: 44px;
-    padding: 10px 15px;
-    color: var(--project-ink);
-    background: #fff;
-    box-shadow: 5px 5px 0 var(--project-layer);
-    font-size: .8rem;
-    font-weight: 850;
-    text-decoration: none;
-    transform: skewX(-7deg);
-}
-
-.all-projects svg, .project-link svg {
-    width: 19px;
-    height: 19px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 2;
-    transition: transform 220ms cubic-bezier(.16, 1, .3, 1);
+    --ui-action-gap: 14px;
+    --ui-action-height: 44px;
+    --ui-action-padding: 10px 15px;
+    --ui-action-size: .8rem;
+    --ui-action-layer: var(--project-layer);
+    --ui-action-transform: skewX(-7deg);
+    --ui-action-skew: 0deg;
+    --ui-action-hover-x: 2px;
+    --ui-action-hover-y: -2px;
 }
 
 .projects-grid {
@@ -243,13 +195,10 @@ h3 {
     display: flex;
     flex-direction: column;
     height: 100%;
-    min-width: 0;
     padding: 26px 28px 22px;
-    border: 2px solid var(--project-ink);
-    color: var(--project-text);
-    background: var(--project-paper);
-    box-shadow: 7px 8px 0 var(--project-layer), 12px 13px 0 var(--project-ink);
-    transition: transform 320ms cubic-bezier(.16, 1, .3, 1), box-shadow 320ms cubic-bezier(.16, 1, .3, 1);
+    --ui-panel-back: var(--project-ink);
+    --ui-panel-shadow: 7px 8px 0 var(--project-layer), 12px 13px 0 var(--ui-panel-back);
+    --ui-panel-hover-shadow: 10px 12px 0 var(--project-layer), 15px 17px 0 var(--ui-panel-back);
 }
 
 .project-card::before {
@@ -276,18 +225,17 @@ h3 {
 .project-category {
     position: relative;
     z-index: 1;
-    padding: 5px 9px;
-    color: #fff;
-    background: var(--project-accent);
-    font-size: .58rem;
-    font-weight: 850;
-    letter-spacing: .14em;
-    transform: skewX(-9deg) rotate(-2deg);
+    --ui-badge-padding: 5px 9px;
+    --ui-badge-color: #fff;
+    --ui-badge-bg: var(--project-accent);
+    --ui-badge-size: .58rem;
+    --ui-badge-tracking: .14em;
+    --ui-badge-transform: skewX(-9deg) rotate(-2deg);
 }
 
 .project-number {
     color: var(--project-accent);
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-display);
     font-size: 4.1rem;
     font-style: italic;
     font-weight: 1000;
@@ -323,7 +271,7 @@ h4 {
 .project-repo {
     margin-top: 9px;
     color: var(--project-muted);
-    font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+    font-family: var(--font-mono);
     font-size: .67rem;
     line-height: 1.5;
     overflow-wrap: anywhere;
@@ -333,22 +281,19 @@ h4 {
 .project-description { margin-top: 9px; color: var(--project-muted); font-size: .85rem; line-height: 1.9; text-wrap: pretty; }
 
 .project-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
+    --ui-tags-gap: 7px;
     margin-top: 19px;
     margin-bottom: 22px;
-    list-style: none;
 }
 
-.project-tags li {
-    padding: 4px 8px;
-    border: 1px solid var(--project-line);
-    color: var(--project-accent);
-    background: var(--project-tint);
-    font-size: .61rem;
-    font-weight: 750;
-    line-height: 1.4;
+.project-tag {
+    --ui-badge-padding: 4px 8px;
+    --ui-badge-border: var(--project-line);
+    --ui-badge-bg: var(--project-tint);
+    --ui-badge-size: .61rem;
+    --ui-badge-weight: 750;
+    --ui-badge-tracking: normal;
+    --ui-badge-line-height: 1.4;
 }
 
 .project-footer {
@@ -364,31 +309,17 @@ h4 {
 .project-detail { color: var(--project-muted); font-size: .67rem; line-height: 1.7; }
 
 .project-link {
-    position: relative;
-    isolation: isolate;
     flex-shrink: 0;
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
-    min-height: 44px;
-    padding: 10px 14px;
-    color: #fff;
-    font-size: .73rem;
-    font-weight: 850;
-    text-decoration: none;
+    --ui-action-bg: var(--project-accent);
+    --ui-action-layer: var(--project-layer);
+    --ui-action-gap: 9px;
+    --ui-action-height: 44px;
+    --ui-action-padding: 10px 14px;
+    --ui-action-size: .73rem;
+    --ui-action-offset: 4px;
+    --ui-action-hover-x: 2px;
+    --ui-action-hover-y: -2px;
 }
-
-.project-link::before, .project-link::after {
-    position: absolute;
-    z-index: -1;
-    inset: 0;
-    background: var(--project-accent);
-    transform: skewX(-9deg);
-    content: '';
-}
-
-.project-link::after { z-index: -2; background: var(--project-layer); transform: translate(4px, 4px) skewX(-9deg); }
-.project-link:focus-visible, .all-projects:focus-visible { outline: 3px solid var(--project-accent); outline-offset: 7px; }
 
 .projects-signoff {
     display: flex;
@@ -403,32 +334,16 @@ h4 {
 }
 
 :global(html[data-theme="dark"] .projects-section) {
-    --project-accent: #e5222d;
-    --project-layer: #e5222d;
-    --project-ink: #f6f2ec;
-    --project-paper: #111115;
-    --project-text: #f6f2ec;
-    --project-muted: #bfb4b9;
-    --project-tint: #2b1117;
-    --project-line: rgba(255, 255, 255, .2);
     --title-middle: #08080a;
     --title-underlay: #f6f2ec;
 }
 
-:global(html[data-theme="dark"] .project-card) { border-color: rgba(255, 255, 255, .7); box-shadow: 7px 8px 0 #e5222d, 12px 13px 0 #000; }
+:global(html[data-theme="dark"] .project-card) { --ui-panel-border: rgba(255, 255, 255, .7); --ui-panel-back: #000; }
 :global(html[data-theme="dark"] .project-number) { color: #f6f2ec; text-shadow: 3px 3px 0 #e5222d, 5px 5px 0 #08080a; }
-:global(html[data-theme="dark"] .all-projects) { color: #08080a; }
-:global(html[data-theme="dark"] .project-link::after) { background: #f6f2ec; }
+:global(html[data-theme="dark"] .project-link) { --ui-action-layer: var(--ui-action-underlay); }
 :global(html[data-theme="dark"] .project-symbol) { color: #f6f2ec; background: #08080a; }
-:global(html[data-theme="dark"] .project-tags li) { color: #ff9da3; }
 :global(html[data-theme="dark"] .projects-intro) { color: #bfb4b9; }
 :global(html[data-theme="dark"] .projects-heading h3) { text-shadow: 3px 3px 0 #08080a; }
-
-@media (hover: hover) and (pointer: fine) {
-    .project-card:hover { transform: translate(-3px, -4px); box-shadow: 10px 12px 0 var(--project-layer), 15px 17px 0 var(--project-ink); }
-    :global(html[data-theme="dark"] .project-card:hover) { box-shadow: 10px 12px 0 #e5222d, 15px 17px 0 #000; }
-    .project-link:hover svg, .all-projects:hover svg { transform: translate(2px, -2px); }
-}
 
 @media (max-width: 820px) {
     .projects-grid { grid-template-columns: 1fr; gap: 26px; }
@@ -439,11 +354,10 @@ h4 {
 @media (max-width: 520px) {
     .projects-section { --title-offset: 5px; }
     .projects-heading { align-items: flex-start; flex-direction: column; gap: 18px; margin-bottom: 26px; }
-    .projects-eyebrow { font-size: .6rem; letter-spacing: .1em; }
+    .projects-eyebrow { --ui-badge-size: .6rem; --ui-badge-tracking: .1em; }
     h3 { font-size: clamp(1.5rem, 7vw, 2rem); }
     .projects-intro { font-size: .8rem; }
-    .project-card { padding: 22px 20px 20px; box-shadow: 5px 6px 0 var(--project-layer), 9px 10px 0 var(--project-ink); }
-    :global(html[data-theme="dark"] .project-card) { box-shadow: 5px 6px 0 #e5222d, 9px 10px 0 #000; }
+    .project-card { padding: 22px 20px 20px; --ui-panel-shadow: 5px 6px 0 var(--project-layer), 9px 10px 0 var(--ui-panel-back); }
     .project-topline { margin-bottom: 18px; }
     .project-number { font-size: 3.7rem; }
     .project-titleline { gap: 14px; }
@@ -458,7 +372,4 @@ h4 {
     .projects-signoff span:last-child { text-align: right; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .project-card, .all-projects svg, .project-link svg { transition: none; }
-}
 </style>

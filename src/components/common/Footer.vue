@@ -9,7 +9,7 @@ const year = new Date().getFullYear();
 <template>
     <FooterBg />
     <footer class="footer">
-        <div class="footer-inner">
+        <div class="footer-inner wired-container">
             <div class="footer-main">
                 <div class="footer-brand">
                     <span class="brand-name">Wh0rigin</span>
@@ -71,9 +71,6 @@ const year = new Date().getFullYear();
 }
 
 .footer-inner {
-    width: calc(100% - 48px);
-    max-width: 1120px;
-    margin: 0 auto;
     padding: 38px 0 22px;
 }
 
@@ -141,7 +138,7 @@ const year = new Date().getFullYear();
 
 @media (max-width: 600px) {
     .footer-inner {
-        width: calc(100% - 36px);
+        --ui-container-gutter: 36px;
     }
 
     .footer-main {

@@ -1,38 +1,4 @@
 /* A secret television channel, inspired by P4's yellow stage and rainbow signal. */
-html[data-theme="golden"] {
-  color-scheme: light;
-  --page-bg: #ffe32d;
-  --surface: #fffdf2;
-  --surface-muted: #fff0b7;
-  --text: #191814;
-  --text-muted: #64522b;
-  --border: #191814;
-  --accent: #ed9821;
-  --accent-strong: #985000;
-  --accent-soft: #fff0ae;
-  --mint: #40b968;
-  --shadow: 9px 9px 0 #ee9a29, 15px 15px 0 #191814;
-  --footer-surface: #191814;
-  --footer-icon: #ffe32d;
-  --panel-radius: 2px;
-  --panel-border-width: 3px;
-  --theme-glow: rgba(255, 255, 231, .42);
-  --theme-contrast: #191814;
-  --page-pattern:
-    linear-gradient(rgba(210, 145, 0, .09) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(210, 145, 0, .09) 1px, transparent 1px),
-    radial-gradient(ellipse at 75% 0, #fff47a, transparent 55%),
-    linear-gradient(145deg, #ffe631, #ffd324);
-  --page-pattern-size: 44px 44px, 44px 44px, auto, auto;
-  --terminal-surface: #fffdf2;
-  --terminal-border: #191814;
-  --terminal-divider: #ed9821;
-  --terminal-text: #29271d;
-  --terminal-muted: #fff4bb;
-  --terminal-prompt: #247b42;
-  --terminal-cursor: #985000;
-}
-
 html[data-theme="golden"] .site-header:not(.at-top) {
   background: #191814;
   border-bottom: 4px solid #ffe32d;
@@ -246,25 +212,16 @@ html[data-theme="golden"] .degree-artwork::after { background: #ffe32d; }
 html[data-theme="golden"] .degree-lettering { color: #191814; -webkit-text-stroke-color: #fffdf2; }
 html[data-theme="golden"] .education-eyebrow { color: #ffe32d; }
 html[data-theme="golden"] .projects-section {
-  --project-accent: #191814;
   --project-layer: #46cbd4;
-  --project-ink: #191814;
-  --project-paper: #fffdf2;
-  --project-text: #29271d;
-  --project-muted: #6b5b3d;
-  --project-tint: #fff0b7;
-  --project-line: rgba(94, 60, 0, .2);
   --title-middle: #ee8625;
   --title-underlay: #fffdf2;
 }
 html[data-theme="golden"] .projects-title-accent { color: #ffe32d; text-shadow: none; }
 html[data-theme="golden"] .projects-intro,
 html[data-theme="golden"] .projects-signoff { color: #49371a; }
-html[data-theme="golden"] .projects-eyebrow { color: #ffe32d; }
 html[data-theme="golden"] .project-item:nth-child(2) { --project-layer: #e879a1; }
 html[data-theme="golden"] .project-item:nth-child(3) { --project-layer: #40b968; }
 html[data-theme="golden"] .project-item:nth-child(4) { --project-layer: #ee8625; }
-html[data-theme="golden"] .project-tags li { color: #735015; }
 
 html[data-theme="golden"] .music-card {
   border: 3px solid #191814;
