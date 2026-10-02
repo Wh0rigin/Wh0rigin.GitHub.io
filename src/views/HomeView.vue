@@ -155,6 +155,24 @@ const mouseup = () => {
         </div>
 
         <section id="top" class="hero" aria-labelledby="hero-title">
+            <div class="hero-golden" aria-hidden="true">
+                <svg class="golden-rainbow" viewBox="0 0 1000 900" preserveAspectRatio="xMidYMid slice">
+                    <g fill="none" stroke-width="15">
+                        <path stroke="#161512" d="M-120 730C190 740 180 180 530 285S825 600 1130 235" />
+                        <path stroke="#fffdf0" transform="translate(0 19)" d="M-120 730C190 740 180 180 530 285S825 600 1130 235" />
+                        <path stroke="#ee7626" transform="translate(0 38)" d="M-120 730C190 740 180 180 530 285S825 600 1130 235" />
+                        <path stroke="#e64669" transform="translate(0 57)" d="M-120 730C190 740 180 180 530 285S825 600 1130 235" />
+                        <path stroke="#fffdf0" transform="translate(0 76)" d="M-120 730C190 740 180 180 530 285S825 600 1130 235" />
+                        <path stroke="#42b762" transform="translate(0 95)" d="M-120 730C190 740 180 180 530 285S825 600 1130 235" />
+                        <path stroke="#46cbd4" transform="translate(0 114)" d="M-120 730C190 740 180 180 530 285S825 600 1130 235" />
+                        <path stroke="#fffdf0" transform="translate(0 133)" d="M-120 730C190 740 180 180 530 285S825 600 1130 235" />
+                    </g>
+                    <g fill="#fffdf0">
+                        <path d="m756 123 10-33 10 33 33 10-33 10-10 33-10-33-33-10zM199 416l7-22 7 22 22 7-22 7-7 22-7-22-22-7zM861 650l8-26 8 26 26 8-26 8-8 26-8-26-26-8z" />
+                    </g>
+                </svg>
+                <span class="golden-channel">YOU FOUND THE SIGNAL.<b>GOLDEN CHANNEL / 04</b></span>
+            </div>
             <div class="hero-water" aria-hidden="true">
                 <svg class="water-scene" viewBox="0 0 800 900" preserveAspectRatio="xMidYMid slice">
                     <defs>
@@ -231,9 +249,16 @@ const mouseup = () => {
                             <feColorMatrix type="matrix" values="0 0 0 0 0.90  0 0 0 0 0.13  0 0 0 0 0.18  0 0 0 1 0" result="silhouette" />
                             <feMerge><feMergeNode in="outline" /><feMergeNode in="silhouette" /></feMerge>
                         </filter>
+                        <filter id="hero-golden-silhouette" color-interpolation-filters="sRGB" x="-2%" y="-2%" width="104%" height="104%">
+                            <feMorphology in="SourceAlpha" operator="dilate" radius="2" result="expandedAlpha" />
+                            <feFlood flood-color="#161512" result="outlineColor" />
+                            <feComposite in="outlineColor" in2="expandedAlpha" operator="in" result="outline" />
+                            <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 0.78  0 0 0 0 0.04  0 0 0 1 0" result="silhouette" />
+                            <feMerge><feMergeNode in="outline" /><feMergeNode in="silhouette" /></feMerge>
+                        </filter>
                     </defs>
                 </svg>
-                <span class="hero-visual-number" aria-hidden="true">05</span>
+                <span class="hero-visual-number" aria-hidden="true">{{ modeStore.theme === 'golden' ? '04' : '05' }}</span>
                 <img class="logo logo-original" alt="连线世界主题插画" draggable="false" @mousedown="mousedown" @mouseup="mouseup" :src="img_url" />
                 <img class="logo logo-silhouette" alt="" aria-hidden="true" draggable="false" :src="img_url" />
             </div>
@@ -345,6 +370,8 @@ const mouseup = () => {
     transform: rotate(-23deg) skewX(-24deg);
     animation: slash-run 7s cubic-bezier(0.74, 0, 0.26, 1) infinite;
 }
+
+.hero-golden { display: none; }
 
 .hero {
     position: relative;

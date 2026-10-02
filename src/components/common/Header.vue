@@ -1,13 +1,20 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useModeStore } from '../../stores/mode';
 
 const modeStore = useModeStore();
+const themeLabel = computed(() => modeStore.theme === 'golden'
+    ? '退出电视主题，切换到日间模式'
+    : modeStore.theme === 'dark' ? '切换到日间模式' : '切换到夜间模式');
 const isOpen = ref(false);
 const isAtTop = ref(true);
 
 const checkScrollPosition = () => {
-    isAtTop.value = window.scrollY === 0;
+    // The record spotlight locks the body in place, which resets window.scrollY.
+    const scrollY = document.body.style.position === 'fixed'
+        ? Math.abs(Number.parseFloat(document.body.style.top) || 0)
+        : window.scrollY;
+    isAtTop.value = scrollY === 0;
 };
 
 const closeMenu = () => {
@@ -54,11 +61,17 @@ onUnmounted(() => {
                 <button
                     class="icon-button theme-button"
                     type="button"
-                    :aria-label="modeStore.theme === 'dark' ? '切换到日间模式' : '切换到夜间模式'"
-                    :title="modeStore.theme === 'dark' ? '切换到日间模式' : '切换到夜间模式'"
+                    :aria-label="themeLabel"
+                    :title="themeLabel"
                     @click="modeStore.toggleTheme"
                 >
-                    <svg v-if="modeStore.theme === 'dark'" aria-hidden="true" viewBox="0 0 24 24">
+                    <svg v-if="modeStore.theme === 'golden'" aria-hidden="true" viewBox="0 0 24 24">
+                        <path d="m8 2 4 4 4-4M6 20l-1 2m13-2 1 2" />
+                        <rect x="2" y="6" width="20" height="14" rx="2" />
+                        <rect x="5" y="9" width="11" height="8" rx="1" />
+                        <path d="M19 10v1m0 4v1" />
+                    </svg>
+                    <svg v-else-if="modeStore.theme === 'dark'" aria-hidden="true" viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="4" />
                         <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" />
                     </svg>

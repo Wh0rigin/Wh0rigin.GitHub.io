@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
-export type Theme = "light" | "dark";
+export type Theme = "light" | "dark" | "golden";
 
 type ViewTransitionDocument = Document & {
     startViewTransition?: (updateCallback: () => void) => { finished: Promise<void> };
@@ -28,14 +28,15 @@ export const useModeStore = defineStore("mode", () => {
         mode.value = Math.floor(Math.random() * 3);
     }
 
-    function setTheme(nextTheme: Theme) {
+    function setTheme(nextTheme: Theme, origin?: HTMLElement) {
         if (theme.value === nextTheme) return;
 
         const applyTheme = () => {
             theme.value = nextTheme;
             document.documentElement.dataset.theme = nextTheme;
             try {
-                window.localStorage.setItem("wh0rigin-theme", nextTheme);
+                // The hidden channel must be entered through the footer television.
+                if (nextTheme !== "golden") window.localStorage.setItem("wh0rigin-theme", nextTheme);
             } catch {
                 // The current page still uses the selected theme for this session.
             }
@@ -54,7 +55,7 @@ export const useModeStore = defineStore("mode", () => {
             return;
         }
 
-        const toggleButton = document.querySelector<HTMLElement>(".theme-button");
+        const toggleButton = origin ?? document.querySelector<HTMLElement>(".theme-button");
         const buttonBounds = toggleButton?.getBoundingClientRect();
         if (buttonBounds) {
             root.style.setProperty("--theme-transition-x", `${buttonBounds.left + buttonBounds.width / 2}px`);
@@ -76,12 +77,17 @@ export const useModeStore = defineStore("mode", () => {
     }
 
     function toggleTheme() {
-        setTheme(theme.value === "dark" ? "light" : "dark");
+        setTheme(theme.value === "light" ? "dark" : "light");
+    }
+
+    function tuneTelevision(event: MouseEvent) {
+        const origin = event.currentTarget instanceof HTMLElement ? event.currentTarget : undefined;
+        setTheme(theme.value === "golden" ? "light" : "golden", origin);
     }
 
     if (typeof document !== "undefined") {
         document.documentElement.dataset.theme = theme.value;
     }
 
-    return { mode, theme, getNewRandomMode, setTheme, toggleTheme };
+    return { mode, theme, getNewRandomMode, setTheme, toggleTheme, tuneTelevision };
 });

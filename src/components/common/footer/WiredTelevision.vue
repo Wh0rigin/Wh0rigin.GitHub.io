@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed } from 'vue';
+import { useModeStore } from '../../../stores/mode';
 
-const tunedIn = ref(false);
+const modeStore = useModeStore();
+const tunedIn = computed(() => modeStore.theme === 'golden');
 </script>
 
 <template>
     <div class="footer-television">
-        <button class="television-button" :class="{ 'is-tuned': tunedIn }" type="button" :aria-pressed="tunedIn" :aria-label="tunedIn ? '关闭小电视彩蛋' : '打开小电视彩蛋'" @click="tunedIn = !tunedIn">
+        <button class="television-button" :class="{ 'is-tuned': tunedIn }" type="button" :aria-pressed="tunedIn" :aria-label="tunedIn ? '退出黄色电视主题' : '打开小电视彩蛋'" @click="modeStore.tuneTelevision">
             <svg class="television-art" viewBox="0 0 300 254" aria-hidden="true">
                 <defs>
                     <clipPath id="footer-tv-screen">
@@ -65,7 +67,7 @@ const tunedIn = ref(false);
             </svg>
         </button>
         <span class="television-hint" aria-hidden="true">{{ tunedIn ? 'CLICK TO CLOSE' : 'CLICK TO TUNE IN' }}</span>
-        <span class="television-announcement" role="status">{{ tunedIn ? 'Hello world！欢迎来到连线世界。' : '' }}</span>
+        <span class="television-announcement" role="status">{{ tunedIn ? '隐藏频道已接通。点击右上角电视按钮可回到白天模式。' : '' }}</span>
     </div>
 </template>
 

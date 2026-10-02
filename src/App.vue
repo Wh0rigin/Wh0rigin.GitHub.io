@@ -4,6 +4,7 @@ import { ref,onMounted,Ref } from 'vue';
 import Header from './components/common/Header.vue';
 import Footer from './components/common/Footer.vue';
 import Loading from './components/common/Loading.vue';
+import './styles/golden-theme.css';
 
 import { useModeStore } from './stores/mode.ts'
 
