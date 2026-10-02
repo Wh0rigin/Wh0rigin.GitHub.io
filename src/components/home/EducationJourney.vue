@@ -10,6 +10,7 @@ const education = [
         major: '人工智能',
         majorEnglish: 'Artificial Intelligence',
         emblem: hangzhouEmblem,
+        emblemScale: 1.2,
         current: true,
     },
     {
@@ -19,6 +20,7 @@ const education = [
         major: '计算机科学与技术',
         majorEnglish: 'Computer Science and Technology',
         emblem: wanliEmblem,
+        emblemScale: 1,
         current: false,
     },
 ];
@@ -44,7 +46,9 @@ const education = [
                         <span class="degree-end" aria-hidden="true">E</span>
                     </abbr>
                     <div class="school-emblem">
-                        <img :src="item.emblem" :alt="`${item.school}校徽`" width="88" height="88" loading="lazy" decoding="async" />
+                        <div class="school-emblem-viewport">
+                            <img :src="item.emblem" :alt="`${item.school}校徽`" :style="{ '--emblem-scale': item.emblemScale }" width="88" height="88" loading="lazy" decoding="async" />
+                        </div>
                     </div>
                 </div>
 
@@ -258,12 +262,20 @@ h3 {
     transform: rotate(5deg);
 }
 
+.school-emblem-viewport {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
 .school-emblem img {
     display: block;
     width: 100%;
     height: 100%;
-    border-radius: 50%;
     object-fit: contain;
+    // Match the visible crest sizes despite different padding in the source files.
+    transform: scale(var(--emblem-scale, 1));
 }
 
 .education-copy { min-width: 0; padding: 12px 0; }
