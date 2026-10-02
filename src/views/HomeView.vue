@@ -5,6 +5,7 @@ import { useModeStore } from '../stores/mode';
 import WhoIntro from '../components/home/WhoIntro.vue';
 import CodeWin from '../components/home/CodeWin.vue';
 import EducationJourney from '../components/home/EducationJourney.vue';
+import FeaturedProjects from '../components/home/FeaturedProjects.vue';
 import MusicSpotlight from '../components/home/MusicSpotlight.vue';
 
 // import logo1_url from '../assets/logo/logo1.png'
@@ -242,6 +243,7 @@ const mouseup = () => {
             <WhoIntro />
             <CodeWin />
             <EducationJourney />
+            <FeaturedProjects />
             <MusicSpotlight />
         </section>
     </main>
