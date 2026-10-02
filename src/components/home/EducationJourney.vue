@@ -7,6 +7,7 @@ const education = [
         degree: 'M.E',
         degreeName: '工学硕士',
         school: '杭州师范大学',
+        schoolUrl: 'https://www.hznu.edu.cn/',
         major: '人工智能',
         majorEnglish: 'Artificial Intelligence',
         emblem: hangzhouEmblem,
@@ -17,6 +18,7 @@ const education = [
         degree: 'B.E',
         degreeName: '工学学士',
         school: '浙江万里学院',
+        schoolUrl: 'https://www.zwu.edu.cn/',
         major: '计算机科学与技术',
         majorEnglish: 'Computer Science and Technology',
         emblem: wanliEmblem,
@@ -62,8 +64,11 @@ const education = [
                     </div>
                     <p class="education-major">{{ item.major }}</p>
                     <p class="major-english" lang="en">{{ item.majorEnglish }}</p>
+                    <a class="school-website" :href="item.schoolUrl" target="_blank" rel="noopener noreferrer" :aria-label="`访问${item.school}官网（新标签页打开）`" :title="`${item.school}官网（新标签页打开）`">
+                        <svg aria-hidden="true" viewBox="0 0 20 20"><path d="M5 15 15 5M5 5h10v10" /></svg>
+                        <span>官网</span>
+                    </a>
                 </div>
-                <span class="row-arrow" aria-hidden="true">↗</span>
             </li>
         </ol>
     </section>
@@ -135,7 +140,7 @@ h3 {
 .education-row {
     position: relative;
     display: grid;
-    grid-template-columns: 250px minmax(0, 1fr) 36px;
+    grid-template-columns: 250px minmax(0, 1fr) 48px;
     align-items: center;
     gap: clamp(28px, 4vw, 52px);
     padding: 28px 40px 28px 30px;
@@ -328,11 +333,47 @@ h4 {
     text-transform: uppercase;
 }
 
-.row-arrow {
+.school-website {
+    position: absolute;
+    top: 50%;
+    right: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 48px;
+    min-height: 60px;
+    padding: 8px;
+    border: 1px solid var(--education-line);
     color: var(--education-accent);
-    font-size: 2rem;
-    font-weight: 800;
-    opacity: .4;
+    background: var(--education-paper);
+    font-size: .68rem;
+    font-weight: 750;
+    text-decoration: none;
+    transform: translateY(-50%);
+    transition: color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
+}
+
+.school-website svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: square;
+}
+
+.school-website:hover {
+    color: #fff;
+    background: var(--education-accent);
+    border-color: var(--education-accent);
+    box-shadow: 4px 4px 0 var(--education-ink);
+}
+
+.school-website:focus-visible {
+    outline: 3px solid var(--accent-strong);
+    outline-offset: 4px;
 }
 
 :global(html[data-theme="dark"] .education-section) {
@@ -372,7 +413,16 @@ h4 {
     .education-row:not(.is-current) .degree-end { left: 95px; }
     .education-row:not(.is-current) .degree-stop { left: 82px; }
     .school-emblem { width: 76px; height: 76px; }
-    .row-arrow { display: none; }
+    .school-website {
+        position: static;
+        flex-direction: row;
+        width: fit-content;
+        min-height: 44px;
+        margin-top: 12px;
+        padding: 8px 12px;
+        gap: 8px;
+        transform: none;
+    }
 }
 
 @media (max-width: 520px) {
