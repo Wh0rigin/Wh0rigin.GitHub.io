@@ -154,7 +154,7 @@ html[data-theme="golden"] .hero-golden-television {
   z-index: -1;
   top: 50%;
   left: 50%;
-  width: 134%;
+  width: 152%;
   height: auto;
   pointer-events: none;
   transform: translate(-50%, -50%) rotate(-6deg);
@@ -275,7 +275,7 @@ html[data-theme="golden"] .television-hint { color: #ffe32d; }
 }
 @media (max-width: 520px) {
   html[data-theme="golden"] .hero h1 { font-size: clamp(2.8rem, 13vw, 4.3rem); }
-  html[data-theme="golden"] .hero-golden-television { width: 132%; filter: drop-shadow(4px 4px 0 #40b968) drop-shadow(3px 3px 0 #fffdf2); }
+  html[data-theme="golden"] .hero-golden-television { top: 60%; width: 146%; filter: drop-shadow(4px 4px 0 #40b968) drop-shadow(3px 3px 0 #fffdf2); }
   html[data-theme="golden"] .hero-visual-number { top: -8%; right: -18%; font-size: clamp(12rem, 52vw, 19rem); -webkit-text-stroke-width: 3px; }
   html[data-theme="golden"] .golden-channel { font-size: .45rem; padding: 5px 8px; }
   html[data-theme="golden"] .golden-channel b { font-size: .56rem; }
