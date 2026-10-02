@@ -5,7 +5,7 @@ import WiredAccent from '../components/ui/WiredAccent.vue';
 import WiredBadge from '../components/ui/WiredBadge.vue';
 import '../styles/blog.css';
 
-const entries = [...posts].sort((a, b) => b.date.localeCompare(a.date));
+const entries = [...posts].sort((a, b) => b.date.localeCompare(a.date) || b.issue.localeCompare(a.issue, undefined, { numeric: true }));
 </script>
 
 <template>
@@ -14,7 +14,7 @@ const entries = [...posts].sort((a, b) => b.date.localeCompare(a.date));
             <header class="journal-heading">
                 <div>
                     <p class="journal-kicker wired-kicker"><span class="wired-kicker-mark" aria-hidden="true"></span> THE WIRED WORLD / JOURNAL</p>
-                    <h1 class="journal-title" lang="en">BLOG<span class="journal-title-shadow" aria-hidden="true">BLOG</span><sup>01—</sup></h1>
+                    <h1 class="journal-title" lang="en">BLOG<span class="journal-title-shadow" aria-hidden="true">BLOG</span><sup>{{ String(entries.length).padStart(2, '0') }}—</sup></h1>
                     <p class="journal-tagline">想法，<WiredAccent class="journal-title-accent">继续连线。</WiredAccent></p>
                 </div>
                 <div class="journal-intro">
@@ -32,7 +32,7 @@ const entries = [...posts].sort((a, b) => b.date.localeCompare(a.date));
                 <ol class="entry-list">
                     <li v-for="post in entries" :key="post.slug">
                         <router-link :to="`/blog/${post.slug}`" class="entry-link wired-panel wired-panel--interactive" :aria-label="`阅读 ${post.title}`">
-                            <div class="entry-art"><BlogArtwork :issue="post.issue" /></div>
+                            <div class="entry-art"><BlogArtwork :issue="post.issue" v-bind="post.artwork" /></div>
                             <div class="entry-copy">
                                 <div class="entry-meta"><span>{{ post.category }}</span><WiredBadge v-if="post.demo" variant="soft" flat class="demo-label">DEMO / 第一篇</WiredBadge><span class="entry-issue">NO. {{ post.issue }}</span></div>
                                 <h3>{{ post.title }}</h3>

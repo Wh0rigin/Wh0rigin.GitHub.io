@@ -1,5 +1,10 @@
 <script setup lang="ts">
-withDefaults(defineProps<{ issue?: string }>(), { issue: '001' });
+withDefaults(defineProps<{
+    issue?: string;
+    headline?: string;
+    highlight?: string;
+    caption?: string;
+}>(), { issue: '001', headline: 'HELLO,', highlight: 'WORLD.', caption: 'A CONNECTION BEGINS.' });
 </script>
 
 <template>
@@ -8,10 +13,10 @@ withDefaults(defineProps<{ issue?: string }>(), { issue: '001' });
         <div class="art-orbit orbit-two"></div>
         <div class="art-cut"></div>
         <span class="art-label">THE WIRED WORLD</span>
-        <span class="art-word">HELLO,<br><em>WORLD.</em></span>
+        <span class="art-word">{{ headline }}<br><em>{{ highlight }}</em></span>
         <span class="art-issue">{{ issue }}</span>
         <span class="art-signal"><i></i><i></i><i></i><i></i></span>
-        <span class="art-caption">A CONNECTION BEGINS.</span>
+        <span class="art-caption">{{ caption }}</span>
     </div>
 </template>
 

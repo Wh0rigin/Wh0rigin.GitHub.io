@@ -23,7 +23,7 @@ const post = computed(() => findPost(String(route.params.slug)));
                     <p class="article-subtitle">{{ post.subtitle }}</p>
                     <div class="article-meta"><span class="author-mark" aria-hidden="true">W.</span><span>Wh0rigin</span><time :datetime="post.date">{{ formatPostDate(post.date) }}</time><span>约 {{ post.readMinutes }} 分钟</span></div>
                 </div>
-                <div class="article-art wired-panel"><BlogArtwork :issue="post.issue" /></div>
+                <div class="article-art wired-panel"><BlogArtwork :issue="post.issue" v-bind="post.artwork" /></div>
             </header>
 
             <div class="article-layout">
@@ -37,6 +37,9 @@ const post = computed(() => findPost(String(route.params.slug)));
                         <p v-for="paragraph in section.paragraphs" :key="paragraph">{{ paragraph }}</p>
                         <blockquote v-if="section.quote"><p>{{ section.quote }}</p></blockquote>
                         <ul v-if="section.items" class="article-bullets"><li v-for="item in section.items" :key="item">{{ item }}</li></ul>
+                        <div v-if="section.links?.length" class="article-links">
+                            <WiredAction v-for="link in section.links" :key="link.href" :href="link.href" arrow="up-right" class="article-resource-link" target="_blank" rel="noopener noreferrer" :aria-label="`${link.label}（新标签页打开）`">{{ link.label }}</WiredAction>
+                        </div>
                     </section>
                     <div class="article-signoff"><span aria-hidden="true">END.</span><p>感谢你接入连线世界。<small>SEE YOU IN THE NEXT ENTRY.</small></p></div>
                     <ul class="entry-tags article-tags wired-tags" aria-label="文章标签"><li v-for="tag in post.tags" :key="tag"># {{ tag }}</li></ul>

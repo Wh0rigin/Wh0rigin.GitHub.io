@@ -1,9 +1,15 @@
+export interface BlogLink {
+    label: string;
+    href: string;
+}
+
 export interface BlogSection {
     id: string;
     title: string;
     paragraphs: string[];
     quote?: string;
     items?: string[];
+    links?: BlogLink[];
 }
 
 export interface BlogPost {
@@ -17,10 +23,76 @@ export interface BlogPost {
     tags: string[];
     summary: string;
     demo?: boolean;
+    artwork?: {
+        headline: string;
+        highlight: string;
+        caption: string;
+    };
     sections: BlogSection[];
 }
 
 export const posts: BlogPost[] = [
+    {
+        slug: 'anime-that-stayed-with-me',
+        issue: '002',
+        title: '从四叠半开始：影响我的动画',
+        subtitle: '良机就在眼前，兴趣也在故事之间慢慢生长。',
+        date: '2026-10-02',
+        readMinutes: 3,
+        category: '动画随笔',
+        tags: ['动画', '四叠半神话大系', '个人记录'],
+        summary: '最喜欢的《四叠半神话大系》，对 AI 兴趣的起点，还有通向日本文学的《虫师》。从几部影响过我的动画说起，也留下我的 BGM.tv 追番记录入口。',
+        artwork: {
+            headline: 'ANIME,',
+            highlight: 'NOTES.',
+            caption: 'STORIES THAT STAY WITH ME.',
+        },
+        sections: [
+            {
+                id: 'the-tatami-galaxy',
+                title: '01 / 四叠半神话大系：良机就在眼前',
+                paragraphs: [
+                    '我最喜欢的动画是《四叠半神话大系》。在 BGM.tv 的自我介绍里，我写过它对我的影响：让我知道良机就在眼前，也让我开始更积极地面对事物。',
+                    '对我来说，这部作品留下的是一种愿意行动的态度。把目光放回眼前，再主动迈出一步，是它留给我的提醒。',
+                ],
+                quote: '良机就在眼前。',
+            },
+            {
+                id: 'lain-and-ghost-in-the-shell',
+                title: '02 / 铃音与攻壳机动队：兴趣的起点',
+                paragraphs: [
+                    '《铃音》和《攻壳机动队》让我对 AI 产生了兴趣。高中时，我曾因此自学过一段时间，虽然当时的学习效果并不太好，但这段尝试确实是由动画里的好奇心开始的。',
+                    '现在，我在杭州师范大学就读人工智能专业的工学硕士。从高中时的自学，到现在继续学习 AI，这段经历也把观看故事时产生的好奇心，带进了我的学习生活。',
+                ],
+            },
+            {
+                id: 'mushishi-and-books',
+                title: '03 / 虫师：从动画走向书页',
+                paragraphs: [
+                    '《虫师》让我开始接触日本文学。那段时间，我读了十余部日本文学作品，观看的兴趣也由此延伸到了阅读。',
+                    '我喜欢的作家是森见登美彦，喜欢的漫画家有安达充、藤本树和浅野一二〇。这些名字和动画一起，构成了我在故事之间不断寻找新作品的路径。',
+                ],
+            },
+            {
+                id: 'from-dvd-to-bangumi',
+                title: '04 / 从 DVD 播放器，到追番记录',
+                paragraphs: [
+                    '我看的第一部日本动画是《数码宝贝 驯兽师之王》，当时用的是 DVD 播放器。至于真正开始持续追番，大概是在 2013、2014 年左右；具体是哪一部作品成为起点，我已经记不太清了。',
+                    '我在 BGM.tv 上使用的名字是「七月の光酒」。那里的评分是主观的，我会给自己想打分的作品打分。这里先记录几部对我影响很深的动画，完整的观看状态和评分则留在 BGM.tv。',
+                ],
+            },
+            {
+                id: 'my-bangumi-records',
+                title: '05 / 我的 BGM.tv 时光机',
+                paragraphs: [
+                    '如果想看看我最近在看什么、看过哪些作品，可以到我的 BGM.tv 主页逛逛。这篇随笔整理自我在那里的自我介绍，后续也可以从某一部作品继续展开。',
+                ],
+                links: [
+                    { label: '在 BGM.tv 查看我的追番记录', href: 'https://bgm.tv/user/wh0rigin' },
+                ],
+            },
+        ],
+    },
     {
         slug: 'hello-wired-world',
         issue: '001',

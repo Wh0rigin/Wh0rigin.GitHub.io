@@ -45,7 +45,7 @@ html[data-theme="golden"] .journal-title sup { color: #191814; }
 .article-heading { display: grid; grid-template-columns: minmax(0, 1fr) 290px; align-items: center; gap: 50px; margin-top: 28px; margin-bottom: 51px; color: var(--ui-stage-text); }
 .article-labels { display: flex; gap: 12px; align-items: center; margin-top: 23px; font-size: .71rem; font-weight: 750; }
 .article-labels .demo-label { --ui-badge-bg: var(--ui-paper); --ui-badge-color: var(--ui-muted); }
-.article-heading h1 { margin-top: 19px; font-size: clamp(2rem, 4.4vw, 3.5rem); font-weight: 950; letter-spacing: -.055em; line-height: 1.3; text-shadow: 3px 3px 0 var(--ui-stage-shadow); }
+.article-heading h1 { margin-top: 19px; font-size: clamp(2rem, 4.4vw, 3.5rem); font-weight: 950; letter-spacing: -.055em; line-height: 1.3; text-wrap: balance; text-shadow: 3px 3px 0 var(--ui-stage-shadow); }
 .article-subtitle { margin-top: 19px; max-width: 580px; color: var(--ui-stage-muted); font-size: .92rem; line-height: 1.9; }
 .article-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; margin-top: 28px; color: var(--ui-stage-muted); font-size: .67rem; }
 .author-mark { display: grid; place-items: center; width: 29px; height: 29px; margin-right: -10px; font-weight: 950; font-style: italic; color: var(--ui-accent); background: var(--ui-paper); transform: rotate(-5deg); }
@@ -64,6 +64,8 @@ html[data-theme="golden"] .journal-title sup { color: #191814; }
 .article-paper { padding: 39px 54px 40px; }
 .article-opening { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; padding-bottom: 25px; margin-bottom: 32px; border-bottom: 1px solid var(--ui-line); font-size: .53rem; letter-spacing: .14em; font-weight: 850; color: var(--ui-muted); }
 .article-opening > span { font-weight: 600; }
+.article-links { display: flex; flex-wrap: wrap; gap: 18px; margin: 28px 0 8px; }
+.article-resource-link { max-width: calc(100% - 8px); overflow-wrap: anywhere; --ui-action-size: .77rem; --ui-action-gap: 12px; }
 
 .article-signoff { display: flex; align-items: center; gap: 22px; margin-top: 45px; padding-top: 28px; border-top: 1px solid var(--ui-line); }
 .article-signoff > span { font-size: 2.1rem; letter-spacing: -.08em; font-weight: 950; font-style: italic; color: var(--ui-accent); }
