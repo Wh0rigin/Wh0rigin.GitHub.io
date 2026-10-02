@@ -4,6 +4,7 @@ import { useModeStore } from '../stores/mode';
 
 import WhoIntro from '../components/home/WhoIntro.vue';
 import CodeWin from '../components/home/CodeWin.vue';
+import EducationJourney from '../components/home/EducationJourney.vue';
 import MusicSpotlight from '../components/home/MusicSpotlight.vue';
 
 // import logo1_url from '../assets/logo/logo1.png'
@@ -240,6 +241,7 @@ const mouseup = () => {
         <section id="page2" class="about-section" aria-label="关于 Wh0rigin">
             <WhoIntro />
             <CodeWin />
+            <EducationJourney />
             <MusicSpotlight />
         </section>
     </main>
