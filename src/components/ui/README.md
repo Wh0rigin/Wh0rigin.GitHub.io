@@ -121,9 +121,18 @@ import WiredAccent from '../components/ui/WiredAccent.vue';
 
 ## WiredImage
 
-**图片占位与淡入。** 图片下载并解码完成前显示主题色占位块，完成后淡入；加载失败时保留尺寸并显示“图片暂未加载”。源码：[WiredImage.vue](WiredImage.vue)。
+**图片占位与淡入。** 图片下载并解码完成前显示主题占位画面，完成后淡入；加载失败时保留尺寸并显示“图片暂未加载”。白天采用蓝色渐变、03、青色层叠与水波圆环；黑夜采用红黑斜切拼贴、05、网点和倾斜纸片；隐藏黄色主题采用 04、电视图标和彩色条纹。源码：[WiredImage.vue](WiredImage.vue)。
 
 ![图片加载前的主题色占位效果](../../../docs/images/ui/wired-image.jpg)
+
+<details>
+<summary>查看黑夜与黄色主题的占位设计</summary>
+
+![红黑主题的拼贴占位效果](../../../docs/images/ui/wired-image-dark.jpg)
+
+![黄色主题的电视信号占位效果](../../../docs/images/ui/wired-image-golden.jpg)
+
+</details>
 
 ```vue
 <script setup lang="ts">
@@ -147,11 +156,11 @@ import WiredImage from '../components/ui/WiredImage.vue';
 - `width` / `height` 必填，用原图尺寸预留比例，避免加载时布局跳动。
 - `loading` 默认 `lazy`；首屏插画可设为 `eager`。
 - `fill` 填满已有尺寸的父容器；默认按原图比例显示。用 `--ui-image-fit: cover` 调整裁切，默认 `contain`。
-- `compact` 用于校徽、小装饰等，隐藏占位文字。
+- `compact` 用于校徽、小装饰等，隐藏占位文字和大号数字，保留简化的主题图框。
 - `keepPrevious` 用于眨眼等连续切换，下一张未准备好时保留已加载的上一张，并直接切换，避免闪烁。
 - `@ready` 在当前图片下载、解码完成后给出源地址；`@error` 给出失败的源地址。缓存命中和 `src` 变化也会处理。
 - `class`、`style` 和交互事件传给外层 `span`。通过 `:deep(.wired-image-content)` 定制内部图片；装饰图使用 `alt="" aria-hidden="true"`。
-- 占位块自动适配三个主题，减少动态效果偏好下关闭扫光和淡入。
+- 占位块自动适配三个主题，减少动态效果偏好下关闭扫光、信号条动画和淡入。
 
 ## WiredPanel
 
