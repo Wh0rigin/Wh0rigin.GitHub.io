@@ -46,10 +46,11 @@ const tunedIn = computed(() => modeStore.theme === 'golden');
                         <path stroke="#f36d9f" d="m30 138 199 98" />
                     </g>
                     <path class="tv-screen-reflection" fill="#fff" fill-opacity=".19" d="m48 85 57-4-65 127H28z" />
-                    <g class="tv-greeting" fill="#08080a" font-family="Arial, Helvetica, sans-serif" font-style="italic" font-weight="900" text-anchor="middle">
-                        <path d="m64 114 136-5-4 67-137 4z" fill="#ffe52e" />
-                        <text x="130" y="140" font-size="29" letter-spacing="-2">HELLO</text>
-                        <text x="128" y="166" font-size="26" letter-spacing="-1.5">WORLD!</text>
+                    <g class="tv-greeting" fill="#08080a" font-family="Arial, Helvetica, sans-serif" font-style="normal" font-weight="900" text-anchor="middle">
+                        <path d="m62 107 140-5-4 77-139 4z" fill="#ffe52e" />
+                        <!-- Keep both lines within the curved screen, including font fallbacks. -->
+                        <text x="130" y="136" font-size="27" letter-spacing="-.5" textLength="112" lengthAdjust="spacingAndGlyphs">HELLO</text>
+                        <text x="130" y="168" font-size="25" letter-spacing="-.5" textLength="112" lengthAdjust="spacingAndGlyphs">WORLD!</text>
                     </g>
                     <path class="tv-scan" fill="#fff" fill-opacity=".24" d="M30 86h190v7H30z" />
                 </g>
