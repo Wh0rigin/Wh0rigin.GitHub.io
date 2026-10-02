@@ -38,7 +38,11 @@ const education = [
             <li v-for="item in education" :key="item.degree" class="education-row" :class="{ 'is-current': item.current }">
                 <div class="degree-artwork">
                     <span class="degree-caption" aria-hidden="true">{{ item.current ? 'MASTER' : 'BACHELOR' }}</span>
-                    <abbr class="degree-lettering" :title="item.degreeName">{{ item.degree }}</abbr>
+                    <abbr class="degree-lettering" :title="item.degreeName" :aria-label="`${item.degree}，${item.degreeName}`">
+                        <span class="degree-initial" aria-hidden="true">{{ item.degree[0] }}</span>
+                        <span class="degree-stop" aria-hidden="true">.</span>
+                        <span class="degree-end" aria-hidden="true">E</span>
+                    </abbr>
                     <div class="school-emblem">
                         <img :src="item.emblem" :alt="`${item.school}校徽`" width="88" height="88" loading="lazy" decoding="async" />
                     </div>
@@ -141,7 +145,7 @@ h3 {
 .degree-artwork {
     position: relative;
     isolation: isolate;
-    min-height: 164px;
+    min-height: 190px;
     transition: transform 320ms cubic-bezier(.16, 1, .3, 1);
 }
 
@@ -149,51 +153,101 @@ h3 {
 .degree-artwork::after {
     position: absolute;
     z-index: -1;
-    inset: 18px 14px 8px 0;
+    inset: 32px 7px 13px -4px;
     background: var(--education-accent);
-    clip-path: polygon(7% 10%, 100% 0, 93% 88%, 0 100%);
+    clip-path: polygon(0 18%, 94% 0, 100% 73%, 8% 100%);
     content: '';
 }
 
 .degree-artwork::before {
     background: var(--education-layer);
-    transform: translate(7px, 9px);
+    transform: translate(11px, 13px) rotate(5deg);
 }
 
 .degree-caption {
     position: absolute;
-    top: 30px;
-    left: 28px;
+    z-index: 3;
+    top: 22px;
+    left: 3px;
+    padding: 4px 7px;
     color: #fff;
+    background: var(--education-accent);
     font-size: .58rem;
     font-weight: 800;
     letter-spacing: .22em;
-    transform: rotate(-6deg);
+    transform: rotate(-13deg);
 }
 
 .degree-lettering {
     position: absolute;
-    top: 55px;
-    left: 18px;
+    inset: 25px 0 0;
     color: #fff;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 6.2rem;
+    font-size: 10rem;
     font-style: italic;
     font-weight: 1000;
-    letter-spacing: -.085em;
-    line-height: .85;
+    letter-spacing: -.09em;
+    line-height: .82;
     text-decoration: none;
-    -webkit-text-stroke: 1.5px var(--education-ink);
+    -webkit-text-stroke: 2px var(--education-ink);
     paint-order: stroke fill;
-    text-shadow: 4px 5px 0 var(--education-layer), 8px 10px 0 var(--education-ink);
-    transform: rotate(-6deg);
+    text-shadow: 7px 8px 0 var(--education-layer), 13px 14px 0 var(--education-ink);
+}
+
+.degree-initial,
+.degree-stop,
+.degree-end {
+    position: absolute;
+    display: block;
+}
+
+.degree-initial {
+    z-index: 2;
+    top: 16px;
+    left: 2px;
+    transform: rotate(-13deg) scaleY(1.08);
+}
+
+.degree-end {
+    z-index: 1;
+    top: 28px;
+    left: 128px;
+    font-size: .88em;
+    transform: rotate(8deg) skewX(-9deg);
+}
+
+.degree-stop {
+    z-index: 3;
+    top: 74px;
+    left: 112px;
+    font-size: .58em;
+    transform: rotate(-12deg);
+}
+
+.education-row:not(.is-current) .degree-initial {
+    top: 24px;
+    transform: rotate(5deg) skewY(-5deg);
+}
+
+.education-row:not(.is-current) .degree-end {
+    top: 11px;
+    left: 109px;
+    transform: rotate(-11deg) skewX(-8deg);
+}
+
+.education-row:not(.is-current) .degree-stop { left: 93px; }
+
+.is-current .degree-lettering { font-size: 10.3rem; }
+
+.education-row:not(.is-current) .degree-artwork::after {
+    transform: rotate(5deg);
 }
 
 .school-emblem {
     position: absolute;
-    z-index: 1;
-    top: -3px;
-    right: -1px;
+    z-index: 4;
+    top: -6px;
+    right: -5px;
     width: 88px;
     height: 88px;
     padding: 5px;
@@ -289,7 +343,7 @@ h4 {
     transform: rotate(-3deg);
 }
 
-:global(html[data-theme="dark"] .degree-caption) { color: #111115; }
+:global(html[data-theme="dark"] .degree-caption) { color: #fff; background: #08080a; }
 :global(html[data-theme="dark"] .degree-lettering) { color: #111115; -webkit-text-stroke-color: #fff; }
 :global(html[data-theme="dark"] .school-emblem) { box-shadow: 4px 5px 0 #08080a, 7px 8px 0 #e5222d; }
 
@@ -299,8 +353,12 @@ h4 {
 
 @media (max-width: 820px) {
     .education-row { grid-template-columns: 210px minmax(0, 1fr); padding: 26px; gap: 30px; }
-    .degree-artwork { min-height: 156px; }
-    .degree-lettering { font-size: 5.4rem; }
+    .degree-artwork { min-height: 176px; }
+    .degree-lettering, .is-current .degree-lettering { font-size: 8.7rem; }
+    .degree-end { left: 110px; }
+    .degree-stop { left: 94px; top: 66px; }
+    .education-row:not(.is-current) .degree-end { left: 95px; }
+    .education-row:not(.is-current) .degree-stop { left: 82px; }
     .school-emblem { width: 76px; height: 76px; }
     .row-arrow { display: none; }
 }
@@ -308,10 +366,17 @@ h4 {
 @media (max-width: 520px) {
     .education-heading { margin-bottom: 22px; }
     .education-row { grid-template-columns: 118px minmax(0, 1fr); padding: 22px 14px; gap: 16px; background: transparent; }
-    .degree-artwork { min-height: 138px; }
-    .degree-artwork::before, .degree-artwork::after { inset: 29px 0 10px; }
-    .degree-caption { top: 51px; left: 12px; font-size: .42rem; letter-spacing: .14em; }
-    .degree-lettering { top: 78px; left: 6px; font-size: 3.5rem; text-shadow: 3px 3px 0 var(--education-layer), 5px 6px 0 var(--education-ink); }
+    .degree-artwork { min-height: 146px; }
+    .degree-artwork::before, .degree-artwork::after { inset: 41px 0 6px -3px; }
+    .degree-artwork::before { transform: translate(6px, 7px) rotate(5deg); }
+    .degree-caption { top: 39px; left: 0; padding: 3px 4px; font-size: .42rem; letter-spacing: .14em; }
+    .degree-lettering, .is-current .degree-lettering { inset: 50px 0 0; font-size: 5.2rem; text-shadow: 4px 5px 0 var(--education-layer), 7px 8px 0 var(--education-ink); -webkit-text-stroke-width: 1.5px; }
+    .degree-initial { top: 11px; left: -1px; }
+    .degree-end { top: 19px; left: 61px; }
+    .degree-stop { top: 45px; left: 53px; }
+    .education-row:not(.is-current) .degree-initial { top: 17px; }
+    .education-row:not(.is-current) .degree-end { top: 7px; left: 52px; }
+    .education-row:not(.is-current) .degree-stop { left: 45px; }
     .school-emblem { top: -4px; right: -2px; width: 56px; height: 56px; padding: 3px; }
     .education-copy { padding: 0; }
     .school-line { gap: 7px; }
