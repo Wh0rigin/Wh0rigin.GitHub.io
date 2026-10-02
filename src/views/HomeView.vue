@@ -7,6 +7,7 @@ import CodeWin from '../components/home/CodeWin.vue';
 import EducationJourney from '../components/home/EducationJourney.vue';
 import FeaturedProjects from '../components/home/FeaturedProjects.vue';
 import MusicSpotlight from '../components/home/MusicSpotlight.vue';
+import AcgInterests from '../components/home/AcgInterests.vue';
 
 // import logo1_url from '../assets/logo/logo1.png'
 // import logo1_slink_url from '../assets/logo/logo1_slink.png'
@@ -270,6 +271,7 @@ const mouseup = () => {
             <EducationJourney />
             <FeaturedProjects />
             <MusicSpotlight />
+            <AcgInterests />
         </section>
     </main>
 </template>
