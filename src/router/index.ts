@@ -1,5 +1,6 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHistory, RouteRecordRaw, type RouteLocationNormalized } from "vue-router";
 import { findPost } from '../content/posts';
+import { navigationLoad } from '../composables/loadingExperience';
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -41,7 +42,28 @@ const router = createRouter({
   },
 });
 
-router.afterEach((to) => {
+let pendingTarget: RouteLocationNormalized | undefined;
+router.beforeEach((to) => {
+  pendingTarget = to;
+  navigationLoad.pending = true;
+  navigationLoad.target = to.fullPath;
+  navigationLoad.error = false;
+});
+
+router.onError((_error, to) => {
+  if (to !== pendingTarget) return;
+  navigationLoad.pending = false;
+  navigationLoad.error = true;
+  navigationLoad.initialSettled = true;
+});
+
+router.afterEach((to, _from, failure) => {
+  // An older, cancelled navigation must not clear a newer one's feedback.
+  if (to !== pendingTarget) return;
+  navigationLoad.pending = false;
+  navigationLoad.initialSettled = true;
+  if (failure) return;
+  navigationLoad.error = false;
   const post = to.name === 'blog-post' ? findPost(String(to.params.slug)) : undefined;
   const title = to.name === 'blog-post' ? post?.title ?? '手记未找到' : to.meta.title;
   document.title = title ? `${title} | The Wired World` : "Wh0rigin's World | 连线世界";

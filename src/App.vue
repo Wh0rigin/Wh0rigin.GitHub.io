@@ -1,74 +1,34 @@
 <script setup lang="ts">
-import { ref,onMounted,Ref } from 'vue';
-
 import Header from './components/common/Header.vue';
 import Footer from './components/common/Footer.vue';
 import Loading from './components/common/Loading.vue';
+import ConnectionFeedback from './components/common/ConnectionFeedback.vue';
 import './styles/tokens.css';
 import './styles/primitives.css';
 import './styles/golden-theme.css';
-
-import { useModeStore } from './stores/mode.ts'
-
-// 预加载的图片资源
-// import logo1_url from './assets/logo/logo1.png'
-// import logo1_slink_url from './assets/logo/logo1_slink.png'
-// import logo2_url from './assets/logo/logo2.png'
-// import logo2_error_url from './assets/logo/logo2_error.png'
-// import logo2_none_url from './assets/logo/logo2_none.png'
-// import logo2_smile_url from './assets/logo/logo2_smile.png'
-// import logo3_url from './assets/logo/logo3.png'
-
-let logo1_url = 'https://wh0rigin.oss-cn-hangzhou.aliyuncs.com/assets/logo/logo1.png'
-let logo1_slink_url= 'https://wh0rigin.oss-cn-hangzhou.aliyuncs.com/assets/logo/logo1_slink.png'
-let logo2_url= 'https://wh0rigin.oss-cn-hangzhou.aliyuncs.com/assets/logo/logo2.png'
-let logo2_error_url = 'https://wh0rigin.oss-cn-hangzhou.aliyuncs.com/assets/logo/logo2_error.png'
-let logo2_none_url = 'https://wh0rigin.oss-cn-hangzhou.aliyuncs.com/assets/logo/logo2_none.png'
-let logo2_smile_url = 'https://wh0rigin.oss-cn-hangzhou.aliyuncs.com/assets/logo/logo2_smile.png'
-let logo3_url = 'https://wh0rigin.oss-cn-hangzhou.aliyuncs.com/assets/logo/logo3.png'
-
-let preloadedImages: Ref<Array<string>> = ref([])
-
-onMounted(() => {
-  const modeStore = useModeStore()
-  modeStore.getNewRandomMode()
-  switch (modeStore.mode) {
-    case 0:
-      preloadedImages.value = [logo1_slink_url, logo1_url];
-      break;
-    case 1:
-      preloadedImages.value = [logo2_error_url, logo2_none_url, logo2_smile_url, logo2_url];
-      break;
-    case 2:
-      preloadedImages.value = [logo3_url];
-      break;
-  }
-  preloadedImages.value.forEach((imageUrl) => {
-    const key = `preloadedImage_${imageUrl}`;
-    if (!localStorage.getItem(key)) {
-      localStorage.setItem(key, imageUrl);
-    }
-  });
-})
-
 </script>
 
 <template>
   <Loading></Loading>
   <Header />
   <router-view v-slot="{ Component, route }">
+    <main v-if="!Component" class="route-placeholder wired-container" aria-busy="true">
+      <p class="wired-kicker">THE WIRED WORLD</p>
+      <h1>正在连线…</h1>
+      <p>页面正在打开，请稍候。</p>
+    </main>
     <Transition name="nested" mode="out-in">
       <component :is="Component" :key="route.path" />
     </Transition>
   </router-view>
   <Footer />
-  <div style="display: none;">
-    <img v-for="(imageUrl, index) in preloadedImages" :key="index" :src="imageUrl" />
-  </div>
+  <ConnectionFeedback />
   
 </template>
 
 <style>
+.route-placeholder { min-height: 70svh; padding-top: 160px; color: var(--theme-contrast); }
+.route-placeholder h1 { margin: 24px 0 16px; font-size: clamp(2rem, 6vw, 4rem); }
 * {
   box-sizing: border-box;
   margin: 0;

@@ -21,7 +21,7 @@ function getInitialTheme(): Theme {
 }
 
 export const useModeStore = defineStore("mode", () => {
-    const mode = ref(0);
+    const mode = ref(Math.floor(Math.random() * 3));
     const theme = ref<Theme>(getInitialTheme());
 
     function getNewRandomMode() {

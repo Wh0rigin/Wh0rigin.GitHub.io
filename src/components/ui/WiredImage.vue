@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
+import { clearImageFailure, imageRetryVersion, markImageFailed } from '../../composables/loadingExperience';
 
 const props = withDefaults(defineProps<{
     src: string;
@@ -7,6 +8,9 @@ const props = withDefaults(defineProps<{
     width: number;
     height: number;
     loading?: 'eager' | 'lazy';
+    srcset?: string;
+    sizes?: string;
+    fetchpriority?: 'high' | 'low' | 'auto';
     fill?: boolean;
     compact?: boolean;
     keepPrevious?: boolean;
@@ -19,7 +23,10 @@ const emit = defineEmits<{
 const imageElement = ref<HTMLImageElement | null>(null);
 const state = ref<'loading' | 'ready' | 'error'>('loading');
 const lastReadySrc = ref('');
+const lastReadyImage = ref('');
 const previousSrc = ref('');
+const attempt = ref(0);
+const recoveryId = Symbol('image');
 const hasPrevious = computed(() => props.keepPrevious && !!previousSrc.value && previousSrc.value !== props.src);
 let generation = 0;
 
@@ -31,13 +38,16 @@ async function reveal(image = imageElement.value) {
     if (currentGeneration !== generation || image !== imageElement.value || !image.complete || !image.naturalWidth) return;
     if (state.value === 'ready' && lastReadySrc.value === props.src) return;
     lastReadySrc.value = props.src;
+    lastReadyImage.value = image.currentSrc || props.src;
     state.value = 'ready';
-    emit('ready', props.src);
+    clearImageFailure(recoveryId);
+    emit('ready', lastReadyImage.value);
 }
 
 function fail(image: HTMLImageElement) {
     if (image !== imageElement.value) return;
     state.value = 'error';
+    markImageFailed(recoveryId);
     emit('error', props.src);
 }
 
@@ -50,13 +60,23 @@ function inspectCachedImage() {
 
 watch(() => props.src, () => {
     generation += 1;
-    previousSrc.value = props.keepPrevious ? lastReadySrc.value : '';
+    clearImageFailure(recoveryId);
+    previousSrc.value = props.keepPrevious ? lastReadyImage.value : '';
     state.value = 'loading';
     void nextTick(inspectCachedImage);
 }, { immediate: true, flush: 'sync' });
 
+watch(imageRetryVersion, () => {
+    if (state.value !== 'error') return;
+    generation += 1;
+    clearImageFailure(recoveryId);
+    state.value = 'loading';
+    attempt.value += 1;
+    void nextTick(inspectCachedImage);
+});
+
 onMounted(inspectCachedImage);
-onUnmounted(() => { generation += 1; });
+onUnmounted(() => { generation += 1; clearImageFailure(recoveryId); });
 </script>
 
 <template>
@@ -85,7 +105,7 @@ onUnmounted(() => { generation += 1; });
         <img v-if="hasPrevious && state !== 'ready'" class="wired-image-previous" :src="previousSrc" :alt="alt" :width="width" :height="height" draggable="false" />
         <img
             v-if="src"
-            :key="src"
+            :key="`${src}:${attempt}`"
             ref="imageElement"
             class="wired-image-content"
             :src="src"
@@ -93,6 +113,9 @@ onUnmounted(() => { generation += 1; });
             :width="width"
             :height="height"
             :loading="loading"
+            :srcset="srcset"
+            :sizes="sizes"
+            :fetchpriority="fetchpriority"
             decoding="async"
             draggable="false"
             :aria-hidden="state !== 'ready' || undefined"

@@ -155,10 +155,12 @@ import WiredImage from '../components/ui/WiredImage.vue';
 
 - `width` / `height` 必填，用原图尺寸预留比例，避免加载时布局跳动。
 - `loading` 默认 `lazy`；首屏插画可设为 `eager`。
+- `srcset` / `sizes` 支持响应式图片；`fetchpriority="high"` 用于首屏关键图片，普通图片保持浏览器默认优先级。
 - `fill` 填满已有尺寸的父容器；默认按原图比例显示。用 `--ui-image-fit: cover` 调整裁切，默认 `contain`。
 - `compact` 用于校徽、小装饰等，隐藏占位文字和大号数字，保留简化的主题图框。
 - `keepPrevious` 用于眨眼等连续切换，下一张未准备好时保留已加载的上一张，并直接切换，避免闪烁。
-- `@ready` 在当前图片下载、解码完成后给出源地址；`@error` 给出失败的源地址。缓存命中和 `src` 变化也会处理。
+- `@ready` 在当前图片下载、解码完成后给出实际选中的 `currentSrc`（可能是 `srcset` 中的小尺寸版本）；`@error` 给出失败的源地址。缓存命中和 `src` 变化也会处理。
+- 失败图片自动登记到全站的 `ConnectionFeedback`；点击“重试图片”只重试失败项，已成功的图片继续保留。断网后恢复连接也会重试一次，不进行循环重试。
 - `class`、`style` 和交互事件传给外层 `span`。通过 `:deep(.wired-image-content)` 定制内部图片；装饰图使用 `alt="" aria-hidden="true"`。
 - 占位块自动适配三个主题，减少动态效果偏好下关闭扫光、信号条动画和淡入。
 

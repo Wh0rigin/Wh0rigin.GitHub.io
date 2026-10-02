@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import WiredBadge from '../ui/WiredBadge.vue';
 import WiredImage from '../ui/WiredImage.vue';
-import hangzhouEmblem from '../../assets/education/hangzhou-normal.png';
-import wanliEmblem from '../../assets/education/zhejiang-wanli.png';
+import hangzhouEmblem from '../../assets/education/hangzhou-normal-256.webp';
+import wanliEmblem from '../../assets/education/zhejiang-wanli-256.webp';
 
 const education = [
     {

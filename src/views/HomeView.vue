@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-import { onMounted, ref,Ref, onUnmounted } from 'vue';
+import { computed, ref, onUnmounted } from 'vue';
 import { useModeStore } from '../stores/mode';
-
+import { conserveImageBandwidth } from '../composables/loadingExperience';
+import { heroImages, heroImageSizes } from '../assets/logo/images';
 import WhoIntro from '../components/home/WhoIntro.vue';
 import CodeWin from '../components/home/CodeWin.vue';
 import EducationJourney from '../components/home/EducationJourney.vue';
@@ -10,143 +11,60 @@ import MusicSpotlight from '../components/home/MusicSpotlight.vue';
 import AcgInterests from '../components/home/AcgInterests.vue';
 import WiredImage from '../components/ui/WiredImage.vue';
 
-// import logo1_url from '../assets/logo/logo1.png'
-// import logo1_slink_url from '../assets/logo/logo1_slink.png'
-// import logo2_url from '../assets/logo/logo2.png'
-// import logo2_error_url from '../assets/logo/logo2_error.png'
-// import logo2_none_url from '../assets/logo/logo2_none.png'
-// import logo2_smile_url from '../assets/logo/logo2_smile.png'
-// import logo3_url from '../assets/logo/logo3.png'
-
-let logo1_url = 'https://wh0rigin.oss-cn-hangzhou.aliyuncs.com/assets/logo/logo1.png'
-let logo1_slink_url= 'https://wh0rigin.oss-cn-hangzhou.aliyuncs.com/assets/logo/logo1_slink.png'
-let logo2_url= 'https://wh0rigin.oss-cn-hangzhou.aliyuncs.com/assets/logo/logo2.png'
-let logo2_error_url = 'https://wh0rigin.oss-cn-hangzhou.aliyuncs.com/assets/logo/logo2_error.png'
-let logo2_none_url = 'https://wh0rigin.oss-cn-hangzhou.aliyuncs.com/assets/logo/logo2_none.png'
-let logo2_smile_url = 'https://wh0rigin.oss-cn-hangzhou.aliyuncs.com/assets/logo/logo2_smile.png'
-let logo3_url = 'https://wh0rigin.oss-cn-hangzhou.aliyuncs.com/assets/logo/logo3.png'
-
-
-const modeStore = useModeStore()
-
-
-
-// let preloadedImages: Array<string> = [
-
-// ]
-
-
-// const handleImageError = function () {
-//     // 图片加载失败时触发此方法
-//     // 切换到另一张图片
-//     img_url.value = fallbackImageUrl;
-// }
-
-
-const logos:Array<string> = [
-    logo1_url,
-    logo2_url,
-    logo3_url,
-    logo1_slink_url,
-    logo2_error_url,
-    logo2_none_url,
-    logo2_smile_url
-]
-// 本地资源
-
-let img_url:Ref<string> = ref('')
+const modeStore = useModeStore();
+const baseIndex = modeStore.mode;
+const imageIndex = ref(baseIndex);
+const heroImage = computed(() => heroImages[imageIndex.value]);
 const heroLoadedSrc = ref('');
-const logoDimensions = [{ width: 897, height: 1021 }, { width: 759, height: 1021 }, { width: 1520, height: 1651 }];
-let timerId: any;
-onMounted(() => {
-    img_url.value = logos[modeStore.mode]
-    // switch(img_url.value){
-    //     case logos[0]:
-    //         preloadedImages = [logo1_slink_url,logo1_url];
-    //         break;
-    //     case logos[1]:
-    //         preloadedImages = [logo2_error_url,logo2_none_url,logo2_smile_url,logo2_url];
-    //         break;
-    //     case logos[2]:
-    //         preloadedImages = [logo3_url];
-    //         break;
-    // }
+const expressions = baseIndex === 0 ? [3] : baseIndex === 1 ? [4, 5, 6] : [];
+let active = true;
+let warmingScheduled = false;
+let blinkTimer: ReturnType<typeof setInterval> | undefined;
+let restoreTimer: ReturnType<typeof setTimeout> | undefined;
+let warmTimer: ReturnType<typeof setTimeout> | undefined;
+let warmingImage: HTMLImageElement | undefined;
 
-    // preloadedImages.forEach((imageUrl) => {
-    //     const key = `preloadedImage_${imageUrl}`;
-    //     if (!localStorage.getItem(key)) {
-    //         localStorage.setItem(key, imageUrl);
-    //     }
-    // });
-
-    
-    switch (img_url.value) {
-        case logos[0]:
-            timerId = setInterval(() => {
-                img_url.value = logos[3]
-                setTimeout(() => {
-                    img_url.value = logos[0]
-                }, 100);
-            }, 5000); // 每5秒执行一次眨眼
-            break;
-        case logos[1]:
-            timerId = setInterval(() => {
-                img_url.value = logos[(Math.floor(Math.random() * 3) + 4)]
-                let time = Math.floor(Math.random() * 400) + 100
-                setTimeout(() => {
-                    img_url.value =logos[1]
-                }, time);
-            }, (Math.floor(Math.random() * 10000) + 1000));
-            break;
-        case logos[2]:
-            break;
+async function warmExpressions() {
+    if (!active || conserveImageBandwidth() || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    // Optional expressions are requested sequentially, at low priority, after the first screen.
+    for (const index of expressions) {
+        const ready = await new Promise<boolean>((resolve) => {
+            const image = new Image();
+            warmingImage = image;
+            image.setAttribute('fetchpriority', 'low');
+            image.onload = () => resolve(true);
+            image.onerror = () => resolve(false);
+            image.sizes = heroImageSizes;
+            image.srcset = heroImages[index].srcset;
+            image.src = heroImages[index].src;
+        });
+        if (!active || !ready || conserveImageBandwidth()) return;
     }
-});
+    if (!expressions.length) return;
+    blinkTimer = setInterval(() => {
+        if (imageIndex.value !== baseIndex || conserveImageBandwidth()) return;
+        imageIndex.value = expressions[Math.floor(Math.random() * expressions.length)];
+        restoreTimer = setTimeout(() => { imageIndex.value = baseIndex; }, baseIndex === 0 ? 100 : 350);
+    }, baseIndex === 0 ? 5000 : 7000);
+}
+function heroReady(src: string) {
+    heroLoadedSrc.value = src;
+    if (warmingScheduled) return;
+    warmingScheduled = true;
+    warmTimer = setTimeout(() => { void warmExpressions(); }, 8000);
+}
+function mousedown() {
+    clearTimeout(restoreTimer);
+    if (expressions.length) imageIndex.value = expressions[Math.floor(Math.random() * expressions.length)];
+}
+function mouseup() { imageIndex.value = baseIndex; }
 onUnmounted(() => {
-    clearInterval(timerId);
-})
-
-const mousedown = () => {
-    switch (img_url.value) {
-        case logos[0]:
-
-            img_url.value = logos[3]
-
-            break;
-        case logos[1]:
-
-            switch ((Math.floor(Math.random() * 3) + 1)) {
-                case 1:
-                    img_url.value = logos[4]
-                    break;
-                case 2:
-                    img_url.value = logos[5]
-                    break;
-                case 3:
-                    img_url.value = logos[6]
-                    break;
-            }
-            break;
-        case logos[2]:
-            break;
-    }
-}
-
-const mouseup = () => {
-    switch (img_url.value) {
-        case logos[3]:
-            img_url.value = logos[0]
-            break;
-        case logos[4]:
-        case logos[5]:
-        case logos[6]:
-            img_url.value = logos[1]
-            break;
-        case logos[2]:
-            break;
-    }
-}
-
+    active = false;
+    clearInterval(blinkTimer);
+    clearTimeout(restoreTimer);
+    clearTimeout(warmTimer);
+    if (warmingImage) { warmingImage.onload = null; warmingImage.onerror = null; warmingImage.src = ''; }
+});
 </script>
 
 <template>
@@ -263,8 +181,8 @@ const mouseup = () => {
                     </defs>
                 </svg>
                 <span class="hero-visual-number" aria-hidden="true">{{ modeStore.theme === 'golden' ? '04' : '05' }}</span>
-                <WiredImage class="logo logo-original" :src="img_url" alt="连线世界主题插画" :width="logoDimensions[modeStore.mode].width" :height="logoDimensions[modeStore.mode].height" loading="eager" keep-previous @ready="heroLoadedSrc = $event" @mousedown="mousedown" @mouseup="mouseup" />
-                <img v-show="heroLoadedSrc" class="logo logo-silhouette" alt="" aria-hidden="true" draggable="false" :src="heroLoadedSrc" />
+                <WiredImage class="logo logo-original" :src="heroImage.src" :srcset="heroImage.srcset" :sizes="heroImageSizes" fetchpriority="high" alt="连线世界主题插画" :width="heroImage.width" :height="heroImage.height" loading="eager" keep-previous @ready="heroReady" @mousedown="mousedown" @mouseup="mouseup" @mouseleave="mouseup" />
+                <img v-if="heroLoadedSrc" class="logo logo-silhouette" alt="" aria-hidden="true" draggable="false" :src="heroLoadedSrc" />
             </div>
         </section>
 

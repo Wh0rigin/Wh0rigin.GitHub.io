@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useModeStore } from '../../stores/mode';
+import { navigationLoad } from '../../composables/loadingExperience';
 
 type Phase = 'waiting' | 'moving' | 'settled' | 'arrived' | 'dim' | 'finished';
 const modeStore = useModeStore();
@@ -25,27 +26,45 @@ const timelineDays = Array.from({ length: 8 }, (_, index) => {
 });
 let active = true;
 const timers: Array<ReturnType<typeof setTimeout>> = [];
-let removeLoadListener: (() => void) | undefined;
+let stopNavigationWatch: (() => void) | undefined;
 let previousOverflow = '';
+let scrollLocked = false;
+const allowSkip = ref(false);
 
 function delay(ms: number) {
     return new Promise<void>((resolve) => timers.push(setTimeout(resolve, ms)));
 }
 
-function waitForLoad() {
-    if (document.readyState === 'complete') return Promise.resolve();
+function waitForPage() {
+    if (navigationLoad.initialSettled) return Promise.resolve();
     return new Promise<void>((resolve) => {
-        const onLoad = () => resolve();
-        window.addEventListener('load', onLoad, { once: true });
-        removeLoadListener = () => window.removeEventListener('load', onLoad);
+        stopNavigationWatch = watch(() => navigationLoad.initialSettled, (settled) => {
+            if (settled) { stopNavigationWatch?.(); resolve(); }
+        });
     });
+}
+
+function finish() {
+    if (!active) return;
+    active = false;
+    phase.value = 'finished';
+    timers.forEach(clearTimeout);
+    stopNavigationWatch?.();
+    if (scrollLocked) document.documentElement.style.overflow = previousOverflow;
+    scrollLocked = false;
 }
 
 onMounted(async () => {
     previousOverflow = document.documentElement.style.overflow;
     document.documentElement.style.overflow = 'hidden';
-    await Promise.all([waitForLoad(), delay(1600)]);
+    scrollLocked = true;
+    timers.push(setTimeout(() => { allowSkip.value = true; }, 1200));
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Only wait for the first route, never for window.load or noncritical images.
+    // A stalled route must also give way to the page's connection/retry feedback.
+    await Promise.all([Promise.race([waitForPage(), delay(8000)]), delay(reducedMotion ? 0 : 1600)]);
     if (!active) return;
+    if (!navigationLoad.initialSettled || navigationLoad.error || reducedMotion) { finish(); return; }
     if (modeStore.theme === 'light') {
         highlightedDate.value = null;
         phase.value = 'moving';
@@ -62,23 +81,20 @@ onMounted(async () => {
         phase.value = 'dim';
         await delay(1300);
     }
-    if (active) {
-        phase.value = 'finished';
-        await delay(800);
-        if (active) document.documentElement.style.overflow = previousOverflow;
-    }
+    finish();
 });
 
 onUnmounted(() => {
     active = false;
     timers.forEach(clearTimeout);
-    removeLoadListener?.();
-    document.documentElement.style.overflow = previousOverflow;
+    stopNavigationWatch?.();
+    if (scrollLocked) document.documentElement.style.overflow = previousOverflow;
 });
 </script>
 
 <template>
-    <div class="loading" :class="[`phase-${phase}`, { 'light-loading': modeStore.theme === 'light', closing: modeStore.theme === 'light' && (phase === 'dim' || phase === 'finished') }]" aria-label="页面加载中">
+    <div class="loading" :class="[`phase-${phase}`, { 'light-loading': modeStore.theme === 'light', closing: modeStore.theme === 'light' && (phase === 'dim' || phase === 'finished') }]" :aria-hidden="phase === 'finished' || undefined" :inert="phase === 'finished' || undefined" aria-label="页面加载中">
+        <button v-if="allowSkip && navigationLoad.initialSettled && !navigationLoad.error && phase !== 'finished'" class="loading-skip" @click="finish">进入页面 <span aria-hidden="true">→</span></button>
         <template v-if="modeStore.theme === 'light'">
             <div class="date-stage" aria-hidden="true">
                 <div class="date-composition">
@@ -147,6 +163,10 @@ onUnmounted(() => {
     transition: opacity 800ms ease, visibility 800ms ease;
 }
 .phase-finished { opacity: 0; visibility: hidden; pointer-events: none; }
+.loading-skip { position: absolute; z-index: 20; bottom: max(28px, env(safe-area-inset-bottom)); left: clamp(24px, 6vw, 88px); padding: 10px 18px; color: #101421; background: #faffff; border: 0; box-shadow: 5px 5px 0 #0acbe5; font-size: .85rem; font-weight: 850; cursor: pointer; transform: skewX(-8deg); }
+.loading-skip:focus-visible { outline: 3px solid #f7de00; outline-offset: 6px; }
+:global(html[data-theme="dark"] .loading-skip) { box-shadow: 5px 5px 0 #e5222d; }
+.loading-skip span { margin-left: 12px; }
 .persona-loading {
     position: relative;
     display: block;

@@ -16,10 +16,42 @@
                 document.documentElement.dataset.theme = 'light';
             }
         </script>
+        <style>
+            html { background: #063493; }
+            html[data-theme="dark"] { background: #09090c; }
+            body { margin: 0; }
+            .boot-screen { box-sizing: border-box; min-height: 100svh; display: grid; place-content: center; gap: 18px; padding: 32px; color: #faffff; background: #063493; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+            html[data-theme="dark"] .boot-screen { background: #09090c; }
+            .boot-brand { margin: 0; font-size: clamp(28px, 6vw, 52px); font-weight: 900; font-style: italic; letter-spacing: -.04em; }
+            .boot-brand span { padding: 3px 10px; background: #096bd5; box-shadow: 5px 5px 0 #31f3ee; }
+            html[data-theme="dark"] .boot-brand span { background: #e5222d; box-shadow: 5px 5px 0 #faffff; }
+            .boot-message { margin: 0; font-size: 14px; line-height: 1.8; }
+            .boot-retry { justify-self: start; padding: 9px 15px; color: #101421; background: #faffff; border: 0; font: inherit; font-size: 14px; cursor: pointer; }
+            .boot-retry[hidden] { display: none; }
+            noscript { display: block; padding: 24px; color: #fff; font: 16px/1.8 sans-serif; }
+        </style>
         <title>Wh0rigin's World | 连线世界</title>
     </head>
     <body>
-        <div id="app"></div>
+        <div id="app">
+            <main class="boot-screen">
+                <p class="boot-brand">THE <span>WIRED WORLD</span></p>
+                <p class="boot-message" id="boot-message" role="status">正在连线，稍后见。</p>
+                <button class="boot-retry" id="boot-retry" hidden onclick="location.reload()">重新连接</button>
+            </main>
+        </div>
+        <script>
+            // This small shell remains useful even before the application script arrives.
+            setTimeout(function () {
+                const message = document.getElementById('boot-message');
+                const retry = document.getElementById('boot-retry');
+                if (message && retry) {
+                    message.textContent = '连线比平时慢一些，正在等待页面。也可以重新连接。';
+                    retry.hidden = false;
+                }
+            }, 10000);
+        </script>
+        <noscript>连线世界需要启用 JavaScript 才能浏览。你也可以访问 <a href="https://github.com/Wh0rigin">Wh0rigin 的 GitHub</a>。</noscript>
         <script type="module" src="/src/main.ts"></script>
     </body>
 </html>
