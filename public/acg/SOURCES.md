@@ -11,3 +11,7 @@ The four anime are named in [Wh0rigin's introduction](https://bgm.tv/user/wh0rig
 - `short-program.jpg` — Short Program / ショートプログラム，安达充. [Subject](https://bgm.tv/subject/46466), [cover](https://lain.bgm.tv/r/400/pic/cover/l/6e/91/46466_2dW8L.jpg).
 - `goodbye-eri.jpg` — 再见绘梨，藤本树. [Subject](https://bgm.tv/subject/377599), [cover](https://lain.bgm.tv/r/400/pic/cover/l/7a/2d/377599_5cY50.jpg).
 - `solanin.jpg` — 乐与路 / ソラニン，浅野一二〇. [Subject](https://bgm.tv/subject/32818), [cover](https://lain.bgm.tv/r/400/pic/cover/l/c6/a7/32818_REH3I.jpg).
+
+## Vector decoration
+
+- `mochiguma.svg` — Hand-authored SVG fan illustration of 饼熊 / もちぐま (Mochiguma), based on the white character in the [official sticker set](https://www.noitamina-shop.com/detail/id/00000011613). The SVG contains only vector shapes, with no embedded raster artwork. Character credit: ©四畳半主義者の会.

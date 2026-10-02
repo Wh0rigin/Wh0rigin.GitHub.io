@@ -20,6 +20,7 @@ const covers = [
                 <WiredBadge flat class="favorite-label">MY FAVORITE / 01</WiredBadge>
                 <img src="/acg/tatami-galaxy.jpg" alt="《四叠半神话大系》动画封面" width="800" height="1142" loading="lazy" decoding="async" />
             </a>
+            <img class="mochiguma-decoration" src="/acg/mochiguma.svg" alt="" aria-hidden="true" width="300" height="310" draggable="false" />
             <figcaption class="favorite-caption"><strong>良机就在眼前。</strong><span lang="en">THE TATAMI GALAXY</span></figcaption>
         </figure>
 
@@ -78,6 +79,7 @@ const covers = [
 .favorite-cover { position: relative; isolation: isolate; display: block; width: min(100%, 245px); padding: 9px; border: 2px solid var(--ui-ink); color: var(--ui-copy); background: var(--ui-paper); box-shadow: 8px 8px 0 var(--ui-layer), 14px 14px 0 var(--ui-stage-shadow); transform: rotate(-4deg); transition: transform var(--motion-panel) var(--ease-out), box-shadow var(--motion-panel) var(--ease-out); }
 .favorite-cover img { display: block; width: 100%; height: auto; }
 .favorite-label { position: absolute; z-index: 1; top: -14px; left: -13px; --ui-badge-size: .58rem; --ui-badge-padding: 7px 12px; --ui-badge-transform: rotate(-2deg) skewX(-8deg); }
+.mochiguma-decoration { position: absolute; z-index: 2; right: -4px; bottom: 74px; width: clamp(102px, 10vw, 128px); height: auto; transform: rotate(8deg); filter: drop-shadow(4px 6px 0 var(--ui-layer)); pointer-events: none; user-select: none; }
 .favorite-caption { position: relative; text-align: center; }
 .favorite-caption strong { display: block; font-size: 1.08rem; font-style: italic; letter-spacing: .06em; }
 .favorite-caption span { display: block; margin-top: 6px; font-size: .53rem; font-weight: 800; letter-spacing: .2em; color: var(--ui-muted); }
@@ -133,6 +135,7 @@ const covers = [
     .acg-card { padding: 20px; --ui-panel-shadow: 6px 6px 0 var(--ui-layer), 11px 11px 0 var(--ui-stage-shadow); }
     .acg-artwork { padding: 16px 14px 0; }
     .favorite-cover { width: min(100%, 218px); }
+    .mochiguma-decoration { right: -3px; bottom: 72px; width: clamp(82px, 25vw, 108px); }
     .tatami-number { right: -5px; font-size: 9rem; }
     .acg-details dd { font-size: .92rem; }
     .acg-link { --ui-action-size: .75rem; --ui-action-padding: 12px 14px; }

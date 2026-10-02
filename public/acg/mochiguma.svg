@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 310" fill="none">
+  <title>饼熊 · Mochiguma</title>
+  <desc>手绘矢量小贴纸：宽脑袋、不对称的大眼睛、白色身体和紫色小披风。</desc>
+  <defs>
+    <path id="cape" d="M155 148C169 167 182 203 211 228C196 231 177 239 150 236L139 183Z"/>
+    <path id="left-leg" d="M132 228C126 247 116 261 101 269C94 273 91 278 97 283L103 288C110 293 116 285 122 278C135 264 143 247 146 231Z"/>
+    <path id="right-leg" d="M145 232C145 250 138 267 134 280C130 293 139 300 147 295C155 292 158 282 158 273L161 231Z"/>
+    <path id="body" d="M135 153C133 176 130 193 121 213C115 227 123 235 139 238C157 241 166 235 165 222C165 201 156 175 155 151Z"/>
+    <path id="left-arm" d="M125 153C126 170 121 185 115 194C110 202 114 209 121 209C129 209 134 189 137 175L141 154Z"/>
+    <path id="right-arm" d="M154 154C161 174 164 191 162 209C161 217 168 222 174 216C179 210 175 192 172 183L162 151Z"/>
+    <path id="left-ear" d="M28 80C14 74 11 58 21 48C32 35 49 40 59 54L62 74Z"/>
+    <path id="right-ear" d="M216 59C214 48 225 35 235 35C248 35 263 43 262 55C262 65 257 70 248 76Z"/>
+    <path id="head" d="M29 75C45 62 65 64 89 65C114 67 136 71 160 65C187 58 215 53 240 59C260 64 274 88 277 109C283 131 274 157 254 166C231 177 201 174 176 168C157 164 140 160 120 164C103 169 86 178 66 175C42 172 24 159 19 139C13 119 13 91 29 75Z"/>
+  </defs>
+  <!-- A single sticker edge keeps the character legible on all three themes. -->
+  <g fill="#fffdf8" stroke="#fffdf8" stroke-width="13" stroke-linecap="round" stroke-linejoin="round">
+    <use href="#cape"/><use href="#left-leg"/><use href="#right-leg"/>
+    <use href="#body"/><use href="#left-arm"/><use href="#right-arm"/>
+    <use href="#left-ear"/><use href="#right-ear"/><use href="#head"/>
+  </g>
+  <g stroke="#171618" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+    <use href="#cape" fill="#a16989"/>
+    <g fill="#f6f5ee">
+      <use href="#left-leg"/><use href="#right-leg"/>
+      <use href="#body"/><use href="#left-arm"/><use href="#right-arm"/>
+      <use href="#left-ear"/><use href="#right-ear"/><use href="#head"/>
+    </g>
+    <path d="M31 89C43 85 57 97 61 114C66 134 62 152 50 158C38 164 24 153 20 135C15 116 18 96 31 89Z" fill="#fffdf8"/>
+    <path d="M225 88C243 82 263 93 269 111C275 129 266 147 250 154C231 162 211 153 205 137C197 117 206 95 225 88Z" fill="#fffdf8"/>
+    <path d="M113 125C128 120 141 126 146 139C150 149 144 158 134 160C128 160 122 159 117 162C104 162 94 154 96 144C98 136 104 128 113 125Z" fill="#fffdf8"/>
+  </g>
+  <path d="M29 100C39 96 49 106 52 120C55 134 51 145 43 149C33 153 24 143 23 132C21 119 21 106 29 100Z" fill="#0c0c0d"/>
+  <path d="M226 96C241 91 257 100 261 113C266 127 258 140 246 145C231 151 216 145 212 132C207 116 213 101 226 96Z" fill="#0c0c0d"/>
+  <path d="M116 148C119 149 121 145 125 147C127 149 123 153 120 153C118 153 115 150 116 148Z" fill="#0c0c0d"/>
+</svg>
