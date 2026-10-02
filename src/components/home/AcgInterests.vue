@@ -6,9 +6,9 @@ const covers = [
     { id: 2582, title: '铃音', kind: 'ANIME', detail: 'Serial Experiments Lain', image: 'lain', width: 400, height: 570 },
     { id: 237, title: '攻壳机动队', kind: 'ANIME', detail: 'Ghost in the Shell', image: 'ghost-in-the-shell', width: 400, height: 548 },
     { id: 340, title: '虫师', kind: 'ANIME', detail: 'Mushishi', image: 'mushishi', width: 400, height: 566 },
-    { id: 46466, title: 'Short Program', kind: 'MANGA', detail: '安达充', image: 'short-program', width: 400, height: 567 },
+    { id: 32693, title: 'H2 好逑双物语', kind: 'MANGA', detail: '安达充', image: 'h2', width: 239, height: 384 },
     { id: 377599, title: '再见绘梨', kind: 'MANGA', detail: '藤本树', image: 'goodbye-eri', width: 400, height: 629 },
-    { id: 32818, title: '乐与路', kind: 'MANGA', detail: '浅野一二〇', image: 'solanin', width: 400, height: 580 },
+    { id: 36261, title: '晚安，布布', kind: 'MANGA', detail: '浅野一二〇', image: 'goodnight-punpun', width: 400, height: 555 },
 ];
 </script>
 
