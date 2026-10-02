@@ -4,18 +4,20 @@ const props = defineProps({
     url: String,
     d: String,
     color: String,
+    iconColor: { type: String, default: '#ffffff' },
+    crisp: Boolean,
 });
 </script>
 
 <template>
-    <a class="media-container" :href="props.url">
+    <a class="media-container" :class="{ 'is-crisp': props.crisp }" :href="props.url">
         <span></span>
         <span></span>
         <span></span>
-        <span><svg viewBox="0 0 1024 1024" width="50" height="50">
+        <span><svg viewBox="0 0 1024 1024" width="50" height="50" aria-hidden="true">
                 <path
                     :d="props.d"
-                    fill="#ffffff"></path>
+                    :fill="props.iconColor"></path>
             </svg></span>
     </a>
 </template>
@@ -72,4 +74,21 @@ const props = defineProps({
             }
         }
     }
-}</style>
+}
+
+.media-container.is-crisp {
+    filter: drop-shadow(3px 4px 0 rgba(0, 0, 0, .28));
+
+    span { border: 2px solid #101014; }
+    span:last-child { opacity: 1; }
+}
+
+.media-container:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 7px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .media-container span { transition: none; }
+}
+</style>
