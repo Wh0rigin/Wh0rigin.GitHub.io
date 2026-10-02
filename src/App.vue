@@ -54,9 +54,11 @@ onMounted(() => {
 <template>
   <Loading></Loading>
   <Header />
-  <Transition name="nested">
-    <router-view></router-view>
-  </Transition>
+  <router-view v-slot="{ Component, route }">
+    <Transition name="nested" mode="out-in">
+      <component :is="Component" :key="route.path" />
+    </Transition>
+  </router-view>
   <Footer />
   <div style="display: none;">
     <img v-for="(imageUrl, index) in preloadedImages" :key="index" :src="imageUrl" />
@@ -185,7 +187,7 @@ a {
   position: relative;
   min-height: 100vh;
   min-height: 100svh;
-  overflow-x: hidden;
+  overflow-x: clip;
   isolation: isolate;
 }
 

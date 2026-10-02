@@ -33,7 +33,7 @@ html[data-theme="golden"] {
   --terminal-cursor: #985000;
 }
 
-html[data-theme="golden"] header:not(.at-top) {
+html[data-theme="golden"] .site-header:not(.at-top) {
   background: #191814;
   border-bottom: 4px solid #ffe32d;
   box-shadow: 0 4px 0 #ed9821;
@@ -49,11 +49,11 @@ html[data-theme="golden"] .brand-accent {
   background: none;
   -webkit-text-fill-color: currentColor;
 }
-html[data-theme="golden"] header:not(.at-top) .brand-prefix { color: #ffe32d; }
-html[data-theme="golden"] header:not(.at-top) .brand { color: #fffdf2; }
+html[data-theme="golden"] .site-header:not(.at-top) .brand-prefix { color: #ffe32d; }
+html[data-theme="golden"] .site-header:not(.at-top) .brand { color: #fffdf2; }
 html[data-theme="golden"] .nav-link { color: inherit; font-weight: 850; }
 html[data-theme="golden"] .nav-link:hover { color: #985000; }
-html[data-theme="golden"] header:not(.at-top) .nav-link:hover { color: #ffe32d; }
+html[data-theme="golden"] .site-header:not(.at-top) .nav-link:hover { color: #ffe32d; }
 html[data-theme="golden"] .github-link,
 html[data-theme="golden"] .icon-button {
   color: #191814;

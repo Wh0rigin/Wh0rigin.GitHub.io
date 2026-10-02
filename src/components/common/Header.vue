@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
 import { useModeStore } from '../../stores/mode';
 
 const modeStore = useModeStore();
+const route = useRoute();
+const isBlog = computed(() => route.path.startsWith('/blog'));
 const themeLabel = computed(() => modeStore.theme === 'golden'
     ? '退出电视主题，切换到日间模式'
     : modeStore.theme === 'dark' ? '切换到日间模式' : '切换到夜间模式');
@@ -21,14 +24,6 @@ const closeMenu = () => {
     isOpen.value = false;
 };
 
-const scrollToSection = (sectionId: string) => {
-    closeMenu();
-    document.getElementById(sectionId)?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-    });
-};
-
 onMounted(() => {
     window.addEventListener('scroll', checkScrollPosition, { passive: true });
 });
@@ -39,15 +34,16 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <header :class="{ 'at-top': isAtTop }">
+    <header class="site-header" :class="{ 'at-top': isAtTop && !isBlog }">
         <nav class="navbar" aria-label="主导航">
             <router-link to="/" class="brand" aria-label="The Wired World home" @click="closeMenu">
                 <span class="brand-text"><span class="brand-prefix">THE</span> <span class="brand-accent">WIRED WORLD</span></span>
             </router-link>
 
             <div class="nav-links">
-                <router-link to="/" class="nav-link">首页</router-link>
-                <a class="nav-link" href="#page2" @click.prevent="scrollToSection('page2')">关于</a>
+                <router-link to="/" class="nav-link" @click="closeMenu">首页</router-link>
+                <router-link :to="{ path: '/', hash: '#page2' }" class="nav-link" @click="closeMenu">关于</router-link>
+                <router-link to="/blog" class="nav-link" :class="{ 'blog-active': isBlog }" :aria-current="isBlog ? 'page' : undefined" @click="closeMenu">Blog</router-link>
             </div>
 
             <div class="nav-actions">
@@ -98,7 +94,8 @@ onUnmounted(() => {
         <Transition name="slide-fade">
             <div v-if="isOpen" id="mobile-menu" class="mobile-menu">
                 <router-link to="/" class="menu-link" @click="closeMenu">首页</router-link>
-                <a class="menu-link" href="#page2" @click.prevent="scrollToSection('page2')">关于</a>
+                <router-link :to="{ path: '/', hash: '#page2' }" class="menu-link" @click="closeMenu">关于</router-link>
+                <router-link to="/blog" class="menu-link" :aria-current="isBlog ? 'page' : undefined" @click="closeMenu">Blog / 连线手记</router-link>
                 <a class="menu-link" href="https://github.com/Wh0rigin" target="_blank" rel="noreferrer">GitHub ↗</a>
             </div>
         </Transition>
@@ -106,7 +103,7 @@ onUnmounted(() => {
 </template>
 
 <style lang="less" scoped>
-header {
+.site-header {
     position: fixed;
     inset: 0 0 auto;
     z-index: 1000;
@@ -117,7 +114,7 @@ header {
     transition: background-color 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
 }
 
-header.at-top {
+.site-header.at-top {
     background: transparent;
     border-color: transparent;
     backdrop-filter: none;
@@ -193,6 +190,21 @@ header.at-top {
     gap: 12px;
 }
 
+.nav-link.blog-active {
+    position: relative;
+}
+
+.nav-link.blog-active::after {
+    position: absolute;
+    right: -3px;
+    bottom: -9px;
+    left: -3px;
+    height: 3px;
+    background: var(--accent);
+    transform: skewX(-25deg);
+    content: '';
+}
+
 .github-link {
     display: inline-flex;
     align-items: center;
@@ -262,18 +274,18 @@ header.at-top {
     display: none;
 }
 
-:global(html[data-theme="light"] header:not(.at-top)) {
+:global(html[data-theme="light"] .site-header:not(.at-top)) {
     border-bottom: 3px solid #23e8ed;
     background: rgba(0, 39, 130, 0.93);
     box-shadow: 0 5px 0 rgba(0, 23, 96, 0.25);
 }
 
-:global(html[data-theme="light"] header:not(.at-top) .brand),
-:global(html[data-theme="light"] header:not(.at-top) .brand-prefix) {
+:global(html[data-theme="light"] .site-header:not(.at-top) .brand),
+:global(html[data-theme="light"] .site-header:not(.at-top) .brand-prefix) {
     color: #ffffff;
 }
 
-:global(html[data-theme="light"] header:not(.at-top) .brand-accent) {
+:global(html[data-theme="light"] .site-header:not(.at-top) .brand-accent) {
     background: linear-gradient(105deg, #ffffff, #3efaf3);
     background-clip: text;
     -webkit-background-clip: text;
@@ -330,7 +342,7 @@ header.at-top {
     transform: translate(2px, 2px) skewX(-7deg);
 }
 
-:global(html[data-theme="dark"] header:not(.at-top)) {
+:global(html[data-theme="dark"] .site-header:not(.at-top)) {
     border-bottom: 3px solid var(--accent);
     background: color-mix(in srgb, #09090c 92%, transparent);
     box-shadow: 0 5px 0 rgba(0, 0, 0, 0.58);
@@ -380,7 +392,7 @@ header.at-top {
 }
 
 @media (max-width: 720px) {
-    :global(html[data-theme="light"] header.at-top .icon-button) {
+    :global(html[data-theme="light"] .site-header.at-top .icon-button) {
         border-color: #003490;
         color: #003490;
         background: #ffffff;
