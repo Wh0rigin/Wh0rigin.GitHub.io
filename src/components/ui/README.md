@@ -9,12 +9,13 @@
 - [WiredAction：层叠按钮与链接](#wiredaction)——跳转页面、外部链接、普通操作。
 - [WiredBadge：风格化标签](#wiredbadge)——栏目标签、DEMO 标记、技术栈。
 - [WiredAccent：层叠文字](#wiredaccent)——突出标题中的关键词。
+- [WiredImage：图片占位与淡入](#wiredimage)——封面、校徽、插画和装饰图片。
 - [WiredPanel：面板与辅助样式](#wiredpanel)——卡片、容器、栏目小标题、标签列表。
 - [WiredProse：长文排版](#wiredprose)——博客正文、列表、引用。
 - [三个主题的整体效果](#主题预览)。
 - [调整局部尺寸与颜色](#调整局部尺寸)。
 
-其中前三项是 Vue 组件；面板和正文是可以直接加到 HTML 元素上的共用 CSS 样式。截图来自现有组件在本地页面中的实际渲染，静态图片不展示悬停和焦点动效。
+其中前四项是 Vue 组件；面板和正文是可以直接加到 HTML 元素上的共用 CSS 样式。截图来自现有组件在本地页面中的实际渲染，静态图片不展示悬停和焦点动效。
 
 ## 文件分工
 
@@ -117,6 +118,40 @@ import WiredAccent from '../components/ui/WiredAccent.vue';
 `depth` 默认是 `2`，也可以使用 `3`。文字与背景分开绘制，装饰层不会拦截点击。
 
 **常用定制变量**：`--ui-accent-offset`、`--ui-accent-transform`、`--ui-accent-bg`、`--ui-accent-text`、`--ui-accent-layer`、`--ui-accent-back`。
+
+## WiredImage
+
+**图片占位与淡入。** 图片下载并解码完成前显示主题色占位块，完成后淡入；加载失败时保留尺寸并显示“图片暂未加载”。源码：[WiredImage.vue](WiredImage.vue)。
+
+![图片加载前的主题色占位效果](../../../docs/images/ui/wired-image.jpg)
+
+```vue
+<script setup lang="ts">
+import WiredImage from '../components/ui/WiredImage.vue';
+</script>
+
+<template>
+  <WiredImage src="/acg/tatami-galaxy.jpg" alt="四叠半神话大系封面"
+    :width="800" :height="1142" />
+  <div class="square-cover">
+    <WiredImage src="/music/vaundy-replica.jpg" alt="replica 专辑封面"
+      :width="600" :height="600" fill />
+  </div>
+</template>
+
+<style scoped>
+.square-cover { width: 180px; aspect-ratio: 1; --ui-image-fit: cover; }
+</style>
+```
+
+- `width` / `height` 必填，用原图尺寸预留比例，避免加载时布局跳动。
+- `loading` 默认 `lazy`；首屏插画可设为 `eager`。
+- `fill` 填满已有尺寸的父容器；默认按原图比例显示。用 `--ui-image-fit: cover` 调整裁切，默认 `contain`。
+- `compact` 用于校徽、小装饰等，隐藏占位文字。
+- `keepPrevious` 用于眨眼等连续切换，下一张未准备好时保留已加载的上一张，并直接切换，避免闪烁。
+- `@ready` 在当前图片下载、解码完成后给出源地址；`@error` 给出失败的源地址。缓存命中和 `src` 变化也会处理。
+- `class`、`style` 和交互事件传给外层 `span`。通过 `:deep(.wired-image-content)` 定制内部图片；装饰图使用 `alt="" aria-hidden="true"`。
+- 占位块自动适配三个主题，减少动态效果偏好下关闭扫光和淡入。
 
 ## WiredPanel
 

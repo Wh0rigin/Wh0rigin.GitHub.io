@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import WiredBadge from '../ui/WiredBadge.vue';
+import WiredImage from '../ui/WiredImage.vue';
 import hangzhouEmblem from '../../assets/education/hangzhou-normal.png';
 import wanliEmblem from '../../assets/education/zhejiang-wanli.png';
 
@@ -50,7 +51,7 @@ const education = [
                     </abbr>
                     <div class="school-emblem">
                         <div class="school-emblem-viewport">
-                            <img :src="item.emblem" :alt="`${item.school}校徽`" :style="{ '--emblem-scale': item.emblemScale }" width="88" height="88" loading="lazy" decoding="async" />
+                            <WiredImage :src="item.emblem" :alt="`${item.school}校徽`" :style="{ '--emblem-scale': item.emblemScale }" :width="88" :height="88" compact fill />
                         </div>
                     </div>
                 </div>
@@ -273,7 +274,7 @@ h3 {
     border-radius: 50%;
 }
 
-.school-emblem img {
+.school-emblem :deep(.wired-image-content) {
     display: block;
     width: 100%;
     height: 100%;

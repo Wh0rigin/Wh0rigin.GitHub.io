@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue';
+import WiredImage from '../ui/WiredImage.vue';
 
 const spotlightOpen = ref(false);
 const recordScene = ref<HTMLButtonElement | null>(null);
 const closeHintRef = ref<HTMLButtonElement | null>(null);
 const vinylRef = ref<HTMLElement | null>(null);
-const coverRef = ref<HTMLImageElement | null>(null);
+const coverRef = ref<HTMLElement | null>(null);
 const spotlightWindowRef = ref<HTMLElement | null>(null);
 const viewport = ref({ width: 1, height: 1 });
 const artwork = ref({ vinylX: 0, vinylY: 0, vinylRadius: 0, coverX: 0, coverY: 0, coverWidth: 0, coverHeight: 0 });
@@ -198,13 +199,9 @@ onUnmounted(() => {
                     <span class="record-spindle"></span>
                 </div>
             </div>
-            <img
-                ref="coverRef"
-                class="album-cover"
-                src="/music/vaundy-replica.jpg"
-                alt="Vaundy《replica》专辑封面"
-                loading="lazy"
-            />
+            <span ref="coverRef" class="album-cover">
+                <WiredImage src="/music/vaundy-replica.jpg" alt="Vaundy《replica》专辑封面" :width="600" :height="600" fill @ready="scheduleGeometryUpdate" />
+            </span>
             <span v-if="!spotlightOpen" class="record-hint" aria-hidden="true">Click me</span>
         </button>
 
@@ -491,6 +488,9 @@ onUnmounted(() => {
 }
 
 .album-cover {
+    display: block;
+    overflow: hidden;
+    --ui-image-fit: cover;
     position: absolute;
     z-index: 1;
     top: 50%;

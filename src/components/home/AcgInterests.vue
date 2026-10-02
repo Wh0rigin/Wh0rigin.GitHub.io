@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import WiredAction from '../ui/WiredAction.vue';
 import WiredBadge from '../ui/WiredBadge.vue';
+import WiredImage from '../ui/WiredImage.vue';
 
 const covers = [
     { id: 2582, title: '铃音', kind: 'ANIME', detail: 'Serial Experiments Lain', image: 'lain', width: 400, height: 570 },
@@ -18,9 +19,9 @@ const covers = [
             <span class="tatami-number" aria-hidden="true">4<sup>½</sup></span>
             <a class="favorite-cover" href="https://bgm.tv/subject/4019" target="_blank" rel="noopener noreferrer" aria-label="在 BGM.tv 查看四叠半神话大系（新标签页打开）">
                 <WiredBadge flat class="favorite-label">MY FAVORITE / 01</WiredBadge>
-                <img src="/acg/tatami-galaxy.jpg" alt="《四叠半神话大系》动画封面" width="800" height="1142" loading="lazy" decoding="async" />
+                <WiredImage class="favorite-image" src="/acg/tatami-galaxy.jpg" alt="《四叠半神话大系》动画封面" :width="800" :height="1142" />
             </a>
-            <img class="mochiguma-decoration" src="/acg/mochiguma.svg" alt="" aria-hidden="true" width="300" height="310" draggable="false" />
+            <WiredImage class="mochiguma-decoration" src="/acg/mochiguma.svg" alt="" aria-hidden="true" :width="300" :height="310" compact />
             <figcaption class="favorite-caption"><strong>良机就在眼前。</strong><span lang="en">THE TATAMI GALAXY</span></figcaption>
         </figure>
 
@@ -45,7 +46,7 @@ const covers = [
                 <li v-for="cover in covers" :key="cover.id">
                     <a class="cover-link" :href="`https://bgm.tv/subject/${cover.id}`" target="_blank" rel="noopener noreferrer" :aria-label="`在 BGM.tv 查看 ${cover.title}（新标签页打开）`">
                         <div class="cover-frame">
-                            <img :src="`/acg/${cover.image}.jpg`" :alt="`《${cover.title}》${cover.kind === 'ANIME' ? '动画' : '漫画'}封面`" :width="cover.width" :height="cover.height" loading="lazy" decoding="async" />
+                            <WiredImage class="cover-image" :src="`/acg/${cover.image}.jpg`" :alt="`《${cover.title}》${cover.kind === 'ANIME' ? '动画' : '漫画'}封面`" :width="cover.width" :height="cover.height" fill />
                             <WiredBadge flat class="cover-kind">{{ cover.kind }}</WiredBadge>
                         </div>
                         <strong class="cover-title">{{ cover.title }}</strong>
@@ -77,7 +78,7 @@ const covers = [
 .tatami-number { position: absolute; z-index: -1; right: -8px; bottom: 28px; color: var(--ui-accent); font: italic 950 11.5rem/1 var(--font-display); letter-spacing: -.09em; opacity: .13; }
 .tatami-number sup { margin-left: .1em; font-size: .43em; vertical-align: baseline; }
 .favorite-cover { position: relative; isolation: isolate; display: block; width: min(100%, 245px); padding: 9px; border: 2px solid var(--ui-ink); color: var(--ui-copy); background: var(--ui-paper); box-shadow: 8px 8px 0 var(--ui-layer), 14px 14px 0 var(--ui-stage-shadow); transform: rotate(-4deg); transition: transform var(--motion-panel) var(--ease-out), box-shadow var(--motion-panel) var(--ease-out); }
-.favorite-cover img { display: block; width: 100%; height: auto; }
+.favorite-image { width: 100%; }
 .favorite-label { position: absolute; z-index: 1; top: -14px; left: -13px; --ui-badge-size: .58rem; --ui-badge-padding: 7px 12px; --ui-badge-transform: rotate(-2deg) skewX(-8deg); }
 .mochiguma-decoration { position: absolute; z-index: 2; right: -4px; bottom: 74px; width: clamp(102px, 10vw, 128px); height: auto; transform: rotate(8deg); filter: drop-shadow(4px 6px 0 var(--ui-layer)); pointer-events: none; user-select: none; }
 .favorite-caption { position: relative; text-align: center; }
@@ -106,7 +107,7 @@ const covers = [
 .cover-link { display: block; color: inherit; text-decoration: none; }
 .cover-frame { position: relative; aspect-ratio: 2 / 3; padding: 5px; border: 1px solid var(--ui-ink); background: var(--ui-paper); box-shadow: 5px 5px 0 var(--ui-layer); transform: rotate(-2deg); transition: transform var(--motion-panel) var(--ease-out), box-shadow var(--motion-panel) var(--ease-out); }
 .cover-list li:nth-child(even) .cover-frame { transform: rotate(2deg); }
-.cover-frame img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.cover-image { width: 100%; height: 100%; }
 .cover-kind { position: absolute; bottom: -9px; left: 4px; --ui-badge-size: .46rem; --ui-badge-padding: 4px 7px; --ui-badge-tracking: .12em; }
 .cover-title { display: block; margin-top: 20px; font-size: .8rem; line-height: 1.5; }
 .cover-detail { display: block; margin-top: 4px; color: var(--ui-muted); font-size: .59rem; line-height: 1.6; }

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import WiredImage from '../components/ui/WiredImage.vue';
 </script>
 
 <template>
@@ -6,7 +7,7 @@
         <h1 class="not-found-title">404</h1>
         <p class="not-found-message">Oops! Something went wrong. This page doesn't exist.</p>
         <router-link to="/" class="home-link">Go back to Home</router-link>
-        <div class="funny-image"></div>
+        <WiredImage class="funny-image" src="https://placekitten.com/200/200" alt="小猫插画" :width="200" :height="200" />
     </div>
 </template>
 
@@ -44,7 +45,8 @@
     .funny-image {
         width: 200px;
         height: 200px;
-        background: url('https://placekitten.com/200/200') center/cover;
+        overflow: hidden;
+        --ui-image-fit: cover;
         margin-top: 20px;
         border-radius: 50%;
     }

@@ -8,6 +8,7 @@ import EducationJourney from '../components/home/EducationJourney.vue';
 import FeaturedProjects from '../components/home/FeaturedProjects.vue';
 import MusicSpotlight from '../components/home/MusicSpotlight.vue';
 import AcgInterests from '../components/home/AcgInterests.vue';
+import WiredImage from '../components/ui/WiredImage.vue';
 
 // import logo1_url from '../assets/logo/logo1.png'
 // import logo1_slink_url from '../assets/logo/logo1_slink.png'
@@ -54,6 +55,8 @@ const logos:Array<string> = [
 // 本地资源
 
 let img_url:Ref<string> = ref('')
+const heroLoadedSrc = ref('');
+const logoDimensions = [{ width: 897, height: 1021 }, { width: 759, height: 1021 }, { width: 1520, height: 1651 }];
 let timerId: any;
 onMounted(() => {
     img_url.value = logos[modeStore.mode]
@@ -260,8 +263,8 @@ const mouseup = () => {
                     </defs>
                 </svg>
                 <span class="hero-visual-number" aria-hidden="true">{{ modeStore.theme === 'golden' ? '04' : '05' }}</span>
-                <img class="logo logo-original" alt="连线世界主题插画" draggable="false" @mousedown="mousedown" @mouseup="mouseup" :src="img_url" />
-                <img class="logo logo-silhouette" alt="" aria-hidden="true" draggable="false" :src="img_url" />
+                <WiredImage class="logo logo-original" :src="img_url" alt="连线世界主题插画" :width="logoDimensions[modeStore.mode].width" :height="logoDimensions[modeStore.mode].height" loading="eager" keep-previous @ready="heroLoadedSrc = $event" @mousedown="mousedown" @mouseup="mouseup" />
+                <img v-show="heroLoadedSrc" class="logo logo-silhouette" alt="" aria-hidden="true" draggable="false" :src="heroLoadedSrc" />
             </div>
         </section>
 
@@ -589,11 +592,11 @@ h1 {
 }
 
 @media (hover: hover) {
-    .logo-original:hover {
+    .logo-original:is(.is-ready, .has-previous):hover {
         opacity: 0;
     }
 
-    .logo-original:hover + .logo-silhouette {
+    .logo-original:is(.is-ready, .has-previous):hover + .logo-silhouette {
         opacity: 1;
     }
 }
