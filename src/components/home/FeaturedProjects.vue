@@ -52,7 +52,7 @@ const projects = [
         <div class="projects-heading">
             <div>
                 <p class="projects-eyebrow">Selected work / Open source</p>
-                <h3 id="projects-title">代码里的<span>一些想法</span></h3>
+                <h3 id="projects-title">代码里的<span class="projects-title-accent"><i class="projects-title-underlay" aria-hidden="true"></i>一些想法</span></h3>
                 <p class="projects-intro">从开发工具到视觉识别，这是我想与你分享的几个开源项目。</p>
             </div>
             <a class="all-projects" href="https://github.com/Wh0rigin?tab=repositories" target="_blank" rel="noopener noreferrer">
@@ -123,6 +123,9 @@ const projects = [
     --project-muted: #526886;
     --project-tint: #e9faff;
     --project-line: rgba(0, 59, 158, .19);
+    --title-middle: #19d9e9;
+    --title-underlay: #002578;
+    --title-offset: 8px;
 }
 
 .projects-heading {
@@ -157,16 +160,44 @@ h3 {
     text-shadow: 3px 3px 0 var(--project-ink);
 }
 
-h3 span {
+.projects-title-accent {
+    position: relative;
+    isolation: isolate;
     display: inline-block;
     margin-left: .15em;
-    padding: 0 .16em;
-    background: var(--project-accent);
+    padding: .03em .23em .04em;
     transform: rotate(-2deg) skewX(-5deg);
 }
 
+.projects-title-accent::before,
+.projects-title-accent::after,
+.projects-title-underlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    clip-path: polygon(3% 5%, 100% 0, 96% 93%, 0 100%);
+    content: '';
+}
+
+.projects-title-accent::before {
+    z-index: -1;
+    background: var(--project-accent);
+}
+
+.projects-title-accent::after {
+    z-index: -2;
+    background: var(--title-middle);
+    transform: translate(var(--title-offset), var(--title-offset)) rotate(1.5deg);
+}
+
+.projects-title-underlay {
+    z-index: -3;
+    background: var(--title-underlay);
+    transform: translate(calc(var(--title-offset) * 1.65), calc(var(--title-offset) * 1.65)) rotate(-.7deg);
+}
+
 .projects-intro {
-    margin-top: 15px;
+    margin-top: 23px;
     color: #e9f8ff;
     font-size: .85rem;
     line-height: 1.8;
@@ -380,6 +411,8 @@ h4 {
     --project-muted: #bfb4b9;
     --project-tint: #2b1117;
     --project-line: rgba(255, 255, 255, .2);
+    --title-middle: #08080a;
+    --title-underlay: #f6f2ec;
 }
 
 :global(html[data-theme="dark"] .project-card) { border-color: rgba(255, 255, 255, .7); box-shadow: 7px 8px 0 #e5222d, 12px 13px 0 #000; }
@@ -404,6 +437,7 @@ h4 {
 }
 
 @media (max-width: 520px) {
+    .projects-section { --title-offset: 5px; }
     .projects-heading { align-items: flex-start; flex-direction: column; gap: 18px; margin-bottom: 26px; }
     .projects-eyebrow { font-size: .6rem; letter-spacing: .1em; }
     h3 { font-size: clamp(1.5rem, 7vw, 2rem); }
