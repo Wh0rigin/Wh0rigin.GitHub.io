@@ -22,8 +22,8 @@ tree
 
 注意：上传时不要上传package_lock.json会出错
 
-## 共用 UI 与样式
+## 可复用组件文档
 
-主题变量集中在 `src/styles/tokens.css`，可复用的按钮、标签、层叠标题、面板和正文样式在 `src/styles/primitives.css`。
+📚 [查看风格化组件列表、效果截图与使用方法](src/components/ui/README.md)
 
-新增页面时可参考 [共用 UI 使用说明](src/components/ui/README.md)。
+包含层叠按钮、标签、标题、面板和正文排版，以及白天、黑夜、黄色主题的预览和定制示例。
