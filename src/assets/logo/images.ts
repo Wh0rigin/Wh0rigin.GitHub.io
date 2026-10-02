@@ -26,4 +26,5 @@ export const heroImages = [
     image(logo2None, logo2NoneSmall, 759, 1021),
     image(logo2Smile, logo2SmileSmall, 759, 1021),
 ];
-export const heroImageSizes = '(max-width: 520px) 240px, (max-width: 820px) 320px, 500px';
+// Match the larger desktop artwork without increasing mobile image requests.
+export const heroImageSizes = '(max-width: 520px) 240px, (max-width: 820px) 320px, (min-width: 1800px) min(31vw, 784px), 500px';

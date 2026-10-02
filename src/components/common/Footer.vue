@@ -40,7 +40,7 @@ const year = new Date().getFullYear();
 }
 
 :global(html[data-theme="light"] .footer) {
-    border-top: 6px solid #2ef4f2;
+    border-top: 0.375rem solid #2ef4f2;
     color: #ffffff;
 }
 
@@ -55,37 +55,37 @@ const year = new Date().getFullYear();
 }
 
 :global(html[data-theme="dark"] .footer) {
-    border-top: 4px solid var(--accent);
-    box-shadow: inset 0 6px 0 #000000;
+    border-top: 0.25rem solid var(--accent);
+    box-shadow: inset 0 0.375rem 0 #000000;
 }
 
 :global(html[data-theme="dark"] .footer::before) {
     position: absolute;
-    top: -4px;
+    top: -0.25rem;
     right: 8%;
-    width: 160px;
-    height: 4px;
+    width: 10rem;
+    height: 0.25rem;
     background: #ffffff;
     transform: skewX(-32deg);
     content: "";
 }
 
 .footer-inner {
-    padding: 38px 0 22px;
+    padding: 2.375rem 0 1.375rem;
 }
 
 .footer-main {
     display: flex;
     align-items: center;
-    gap: 18px 36px;
+    gap: 1.125rem 2.25rem;
     flex-wrap: wrap;
-    padding-bottom: 30px;
+    padding-bottom: 1.875rem;
 }
 
 .footer-brand {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 0.3125rem;
 }
 
 .brand-name {
@@ -107,15 +107,15 @@ const year = new Date().getFullYear();
 .media {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 0.25rem;
 }
 
 .footer-bottom {
     display: flex;
     justify-content: space-between;
-    gap: 18px;
-    padding-top: 18px;
-    border-top: 1px solid var(--border);
+    gap: 1.125rem;
+    padding-top: 1.125rem;
+    border-top: 0.0625rem solid var(--border);
     color: var(--text-muted);
     font-size: 0.8rem;
 
@@ -130,22 +130,22 @@ const year = new Date().getFullYear();
 }
 
 @media (min-width: 601px) and (max-width: 1000px) {
-    .footer-main { gap: 18px 24px; }
+    .footer-main { gap: 1.125rem 1.5rem; }
     .footer-brand { flex-shrink: 0; }
-    .footer-main p { flex: 1 0 calc(100% - 160px); }
+    .footer-main p { flex: 1 0 calc(100% - 10rem); }
     .media { margin-right: auto; }
 }
 
 @media (max-width: 600px) {
     .footer-inner {
-        --ui-container-gutter: 36px;
+        --ui-container-gutter: 2.25rem;
     }
 
     .footer-main {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) 120px;
+        grid-template-columns: minmax(0, 1fr) 7.5rem;
         align-items: center;
-        gap: 12px 20px;
+        gap: 0.75rem 1.25rem;
     }
 
     .footer-brand { grid-column: 1; grid-row: 1; }
@@ -165,11 +165,11 @@ const year = new Date().getFullYear();
         min-width: 0;
         justify-content: space-around;
         gap: 0;
-        margin: 10px 0 0;
-        padding: 0 8px;
+        margin: 0.625rem 0 0;
+        padding: 0 0.5rem;
     }
 
-    .media :deep(.media-container) { flex: 0 0 54px; width: 54px; height: 54px; margin: 0 14px; }
+    .media :deep(.media-container) { flex: 0 0 3.375rem; width: 3.375rem; height: 3.375rem; margin: 0 0.875rem; }
     .footer-main :deep(.footer-television) { grid-column: 2; grid-row: 1 / span 2; justify-self: end; }
 }
 </style>

@@ -299,17 +299,17 @@ onUnmounted(() => {
     position: relative;
     grid-column: 1 / -1;
     display: grid;
-    grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.1fr);
+    grid-template-columns: minmax(17.5rem, 0.9fr) minmax(0, 1.1fr);
     align-items: center;
-    gap: clamp(24px, 5vw, 64px);
+    gap: clamp(1.5rem, 5vw, 4rem);
     overflow: hidden;
-    padding: clamp(24px, 4vw, 48px);
+    padding: clamp(1.5rem, 4vw, 3rem);
     border: var(--panel-border-width) solid var(--border);
     border-radius: var(--panel-radius);
     color: var(--text);
     background: linear-gradient(120deg, var(--surface), color-mix(in srgb, var(--accent-soft) 58%, var(--surface)));
     box-shadow: var(--shadow);
-    backdrop-filter: blur(14px);
+    backdrop-filter: blur(0.875rem);
     transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease;
 
     &::before {
@@ -318,7 +318,7 @@ onUnmounted(() => {
         right: -8%;
         width: 42%;
         aspect-ratio: 1;
-        border: 22px solid color-mix(in srgb, var(--accent) 10%, transparent);
+        border: 1.375rem solid color-mix(in srgb, var(--accent) 10%, transparent);
         border-radius: 50%;
         pointer-events: none;
         animation: music-orbit 12s linear infinite;
@@ -331,9 +331,9 @@ onUnmounted(() => {
 }
 
 :global(html[data-theme="light"] .music-card) {
-    border: 3px solid #003b9e;
+    border: 0.1875rem solid #003b9e;
     background: linear-gradient(112deg, #faffff 0 72%, #c6f7ff 72%);
-    box-shadow: 11px 11px 0 #19d9e9, 17px 17px 0 #002578;
+    box-shadow: 0.6875rem 0.6875rem 0 #19d9e9, 1.0625rem 1.0625rem 0 #002578;
 }
 
 :global(html[data-theme="light"] .music-card::before) {
@@ -373,14 +373,14 @@ onUnmounted(() => {
 }
 
 .record-scene:focus-visible {
-    outline: 3px solid var(--accent-strong);
-    outline-offset: 6px;
+    outline: 0.1875rem solid var(--accent-strong);
+    outline-offset: 0.375rem;
 }
 
 :global(html[data-theme="dark"] .music-card) {
     border-color: rgba(255, 255, 255, 0.68);
     background: linear-gradient(120deg, #17171b 0 72%, color-mix(in srgb, var(--accent) 26%, #17171b) 72%);
-    box-shadow: 12px 12px 0 #000000, 17px 17px 0 color-mix(in srgb, var(--accent) 48%, transparent);
+    box-shadow: 0.75rem 0.75rem 0 #000000, 1.0625rem 1.0625rem 0 color-mix(in srgb, var(--accent) 48%, transparent);
 }
 
 :global(html[data-theme="dark"] .music-card::before) {
@@ -398,14 +398,14 @@ onUnmounted(() => {
 .record-scene {
     position: relative;
     display: grid;
-    min-height: 340px;
+    min-height: 21.25rem;
     place-items: center;
     isolation: isolate;
 }
 
 .record-hint {
     position: absolute;
-    bottom: 4px;
+    bottom: 0.25rem;
     left: 50%;
     color: var(--accent-strong);
     font-size: .7rem;
@@ -420,7 +420,7 @@ onUnmounted(() => {
     position: absolute;
     top: 50%;
     left: 58%;
-    width: clamp(220px, 27vw, 300px);
+    width: clamp(13.75rem, 27vw, 18.75rem);
     aspect-ratio: 1;
     transform: translate(-50%, -50%);
 }
@@ -429,12 +429,12 @@ onUnmounted(() => {
     position: relative;
     width: 100%;
     height: 100%;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 0.0625rem solid rgba(255, 255, 255, 0.12);
     border-radius: 50%;
     background:
         radial-gradient(circle, transparent 0 15%, rgba(255, 255, 255, 0.04) 15.4% 15.8%, transparent 16.2% 23%, rgba(255, 255, 255, 0.035) 23.4% 23.8%, transparent 24.2% 34%, rgba(255, 255, 255, 0.035) 34.4% 34.8%, transparent 35.2% 46%, rgba(255, 255, 255, 0.035) 46.4% 46.8%, transparent 47.2%),
-        repeating-radial-gradient(circle, #282a30 0 1px, #15171c 2px 4px);
-    box-shadow: 0 18px 36px rgba(7, 9, 16, 0.3), inset 0 0 22px rgba(0, 0, 0, 0.5);
+        repeating-radial-gradient(circle, #282a30 0 0.0625rem, #15171c 0.125rem 0.25rem);
+    box-shadow: 0 1.125rem 2.25rem rgba(7, 9, 16, 0.3), inset 0 0 1.375rem rgba(0, 0, 0, 0.5);
     animation: record-spin 28s linear infinite;
 
     &::before {
@@ -468,7 +468,7 @@ onUnmounted(() => {
     }
 
     small {
-        margin-top: 3px;
+        margin-top: 0.1875rem;
         font-size: 0.42rem;
         font-weight: 800;
         letter-spacing: 0.08em;
@@ -479,9 +479,9 @@ onUnmounted(() => {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 5px;
-    height: 5px;
-    border: 1px solid rgba(20, 20, 24, 0.72);
+    width: 0.3125rem;
+    height: 0.3125rem;
+    border: 0.0625rem solid rgba(20, 20, 24, 0.72);
     border-radius: 50%;
     background: #f7ebad;
     transform: translate(-50%, -50%);
@@ -495,18 +495,18 @@ onUnmounted(() => {
     z-index: 1;
     top: 50%;
     left: 5%;
-    width: clamp(148px, 18vw, 190px);
+    width: clamp(9.25rem, 18vw, 11.875rem);
     aspect-ratio: 1;
-    border: 5px solid rgba(255, 255, 255, 0.92);
-    border-radius: 8px;
+    border: 0.3125rem solid rgba(255, 255, 255, 0.92);
+    border-radius: 0.5rem;
     object-fit: cover;
-    box-shadow: 0 18px 38px rgba(13, 15, 23, 0.3);
+    box-shadow: 0 1.125rem 2.375rem rgba(13, 15, 23, 0.3);
     transform: translateY(-50%) rotate(-6deg);
     transition: transform 260ms cubic-bezier(.2, .8, .2, 1), box-shadow 260ms ease;
 }
 
 .record-scene:focus-visible .album-cover {
-    box-shadow: 0 22px 46px rgba(13, 15, 23, .4);
+    box-shadow: 0 1.375rem 2.875rem rgba(13, 15, 23, .4);
     transform: translateY(-52%) rotate(-3deg) scale(1.025);
 }
 
@@ -559,8 +559,8 @@ onUnmounted(() => {
 .spotlight-layer,
 .spotlight-window {
     position: absolute;
-    top: clamp(64px, 7vh, 100px);
-    right: clamp(12px, 3vw, 48px);
+    top: clamp(4rem, 7vh, 6.25rem);
+    right: clamp(0.75rem, 3vw, 3rem);
     width: 94vw;
     height: 90vh;
     clip-path: polygon(82% 0, 100% 0, 100% 0, 82% 0);
@@ -570,13 +570,13 @@ onUnmounted(() => {
 .spotlight-layer-back {
     z-index: 0;
     background: var(--spotlight-back);
-    transform: translate(4px, 5px) skewY(-.4deg) translate(34px, -20px) scale(.97);
+    transform: translate(0.25rem, 0.3125rem) skewY(-.4deg) translate(2.125rem, -1.25rem) scale(.97);
 }
 
 .spotlight-layer-front {
     z-index: 1;
     background: var(--spotlight-front);
-    transform: translate(2px, 3px) skewY(-.2deg) translate(34px, -20px) scale(.97);
+    transform: translate(0.125rem, 0.1875rem) skewY(-.2deg) translate(2.125rem, -1.25rem) scale(.97);
 }
 
 .spotlight-window {
@@ -584,23 +584,23 @@ onUnmounted(() => {
     display: flex;
     align-items: flex-end;
     overflow: hidden;
-    padding: clamp(28px, 4vw, 52px) clamp(28px, 5vw, 68px) clamp(32px, 4vw, 48px) clamp(62px, 9vw, 118px);
+    padding: clamp(1.75rem, 4vw, 3.25rem) clamp(1.75rem, 5vw, 4.25rem) clamp(2rem, 4vw, 3rem) clamp(3.875rem, 9vw, 7.375rem);
     color: #fff;
     background: var(--spotlight-fill);
-    filter: drop-shadow(0 18px 22px rgba(0, 0, 0, .22));
+    filter: drop-shadow(0 1.125rem 1.375rem rgba(0, 0, 0, .22));
     pointer-events: none;
-    transform: translate(34px, -20px) scale(.97);
+    transform: translate(2.125rem, -1.25rem) scale(.97);
     transition: clip-path 560ms cubic-bezier(.16, 1, .3, 1), transform 560ms cubic-bezier(.16, 1, .3, 1);
 }
 
 .spotlight-portal.is-open .spotlight-layer-back {
     clip-path: polygon(76% 0, 100% 0, 100% 100%, 0 100%);
-    transform: translate(13px, 13px) skewY(-1deg);
+    transform: translate(0.8125rem, 0.8125rem) skewY(-1deg);
 }
 
 .spotlight-portal.is-open .spotlight-layer-front {
     clip-path: polygon(79% 0, 100% 0, 100% 100%, 0 100%);
-    transform: translate(7px, 7px) skewY(-.5deg);
+    transform: translate(0.4375rem, 0.4375rem) skewY(-.5deg);
 }
 
 .spotlight-portal.is-open .spotlight-window {
@@ -620,7 +620,7 @@ onUnmounted(() => {
     z-index: 1;
     margin-left: auto;
     text-align: right;
-    text-shadow: 2px 3px 0 rgba(0, 0, 0, .2);
+    text-shadow: 0.125rem 0.1875rem 0 rgba(0, 0, 0, .2);
 }
 
 .spotlight-quote {
@@ -628,14 +628,14 @@ onUnmounted(() => {
     z-index: 3;
     left: 43vw;
     right: 8vw;
-    bottom: clamp(150px, 22vh, 230px);
+    bottom: clamp(9.375rem, 22vh, 14.375rem);
     margin: 0;
-    padding: 12px;
+    padding: 0.75rem;
     color: var(--dialogue-ink);
     text-align: left;
-    filter: drop-shadow(7px 9px 0 rgba(0, 0, 0, .35));
+    filter: drop-shadow(0.4375rem 0.5625rem 0 rgba(0, 0, 0, .35));
     opacity: 0;
-    transform: translate(28px, 14px) rotate(-1deg) scale(.97);
+    transform: translate(1.75rem, 0.875rem) rotate(-1deg) scale(.97);
     transition: opacity 220ms ease, transform 420ms cubic-bezier(.16, 1, .3, 1);
     --dialogue-shape: polygon(6% 7%, 97% 0, 100% 91%, 14% 100%, 6% 83%, 0 72%, 7% 69%);
 }
@@ -650,7 +650,7 @@ onUnmounted(() => {
 }
 
 .spotlight-quote::after {
-    inset: 5px;
+    inset: 0.3125rem;
     background: var(--dialogue-paper);
 }
 
@@ -663,7 +663,7 @@ onUnmounted(() => {
 .spotlight-dialogue-body {
     position: relative;
     z-index: 1;
-    padding: clamp(30px, 2.8vw, 40px) clamp(30px, 3vw, 42px) 40px clamp(44px, 5vw, 70px);
+    padding: clamp(1.875rem, 2.8vw, 2.5rem) clamp(1.875rem, 3vw, 2.625rem) 2.5rem clamp(2.75rem, 5vw, 4.375rem);
     background: transparent;
     pointer-events: auto;
     overscroll-behavior: contain;
@@ -672,8 +672,13 @@ onUnmounted(() => {
 }
 
 .spotlight-dialogue-body:focus-visible {
-    outline: 2px dashed var(--dialogue-ink);
-    outline-offset: -18px;
+    outline: 0.125rem dashed var(--dialogue-ink);
+    outline-offset: -1.125rem;
+}
+
+@media (min-width: 1800px) {
+    /* The dialogue's angled edges take a percentage of its width. */
+    .spotlight-dialogue-body { padding: 2.5rem 8% 3.125rem 16%; }
 }
 
 .spotlight-quote p {
@@ -687,13 +692,13 @@ onUnmounted(() => {
 .spotlight-speaker {
     position: absolute;
     z-index: 2;
-    top: -22px;
+    top: -1.375rem;
     left: 7%;
     display: flex;
     align-items: baseline;
-    gap: 12px;
-    padding: 8px 22px;
-    border: 3px solid var(--dialogue-ink);
+    gap: 0.75rem;
+    padding: 0.5rem 1.375rem;
+    border: 0.1875rem solid var(--dialogue-ink);
     color: var(--dialogue-ink);
     background: var(--dialogue-paper);
     font-size: clamp(1rem, 1.6vw, 1.35rem);
@@ -701,7 +706,7 @@ onUnmounted(() => {
     font-weight: 900;
     letter-spacing: -.025em;
     transform: rotate(-7deg) skewX(-9deg);
-    box-shadow: 5px 5px 0 var(--dialogue-ink);
+    box-shadow: 0.3125rem 0.3125rem 0 var(--dialogue-ink);
 }
 
 .spotlight-speaker span {
@@ -712,10 +717,10 @@ onUnmounted(() => {
 .spotlight-dialogue-arrow {
     position: absolute;
     z-index: 2;
-    right: -12px;
-    bottom: 14px;
-    width: 62px;
-    height: 42px;
+    right: -0.75rem;
+    bottom: 0.875rem;
+    width: 3.875rem;
+    height: 2.625rem;
     background: var(--dialogue-ink);
     clip-path: polygon(0 100%, 78% 0, 100% 80%);
     transform: rotate(-8deg);
@@ -723,27 +728,27 @@ onUnmounted(() => {
 
 .spotlight-dialogue-arrow::after {
     position: absolute;
-    inset: 7px;
+    inset: 0.4375rem;
     background: var(--dialogue-paper);
     clip-path: polygon(0 100%, 78% 0, 100% 80%);
     content: "";
 }
 
-.spotlight-copy > p { margin-bottom: 6px; font-size: clamp(.57rem, .85vw, .72rem); font-weight: 900; letter-spacing: .18em; }
+.spotlight-copy > p { margin-bottom: 0.375rem; font-size: clamp(.57rem, .85vw, .72rem); font-weight: 900; letter-spacing: .18em; }
 .spotlight-copy > p span { opacity: .72; }
 .spotlight-copy > strong { display: block; font-size: clamp(2.7rem, 6vw, 6rem); font-style: italic; font-weight: 950; letter-spacing: -.09em; line-height: .92; }
-.spotlight-artist { display: block; margin-top: 11px; font-size: clamp(.62rem, .95vw, .8rem); font-weight: 900; letter-spacing: .2em; }
-.spotlight-artist i { margin: 0 5px; font-style: normal; opacity: .68; }
-.spotlight-serial { position: absolute; right: clamp(24px, 4vw, 54px); bottom: clamp(14px, 2vw, 24px); color: rgba(255, 255, 255, .76); font-size: .52rem; font-weight: 850; letter-spacing: .14em; }
-.spotlight-serial b { margin: 0 5px; color: #fff; }
+.spotlight-artist { display: block; margin-top: 0.6875rem; font-size: clamp(.62rem, .95vw, .8rem); font-weight: 900; letter-spacing: .2em; }
+.spotlight-artist i { margin: 0 0.3125rem; font-style: normal; opacity: .68; }
+.spotlight-serial { position: absolute; right: clamp(1.5rem, 4vw, 3.375rem); bottom: clamp(0.875rem, 2vw, 1.5rem); color: rgba(255, 255, 255, .76); font-size: .52rem; font-weight: 850; letter-spacing: .14em; }
+.spotlight-serial b { margin: 0 0.3125rem; color: #fff; }
 .spotlight-hint {
     position: absolute;
     z-index: 3;
-    bottom: calc(10vh - clamp(64px, 7vh, 100px) + clamp(14px, 2vw, 24px));
-    left: calc(3vw + clamp(24px, 4vw, 54px));
-    padding: 5px 0;
+    bottom: calc(10vh - clamp(4rem, 7vh, 6.25rem) + clamp(0.875rem, 2vw, 1.5rem));
+    left: calc(3vw + clamp(1.5rem, 4vw, 3.375rem));
+    padding: 0.3125rem 0;
     border: 0;
-    border-bottom: 1px solid rgba(255, 255, 255, .72);
+    border-bottom: 0.0625rem solid rgba(255, 255, 255, .72);
     color: rgba(255, 255, 255, .94);
     background: transparent;
     font: inherit;
@@ -756,8 +761,8 @@ onUnmounted(() => {
 }
 
 .spotlight-hint:focus-visible {
-    outline: 2px solid #fff;
-    outline-offset: 4px;
+    outline: 0.125rem solid #fff;
+    outline-offset: 0.25rem;
 }
 
 :global(html[data-theme="light"] .spotlight-portal) {
@@ -777,14 +782,14 @@ onUnmounted(() => {
 }
 
 .music-copy {
-    max-width: 520px;
+    max-width: 32.5rem;
 }
 
 .eyebrow {
     display: flex;
     align-items: center;
-    gap: 9px;
-    margin-bottom: 14px;
+    gap: 0.5625rem;
+    margin-bottom: 0.875rem;
     color: var(--accent-strong);
     font-size: 0.76rem;
     font-weight: 750;
@@ -802,19 +807,19 @@ h3 {
 }
 
 .music-intro {
-    margin-top: 10px;
+    margin-top: 0.625rem;
     color: var(--text-muted);
     line-height: 1.7;
 }
 
 .music-details {
     display: grid;
-    gap: 17px;
-    margin-top: 28px;
+    gap: 1.0625rem;
+    margin-top: 1.75rem;
 
     div {
         display: grid;
-        gap: 5px;
+        gap: 0.3125rem;
     }
 
     dt {
@@ -834,7 +839,7 @@ h3 {
     }
 
     dd i {
-        margin: 0 8px;
+        margin: 0 0.5rem;
         color: var(--text-muted);
         font-style: normal;
     }
@@ -848,8 +853,8 @@ h3 {
 .album-link {
     display: inline-flex;
     align-items: center;
-    gap: 7px;
-    margin-top: 25px;
+    gap: 0.4375rem;
+    margin-top: 1.5625rem;
     color: var(--accent-strong);
     font-size: 0.88rem;
     font-weight: 700;
@@ -860,7 +865,7 @@ h3 {
     }
 
     &:hover span {
-        transform: translate(2px, -2px);
+        transform: translate(0.125rem, -0.125rem);
     }
 }
 
@@ -879,24 +884,24 @@ h3 {
 @media (max-width: 820px) {
     .music-card {
         grid-template-columns: 1fr;
-        gap: 8px;
+        gap: 0.5rem;
     }
 
     .record-scene {
-        width: min(100%, 390px);
-        min-height: 315px;
+        width: min(100%, 24.375rem);
+        min-height: 19.6875rem;
         margin: 0 auto;
-        scroll-margin-top: clamp(70px, 10vh, 90px);
+        scroll-margin-top: clamp(4.375rem, 10vh, 5.625rem);
     }
 
     .vinyl-position {
-        width: clamp(220px, 55vw, 280px);
+        width: clamp(13.75rem, 55vw, 17.5rem);
         left: 60%;
     }
 
     .album-cover {
         left: 8%;
-        width: clamp(150px, 38vw, 180px);
+        width: clamp(9.375rem, 38vw, 11.25rem);
     }
 
     .music-copy {
@@ -905,37 +910,37 @@ h3 {
 
     .spotlight-layer,
     .spotlight-window {
-        top: clamp(72px, 9vh, 96px);
+        top: clamp(4.5rem, 9vh, 6rem);
         right: 4vw;
         width: 92vw;
-        height: calc(100vh - clamp(72px, 9vh, 96px) - 16px);
+        height: calc(100vh - clamp(4.5rem, 9vh, 6rem) - 1rem);
     }
 
     .spotlight-window {
         align-items: flex-end;
-        padding: 32px 20px 46px 54px;
+        padding: 2rem 1.25rem 2.875rem 3.375rem;
     }
 
     .spotlight-copy > strong { font-size: clamp(3rem, 10vw, 5rem); }
-    .spotlight-serial { right: 20px; bottom: 42px; font-size: .46rem; }
+    .spotlight-serial { right: 1.25rem; bottom: 2.625rem; font-size: .46rem; }
 
     .spotlight-quote {
-        --dialogue-top: max(42vh, calc(var(--spotlight-artwork-bottom) + 28px));
+        --dialogue-top: max(42vh, calc(var(--spotlight-artwork-bottom) + 1.75rem));
         top: var(--dialogue-top);
         left: 5vw;
         right: 5vw;
         bottom: auto;
-        max-height: calc(100vh - var(--dialogue-top) - 146px);
-        padding: 9px;
+        max-height: calc(100vh - var(--dialogue-top) - 9.125rem);
+        padding: 0.5625rem;
         display: flex;
-        transform: translate(18px, 12px) rotate(-1deg);
+        transform: translate(1.125rem, 0.75rem) rotate(-1deg);
     }
 
     .spotlight-dialogue-body {
         min-height: 0;
         width: 100%;
         overflow-y: auto;
-        padding: 26px 30px 36px 38px;
+        padding: 1.625rem 1.875rem 2.25rem 2.375rem;
     }
 
     .spotlight-quote p {
@@ -944,49 +949,49 @@ h3 {
     }
 
     .spotlight-speaker {
-        top: -19px;
-        padding: 6px 14px;
+        top: -1.1875rem;
+        padding: 0.375rem 0.875rem;
         font-size: 1rem;
     }
 
     .spotlight-dialogue-arrow {
-        right: -5px;
-        bottom: 10px;
-        width: 46px;
-        height: 32px;
+        right: -0.3125rem;
+        bottom: 0.625rem;
+        width: 2.875rem;
+        height: 2rem;
     }
 
-    .spotlight-hint { left: calc(4vw + 18px); bottom: 28px; }
+    .spotlight-hint { left: calc(4vw + 1.125rem); bottom: 1.75rem; }
 }
 
 @media (max-width: 520px) {
     .music-card {
         gap: 0;
-        padding: 20px;
+        padding: 1.25rem;
     }
 
     .record-scene {
-        min-height: 272px;
+        min-height: 17rem;
     }
 
     .spotlight-layer,
     .spotlight-window {
-        top: clamp(70px, 9vh, 90px);
+        top: clamp(4.375rem, 9vh, 5.625rem);
         right: 4vw;
         width: 92vw;
-        height: calc(100vh - clamp(70px, 9vh, 90px) - 14px);
+        height: calc(100vh - clamp(4.375rem, 9vh, 5.625rem) - 0.875rem);
     }
 
-    .spotlight-window { padding: 24px 18px 60px 48px; }
+    .spotlight-window { padding: 1.5rem 1.125rem 3.75rem 3rem; }
 
     .vinyl-position {
-        width: min(70vw, 240px);
+        width: min(70vw, 15rem);
         left: 62%;
     }
 
     .album-cover {
         left: 4%;
-        width: min(52vw, 165px);
+        width: min(52vw, 10.3125rem);
     }
 
     .music-details .band-name {
@@ -1008,6 +1013,6 @@ h3 {
 @media (hover: hover) and (pointer: fine) {
     .spotlight-layer { pointer-events: none; }
 
-    .record-scene:hover .album-cover { box-shadow: 0 22px 46px rgba(13, 15, 23, .4); transform: translateY(-52%) rotate(-3deg) scale(1.025); }
+    .record-scene:hover .album-cover { box-shadow: 0 1.375rem 2.875rem rgba(13, 15, 23, .4); transform: translateY(-52%) rotate(-3deg) scale(1.025); }
 }
 </style>

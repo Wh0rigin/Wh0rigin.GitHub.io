@@ -64,21 +64,21 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-.route-progress { position: fixed; z-index: 9000; inset: 0 0 auto; height: 3px; pointer-events: none; background: var(--accent-soft); }
+.route-progress { position: fixed; z-index: 9000; inset: 0 0 auto; height: 0.1875rem; pointer-events: none; background: var(--accent-soft); }
 .route-progress-track { display: block; width: 100%; height: 100%; overflow: hidden; }
 .route-progress-track::before { display: block; width: 35%; height: 100%; background: var(--accent-strong); animation: route-signal 1.4s ease-in-out infinite; content: ''; }
-.route-progress-label { position: absolute; top: 86px; right: max(18px, calc((100vw - 1120px) / 2)); padding: 8px 14px; color: var(--text); background: var(--surface); border: 1px solid var(--border); box-shadow: 4px 4px 0 var(--accent); font-size: .8rem; font-weight: 700; transform: skewX(-5deg); }
-.connection-note { position: fixed; z-index: 9000; bottom: max(20px, env(safe-area-inset-bottom)); left: 50%; display: flex; align-items: center; gap: 18px; width: max-content; max-width: min(720px, calc(100% - 40px)); padding: 16px 20px; color: var(--text); background: var(--surface); border: 2px solid var(--border); box-shadow: 6px 6px 0 var(--accent); transform: translateX(-50%); }
+.route-progress-label { position: absolute; top: 5.375rem; right: max(1.125rem, calc((100vw - var(--layout-content-width)) / 2)); padding: 0.5rem 0.875rem; color: var(--text); background: var(--surface); border: 0.0625rem solid var(--border); box-shadow: 0.25rem 0.25rem 0 var(--accent); font-size: .8rem; font-weight: 700; transform: skewX(-5deg); }
+.connection-note { position: fixed; z-index: 9000; bottom: max(1.25rem, env(safe-area-inset-bottom)); left: 50%; display: flex; align-items: center; gap: 1.125rem; width: max-content; max-width: min(45rem, calc(100% - 2.5rem)); padding: 1rem 1.25rem; color: var(--text); background: var(--surface); border: 0.125rem solid var(--border); box-shadow: 0.375rem 0.375rem 0 var(--accent); transform: translateX(-50%); }
 .connection-signal { flex: 0 0 auto; font: italic 900 .65rem/1.2 var(--font-display); letter-spacing: .08em; color: var(--accent-strong); }
 .connection-copy { min-width: 0; font-size: .82rem; line-height: 1.6; }
-.connection-note :deep(.wired-action) { flex-shrink: 0; --ui-action-size: .78rem; --ui-action-padding: 8px 12px; }
+.connection-note :deep(.wired-action) { flex-shrink: 0; --ui-action-size: .78rem; --ui-action-padding: 0.5rem 0.75rem; }
 .connection-note-enter-active, .connection-note-leave-active { transition: opacity 180ms, translate 180ms; }
-.connection-note-enter-from, .connection-note-leave-to { opacity: 0; translate: 0 10px; }
+.connection-note-enter-from, .connection-note-leave-to { opacity: 0; translate: 0 0.625rem; }
 @keyframes route-signal { from { transform: translateX(-110%); } to { transform: translateX(390%); } }
 @media (max-width: 520px) {
-    .connection-note { flex-wrap: wrap; gap: 10px; padding: 13px 15px; max-width: calc(100% - 28px); width: 100%; }
+    .connection-note { flex-wrap: wrap; gap: 0.625rem; padding: 0.8125rem 0.9375rem; max-width: calc(100% - 1.75rem); width: 100%; }
     .connection-signal { width: 100%; }
-    .connection-copy { flex: 1 1 140px; }
+    .connection-copy { flex: 1 1 8.75rem; }
 }
 @media (prefers-reduced-motion: reduce) { .route-progress-track::before { animation: none; width: 100%; } }
 </style>

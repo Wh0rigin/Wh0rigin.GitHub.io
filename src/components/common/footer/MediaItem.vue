@@ -25,9 +25,9 @@ const props = defineProps({
 <style lang="less" scoped>
 .media-container {
     position: relative;
-    width: 60px;
-    height: 60px;
-    margin: 0 30px;
+    width: 3.75rem;
+    height: 3.75rem;
+    margin: 0 1.875rem;
     transform: rotate(-30deg) skew(25deg);
     cursor: pointer;
     filter: drop-shadow(0 0 1rem v-bind("props.color"));
@@ -49,22 +49,22 @@ const props = defineProps({
     &:hover {
         span {
             &:nth-child(5) {
-                transform: translate(40px, -40px);
+                transform: translate(2.5rem, -2.5rem);
                 opacity: 1;
             }
 
             &:nth-child(4) {
-                transform: translate(30px, -30px);
+                transform: translate(1.875rem, -1.875rem);
                 opacity: 0.8;
             }
 
             &:nth-child(3) {
-                transform: translate(20px, -20px);
+                transform: translate(1.25rem, -1.25rem);
                 opacity: 0.6;
             }
 
             &:nth-child(2) {
-                transform: translate(10px, -10px);
+                transform: translate(0.625rem, -0.625rem);
                 opacity: 0.4;
             }
 
@@ -77,15 +77,15 @@ const props = defineProps({
 }
 
 .media-container.is-crisp {
-    filter: drop-shadow(3px 4px 0 rgba(0, 0, 0, .28));
+    filter: drop-shadow(0.1875rem 0.25rem 0 rgba(0, 0, 0, .28));
 
-    span { border: 2px solid #101014; }
+    span { border: 0.125rem solid #101014; }
     span:last-child { opacity: 1; }
 }
 
 .media-container:focus-visible {
-    outline: 3px solid var(--accent);
-    outline-offset: 7px;
+    outline: 0.1875rem solid var(--accent);
+    outline-offset: 0.4375rem;
 }
 
 @media (prefers-reduced-motion: reduce) {

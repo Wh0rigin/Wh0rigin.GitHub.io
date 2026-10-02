@@ -19,12 +19,12 @@ const tunedIn = computed(() => modeStore.theme === 'golden');
 
 <style scoped lang="less">
 .footer-television {
-    flex: 0 0 146px;
+    flex: 0 0 9.125rem;
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 146px;
+    width: 9.125rem;
 }
 
 .television-button {
@@ -40,10 +40,10 @@ const tunedIn = computed(() => modeStore.theme === 'golden');
 }
 
 .television-button.is-tuned { transform: rotate(-2deg); }
-.television-button:focus-visible { outline: 2px solid #ffe52e; outline-offset: 5px; border-radius: 8px; }
+.television-button:focus-visible { outline: 0.125rem solid #ffe52e; outline-offset: 0.3125rem; border-radius: 0.5rem; }
 
 .television-hint {
-    margin-top: 1px;
+    margin-top: 0.0625rem;
     color: #ffe765;
     font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
     font-size: .54rem;
@@ -52,16 +52,16 @@ const tunedIn = computed(() => modeStore.theme === 'golden');
     white-space: nowrap;
 }
 
-.television-announcement { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.television-announcement { position: absolute; width: 0.0625rem; height: 0.0625rem; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
 @media (hover: hover) and (pointer: fine) {
-    .television-button:hover { transform: translateY(-4px) rotate(-2deg); filter: drop-shadow(0 0 6px rgba(255, 224, 35, .22)); }
+    .television-button:hover { transform: translateY(-0.25rem) rotate(-2deg); filter: drop-shadow(0 0 0.375rem rgba(255, 224, 35, .22)); }
     .television-button:hover :deep(.tv-sparkles) { opacity: 1; }
 }
 
 @media (max-width: 600px) {
-    .footer-television { width: 120px; }
-    .television-button { width: calc(100% - 8px); }
+    .footer-television { width: 7.5rem; }
+    .television-button { width: calc(100% - 0.5rem); }
     .television-hint { font-size: .46rem; letter-spacing: .08em; }
 }
 

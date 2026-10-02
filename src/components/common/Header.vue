@@ -109,8 +109,8 @@ onUnmounted(() => {
     z-index: 1000;
     color: var(--text);
     background: color-mix(in srgb, var(--surface) 88%, transparent);
-    border-bottom: 1px solid var(--border);
-    backdrop-filter: blur(16px);
+    border-bottom: 0.0625rem solid var(--border);
+    backdrop-filter: blur(1rem);
     transition: background-color 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
 }
 
@@ -121,11 +121,11 @@ onUnmounted(() => {
 }
 
 .navbar {
-    min-height: 72px;
+    min-height: 4.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 28px;
+    gap: 1.75rem;
 }
 
 .brand {
@@ -164,9 +164,9 @@ onUnmounted(() => {
 }
 
 .nav-links {
-    gap: 30px;
+    gap: 1.875rem;
     margin-left: auto;
-    margin-right: 14px;
+    margin-right: 0.875rem;
 }
 
 .nav-link,
@@ -184,7 +184,7 @@ onUnmounted(() => {
 }
 
 .nav-actions {
-    gap: 12px;
+    gap: 0.75rem;
 }
 
 .nav-link.blog-active {
@@ -193,10 +193,10 @@ onUnmounted(() => {
 
 .nav-link.blog-active::after {
     position: absolute;
-    right: -3px;
-    bottom: -9px;
-    left: -3px;
-    height: 3px;
+    right: -0.1875rem;
+    bottom: -0.5625rem;
+    left: -0.1875rem;
+    height: 0.1875rem;
     background: var(--accent);
     transform: skewX(-25deg);
     content: '';
@@ -205,10 +205,10 @@ onUnmounted(() => {
 .github-link {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 10px 15px;
-    border: 1px solid var(--border);
-    border-radius: 999px;
+    gap: 0.375rem;
+    padding: 0.625rem 0.9375rem;
+    border: 0.0625rem solid var(--border);
+    border-radius: 62.4375rem;
     color: var(--text);
     font-size: 0.88rem;
     font-weight: 650;
@@ -222,8 +222,8 @@ onUnmounted(() => {
     }
 
     svg {
-        width: 14px;
-        height: 14px;
+        width: 0.875rem;
+        height: 0.875rem;
         fill: none;
         stroke: currentColor;
         stroke-width: 1.8;
@@ -234,10 +234,10 @@ onUnmounted(() => {
 
 .icon-button {
     display: grid;
-    width: 40px;
-    height: 40px;
+    width: 2.5rem;
+    height: 2.5rem;
     place-items: center;
-    border: 1px solid var(--border);
+    border: 0.0625rem solid var(--border);
     border-radius: 50%;
     color: var(--text);
     background: var(--surface);
@@ -247,17 +247,17 @@ onUnmounted(() => {
     &:hover {
         color: var(--accent-strong);
         border-color: var(--accent);
-        transform: translateY(-1px);
+        transform: translateY(-0.0625rem);
     }
 
     &:focus-visible {
-        outline: 3px solid var(--accent);
-        outline-offset: 3px;
+        outline: 0.1875rem solid var(--accent);
+        outline-offset: 0.1875rem;
     }
 
     svg {
-        width: 19px;
-        height: 19px;
+        width: 1.1875rem;
+        height: 1.1875rem;
         fill: none;
         stroke: currentColor;
         stroke-width: 1.7;
@@ -272,9 +272,9 @@ onUnmounted(() => {
 }
 
 :global(html[data-theme="light"] .site-header:not(.at-top)) {
-    border-bottom: 3px solid #23e8ed;
+    border-bottom: 0.1875rem solid #23e8ed;
     background: rgba(0, 39, 130, 0.93);
-    box-shadow: 0 5px 0 rgba(0, 23, 96, 0.25);
+    box-shadow: 0 0.3125rem 0 rgba(0, 23, 96, 0.25);
 }
 
 :global(html[data-theme="light"] .site-header:not(.at-top) .brand),
@@ -299,7 +299,7 @@ onUnmounted(() => {
     color: #ffffff;
     font-style: italic;
     font-weight: 850;
-    text-shadow: 2px 2px 0 rgba(0, 28, 116, 0.6);
+    text-shadow: 0.125rem 0.125rem 0 rgba(0, 28, 116, 0.6);
 }
 
 :global(html[data-theme="light"] .nav-link:hover),
@@ -308,11 +308,11 @@ onUnmounted(() => {
 }
 
 :global(html[data-theme="light"] .github-link) {
-    border: 2px solid #ffffff;
+    border: 0.125rem solid #ffffff;
     border-radius: 0;
     color: #ffffff;
     background: #003490;
-    box-shadow: 5px 5px 0 #1de3e8;
+    box-shadow: 0.3125rem 0.3125rem 0 #1de3e8;
     font-style: italic;
     font-weight: 850;
     transform: skewX(-7deg);
@@ -321,60 +321,60 @@ onUnmounted(() => {
 :global(html[data-theme="light"] .github-link:hover) {
     color: #001b64;
     background: #39f5ef;
-    transform: translate(2px, 2px) skewX(-7deg);
+    transform: translate(0.125rem, 0.125rem) skewX(-7deg);
 }
 
 :global(html[data-theme="light"] .icon-button) {
-    border: 2px solid #ffffff;
-    border-radius: 1px;
+    border: 0.125rem solid #ffffff;
+    border-radius: 0.0625rem;
     color: #ffffff;
     background: #0045a6;
-    box-shadow: 4px 4px 0 #1de3e8;
+    box-shadow: 0.25rem 0.25rem 0 #1de3e8;
     transform: skewX(-7deg);
 }
 
 :global(html[data-theme="light"] .icon-button:hover) {
     color: #001b64;
     background: #39f5ef;
-    transform: translate(2px, 2px) skewX(-7deg);
+    transform: translate(0.125rem, 0.125rem) skewX(-7deg);
 }
 
 :global(html[data-theme="dark"] .site-header:not(.at-top)) {
-    border-bottom: 3px solid var(--accent);
+    border-bottom: 0.1875rem solid var(--accent);
     background: color-mix(in srgb, #09090c 92%, transparent);
-    box-shadow: 0 5px 0 rgba(0, 0, 0, 0.58);
+    box-shadow: 0 0.3125rem 0 rgba(0, 0, 0, 0.58);
 }
 
 :global(html[data-theme="dark"] .brand-text) {
-    text-shadow: 3px 3px 0 #000000;
+    text-shadow: 0.1875rem 0.1875rem 0 #000000;
     transform: skewX(-5deg);
 }
 
 :global(html[data-theme="dark"] .github-link) {
-    border-width: 2px;
-    border-radius: 2px;
-    box-shadow: 4px 4px 0 #000000;
+    border-width: 0.125rem;
+    border-radius: 0.125rem;
+    box-shadow: 0.25rem 0.25rem 0 #000000;
     transform: skewX(-5deg);
 }
 
 :global(html[data-theme="dark"] .github-link:hover) {
     color: #ffffff;
     background: var(--accent);
-    box-shadow: 2px 2px 0 #000000;
-    transform: translate(2px, 2px) skewX(-5deg);
+    box-shadow: 0.125rem 0.125rem 0 #000000;
+    transform: translate(0.125rem, 0.125rem) skewX(-5deg);
 }
 
 :global(html[data-theme="dark"] .icon-button) {
-    border-width: 2px;
-    border-radius: 2px;
-    box-shadow: 3px 3px 0 #000000;
+    border-width: 0.125rem;
+    border-radius: 0.125rem;
+    box-shadow: 0.1875rem 0.1875rem 0 #000000;
     transform: rotate(-2deg);
 }
 
 :global(html[data-theme="dark"] .icon-button:hover) {
     color: #ffffff;
     background: var(--accent);
-    transform: translate(2px, 2px) rotate(-2deg);
+    transform: translate(0.125rem, 0.125rem) rotate(-2deg);
 }
 
 .slide-fade-enter-active,
@@ -385,7 +385,7 @@ onUnmounted(() => {
 .slide-fade-enter-from,
 .slide-fade-leave-to {
     opacity: 0;
-    transform: translateY(-6px);
+    transform: translateY(-0.375rem);
 }
 
 @media (max-width: 720px) {
@@ -396,16 +396,16 @@ onUnmounted(() => {
     }
 
     :global(html[data-theme="light"] .mobile-menu) {
-        border: 2px solid #003490;
-        border-radius: 1px;
+        border: 0.125rem solid #003490;
+        border-radius: 0.0625rem;
         background: #faffff;
-        box-shadow: 7px 7px 0 #1de3e8;
+        box-shadow: 0.4375rem 0.4375rem 0 #1de3e8;
     }
 
     .navbar {
-        --ui-container-gutter: 32px;
-        min-height: 64px;
-        gap: 12px;
+        --ui-container-gutter: 2rem;
+        min-height: 4rem;
+        gap: 0.75rem;
     }
 
     .nav-links,
@@ -415,7 +415,7 @@ onUnmounted(() => {
 
     .nav-actions {
         margin-left: auto;
-        gap: 8px;
+        gap: 0.5rem;
     }
 
     .menu-button {
@@ -424,28 +424,28 @@ onUnmounted(() => {
 
     .mobile-menu {
         position: absolute;
-        top: calc(100% + 8px);
-        right: 16px;
+        top: calc(100% + 0.5rem);
+        right: 1rem;
         display: flex;
-        width: min(280px, calc(100vw - 32px));
+        width: min(17.5rem, calc(100vw - 2rem));
         flex-direction: column;
-        gap: 2px;
-        padding: 8px;
-        border: 1px solid var(--border);
-        border-radius: 18px;
+        gap: 0.125rem;
+        padding: 0.5rem;
+        border: 0.0625rem solid var(--border);
+        border-radius: 1.125rem;
         background: var(--surface);
         box-shadow: var(--shadow);
     }
 
     :global(html[data-theme="dark"] .mobile-menu) {
-        border-width: 2px;
-        border-radius: 3px;
-        box-shadow: 8px 8px 0 #000000, 11px 11px 0 var(--accent);
+        border-width: 0.125rem;
+        border-radius: 0.1875rem;
+        box-shadow: 0.5rem 0.5rem 0 #000000, 0.6875rem 0.6875rem 0 var(--accent);
     }
 
     .menu-link {
-        padding: 12px 14px;
-        border-radius: 11px;
+        padding: 0.75rem 0.875rem;
+        border-radius: 0.6875rem;
 
         &:hover {
             background: var(--surface-muted);

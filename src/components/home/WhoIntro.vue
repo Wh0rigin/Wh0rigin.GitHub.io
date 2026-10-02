@@ -17,13 +17,13 @@
 .intro-card {
     position: relative;
     overflow: hidden;
-    padding: clamp(28px, 4vw, 48px);
+    padding: clamp(1.75rem, 4vw, 3rem);
     border: var(--panel-border-width) solid var(--border);
     border-radius: var(--panel-radius);
     color: var(--text);
     background: var(--surface);
     box-shadow: var(--shadow);
-    backdrop-filter: blur(14px);
+    backdrop-filter: blur(0.875rem);
     transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
 
     &::before {
@@ -31,36 +31,36 @@
         top: 0;
         right: 12%;
         left: 12%;
-        height: 3px;
+        height: 0.1875rem;
         background: linear-gradient(90deg, transparent, var(--mint), var(--accent), transparent);
         content: "";
     }
 
     &:hover {
         border-color: color-mix(in srgb, var(--accent) 42%, var(--border));
-        transform: translateY(-4px);
+        transform: translateY(-0.25rem);
     }
 }
 
 :global(html[data-theme="light"] .intro-card) {
-    border: 3px solid #003b9e;
-    box-shadow: 11px 11px 0 #19d9e9, 17px 17px 0 #002578;
+    border: 0.1875rem solid #003b9e;
+    box-shadow: 0.6875rem 0.6875rem 0 #19d9e9, 1.0625rem 1.0625rem 0 #002578;
 }
 
 :global(html[data-theme="light"] .intro-card::before) {
     top: 0;
     right: 0;
     left: auto;
-    width: 88px;
-    height: 88px;
+    width: 5.5rem;
+    height: 5.5rem;
     background: #17ddec;
     clip-path: polygon(0 0, 100% 0, 100% 100%);
 }
 
 :global(html[data-theme="light"] .intro-card:hover) {
     border-color: #00bfdc;
-    box-shadow: 7px 7px 0 #19d9e9, 13px 13px 0 #002578;
-    transform: translate(4px, 4px);
+    box-shadow: 0.4375rem 0.4375rem 0 #19d9e9, 0.8125rem 0.8125rem 0 #002578;
+    transform: translate(0.25rem, 0.25rem);
 }
 
 :global(html[data-theme="light"] .intro-card h2) {
@@ -71,7 +71,7 @@
 
 :global(html[data-theme="light"] .intro-card .eyebrow) {
     width: fit-content;
-    padding: 6px 10px;
+    padding: 0.375rem 0.625rem;
     color: #ffffff;
     background: #003c9d;
     transform: skewX(-8deg);
@@ -79,27 +79,27 @@
 
 :global(html[data-theme="dark"] .intro-card) {
     border-color: rgba(255, 255, 255, 0.7);
-    box-shadow: 10px 10px 0 var(--accent), 18px 18px 0 #000000;
+    box-shadow: 0.625rem 0.625rem 0 var(--accent), 1.125rem 1.125rem 0 #000000;
 }
 
 :global(html[data-theme="dark"] .intro-card::before) {
-    top: 18px;
-    right: -38px;
+    top: 1.125rem;
+    right: -2.375rem;
     left: auto;
-    width: 150px;
-    height: 16px;
+    width: 9.375rem;
+    height: 1rem;
     background: var(--accent);
     transform: rotate(37deg);
 }
 
 :global(html[data-theme="dark"] .intro-card:hover) {
     border-color: #ffffff;
-    box-shadow: 6px 6px 0 var(--accent), 12px 12px 0 #000000;
-    transform: translate(4px, 4px);
+    box-shadow: 0.375rem 0.375rem 0 var(--accent), 0.75rem 0.75rem 0 #000000;
+    transform: translate(0.25rem, 0.25rem);
 }
 
 .eyebrow {
-    margin-bottom: 18px;
+    margin-bottom: 1.125rem;
     color: var(--accent-strong);
     font-size: 0.76rem;
     font-weight: 750;
@@ -120,7 +120,7 @@ h2 {
 }
 
 .lead {
-    margin-top: 22px;
+    margin-top: 1.375rem;
     color: var(--text);
     font-size: 1.05rem;
     font-weight: 600;
@@ -128,7 +128,7 @@ h2 {
 }
 
 .details {
-    margin-top: 14px;
+    margin-top: 0.875rem;
     color: var(--text-muted);
     font-size: 0.96rem;
     line-height: 1.8;
@@ -137,8 +137,8 @@ h2 {
 .profile-link {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    margin-top: 24px;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
     color: var(--accent-strong);
     font-size: 0.93rem;
     font-weight: 700;
@@ -149,7 +149,7 @@ h2 {
     }
 
     &:hover span {
-        transform: translate(2px, -2px);
+        transform: translate(0.125rem, -0.125rem);
     }
 }
 </style>

@@ -113,15 +113,15 @@ html[data-theme="golden"] {
   --font-size-body: 1rem;
   --font-size-small: .85rem;
   --font-size-caption: .66rem;
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-6: 24px;
-  --space-8: 32px;
+  --space-1: .25rem;
+  --space-2: .5rem;
+  --space-3: .75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
   --layout-content-width: 1120px;
-  --layout-gutter: 48px;
-  --layout-anchor-offset: 110px;
+  --layout-gutter: 3rem;
+  --layout-anchor-offset: 6.875rem;
   --motion-quick: 220ms;
   --motion-panel: 320ms;
   --ease-out: cubic-bezier(.16, 1, .3, 1);
@@ -180,4 +180,13 @@ html[data-theme="golden"] {
   --ui-action-text: #ffe32d;
   --ui-action-underlay: #40b968;
   --ui-paper-action-text: #191814;
+}
+
+/* Grow type and its surrounding geometry together on large desktop displays.
+   Below 1800px the existing desktop/mobile sizes remain unchanged. */
+@media (min-width: 1800px) {
+  :root {
+    font-size: clamp(1rem, .86vw, 1.375rem);
+    --layout-content-width: clamp(1120px, 62.5vw, 1600px);
+  }
 }
