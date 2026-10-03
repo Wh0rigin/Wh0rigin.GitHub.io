@@ -36,7 +36,7 @@ const previousSrc = ref('');
 const attempt = ref(0);
 const retrySource = ref('');
 const recoveryId = Symbol('image');
-const effectiveLoading = computed(() => openingLoad.active ? 'eager' : props.loading);
+const effectiveLoading = computed(() => openingLoad.active && openingLoad.waitForImages ? 'eager' : props.loading);
 const hasPrevious = computed(() => props.keepPrevious && !!previousSrc.value && previousSrc.value !== props.src);
 let generation = 0;
 let previousActionDescription: string | null = null;

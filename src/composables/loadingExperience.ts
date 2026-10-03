@@ -8,9 +8,9 @@ export const navigationLoad = reactive({
     initialSettled: false,
 });
 
-// Opening waits for every image mounted on the current page, including those
-// below the fold. Failed images settle too and keep their retry placeholders.
-export const openingLoad = reactive({ active: true });
+// Only the home route opts into opening image preparation. Blog images keep
+// their normal lazy loading and never hold the opening animation.
+export const openingLoad = reactive({ active: true, waitForImages: false });
 const pendingImages = reactive(new Set<symbol>());
 export const pendingImageCount = () => pendingImages.size;
 export function startImageLoading(id: symbol) { pendingImages.add(id); }

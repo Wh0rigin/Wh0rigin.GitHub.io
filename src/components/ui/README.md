@@ -165,7 +165,7 @@ import WiredImage from '../components/ui/WiredImage.vue';
 ```
 
 - `width` / `height` 必填，用原图尺寸预留比例，避免加载时布局跳动。
-- `loading` 默认 `lazy`；首屏插画可设为 `eager`。开场加载页显示期间，所有 `WiredImage` 自动使用 `eager`，包括页面下方的图片；下载、解码完成或加载失败都会结束该图片的等待。用户提前进入后恢复原来的 `loading` 设置。
+- `loading` 默认 `lazy`；首屏插画可设为 `eager`。只有主页的开场加载页会将 `WiredImage` 改为 `eager`，包括页面下方的图片；下载、解码完成或加载失败都会结束等待。博客页不等待图片，也不改为 `eager`；正文图片建议保持默认懒加载，并只在文章组件中挂载。用户提前进入后恢复原来的 `loading` 设置。
 - `srcset` / `sizes` 支持响应式图片；`fetchpriority="high"` 用于首屏关键图片，普通图片保持浏览器默认优先级。
 - `fill` 填满已有尺寸的父容器；默认按原图比例显示。用 `--ui-image-fit: cover` 调整裁切，默认 `contain`。
 - `compact` 用于校徽、小装饰等，隐藏占位文字和大号数字，保留简化的主题图框。

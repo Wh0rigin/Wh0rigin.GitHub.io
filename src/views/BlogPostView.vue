@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { useRoute } from 'vue-router';
-import { findPost, formatPostDate } from '../content/posts';
+import { formatPostDate, type BlogPost } from '../content/posts';
 import BlogArtwork from '../components/blog/BlogArtwork.vue';
 import WiredAction from '../components/ui/WiredAction.vue';
 import WiredBadge from '../components/ui/WiredBadge.vue';
 import '../styles/blog.css';
 
-const route = useRoute();
-const post = computed(() => findPost(String(route.params.slug)));
+const props = defineProps<{ post?: BlogPost }>();
+const post = computed(() => props.post);
 </script>
 
 <template>

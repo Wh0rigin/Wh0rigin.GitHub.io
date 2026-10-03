@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw, type RouteLocationNormalized } from "vue-router";
-import { findPost } from '../content/posts';
-import { navigationLoad } from '../composables/loadingExperience';
+import { navigationLoad, openingLoad } from '../composables/loadingExperience';
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -8,6 +7,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "home",
     component: () => import("../views/HomeView.vue"),
+    meta: { waitForOpeningImages: true },
   },
   {
     path: '/blog',
@@ -19,6 +19,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/blog/:slug',
     name: 'blog-post',
     component: () => import('../views/BlogPostView.vue'),
+    props: (route) => ({ post: route.meta.post }),
   },
   {
     path: '/:catchAll(.*)',
@@ -48,6 +49,16 @@ router.beforeEach((to) => {
   navigationLoad.pending = true;
   navigationLoad.target = to.fullPath;
   navigationLoad.error = false;
+  openingLoad.waitForImages = to.meta.waitForOpeningImages === true;
+});
+
+router.beforeResolve(async (to) => {
+  if (to.name !== 'blog-post') return;
+  // Load only the selected article, after its route has been opened.
+  const { loadPost } = await import('../content/postContent');
+  const post = await loadPost(String(to.params.slug));
+  to.meta.post = post;
+  to.meta.title = post?.title ?? '手记未找到';
 });
 
 router.onError((_error, to) => {
@@ -64,8 +75,7 @@ router.afterEach((to, _from, failure) => {
   navigationLoad.initialSettled = true;
   if (failure) return;
   navigationLoad.error = false;
-  const post = to.name === 'blog-post' ? findPost(String(to.params.slug)) : undefined;
-  const title = to.name === 'blog-post' ? post?.title ?? '手记未找到' : to.meta.title;
+  const title = to.meta.title;
   document.title = title ? `${title} | The Wired World` : "Wh0rigin's World | 连线世界";
 });
 

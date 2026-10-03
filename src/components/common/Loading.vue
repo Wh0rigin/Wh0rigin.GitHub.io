@@ -81,8 +81,9 @@ onMounted(async () => {
     await Promise.all([waitForPage(), delay(reducedMotion ? 0 : 1600)]);
     if (!active) return;
     if (navigationLoad.error) { finish(); return; }
-    // No image timeout: users can enter early through the existing skip text.
-    await waitForImages();
+    // Only home waits for images. Other routes can show text while images load.
+    // No home image timeout: users can enter early through the existing skip text.
+    if (openingLoad.waitForImages) await waitForImages();
     if (!active) return;
     if (reducedMotion) { finish(); return; }
     if (modeStore.theme === 'light') {
