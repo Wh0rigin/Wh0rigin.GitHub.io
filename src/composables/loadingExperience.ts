@@ -8,6 +8,14 @@ export const navigationLoad = reactive({
     initialSettled: false,
 });
 
+// Opening waits for every image mounted on the current page, including those
+// below the fold. Failed images settle too and keep their retry placeholders.
+export const openingLoad = reactive({ active: true });
+const pendingImages = reactive(new Set<symbol>());
+export const pendingImageCount = () => pendingImages.size;
+export function startImageLoading(id: symbol) { pendingImages.add(id); }
+export function settleImageLoading(id: symbol) { pendingImages.delete(id); }
+
 const failedImages = reactive(new Set<symbol>());
 export const failedImageCount = () => failedImages.size;
 export const imageRetryVersion = ref(0);

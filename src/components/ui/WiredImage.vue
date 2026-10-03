@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, onUnmounted, ref, useAttrs, watch } from 'vue';
-import { clearImageFailure, imageRetryVersion, markImageFailed } from '../../composables/loadingExperience';
+import { clearImageFailure, imageRetryVersion, markImageFailed, openingLoad, settleImageLoading, startImageLoading } from '../../composables/loadingExperience';
 
 const props = withDefaults(defineProps<{
     src: string;
@@ -36,6 +36,7 @@ const previousSrc = ref('');
 const attempt = ref(0);
 const retrySource = ref('');
 const recoveryId = Symbol('image');
+const effectiveLoading = computed(() => openingLoad.active ? 'eager' : props.loading);
 const hasPrevious = computed(() => props.keepPrevious && !!previousSrc.value && previousSrc.value !== props.src);
 let generation = 0;
 let previousActionDescription: string | null = null;
@@ -53,6 +54,7 @@ async function reveal(image = imageElement.value) {
     state.value = 'ready';
     retryInFlight.value = false;
     clearImageFailure(recoveryId);
+    settleImageLoading(recoveryId);
     emit('ready', lastReadyImage.value);
 }
 
@@ -61,6 +63,7 @@ function fail(image: HTMLImageElement) {
     state.value = 'error';
     retryInFlight.value = false;
     markImageFailed(recoveryId);
+    settleImageLoading(recoveryId);
     emit('error', props.src);
 }
 
@@ -74,6 +77,8 @@ function inspectCachedImage() {
 watch(() => props.src, () => {
     generation += 1;
     clearImageFailure(recoveryId);
+    if (props.src) startImageLoading(recoveryId);
+    else settleImageLoading(recoveryId);
     previousSrc.value = props.keepPrevious ? lastReadyImage.value : '';
     state.value = 'loading';
     retryInFlight.value = false;
@@ -95,6 +100,7 @@ function retryImage() {
     } catch { /* Let the browser handle unsupported or malformed URLs. */ }
     generation += 1;
     clearImageFailure(recoveryId);
+    startImageLoading(recoveryId);
     state.value = 'loading';
     retryInFlight.value = true;
     attempt.value += 1;
@@ -155,6 +161,7 @@ onMounted(() => {
 onUnmounted(() => {
     generation += 1;
     clearImageFailure(recoveryId);
+    settleImageLoading(recoveryId);
     restoreActionDescription();
     enclosingAction.value?.removeEventListener('click', interceptEnclosingClick, true);
     enclosingAction.value?.removeEventListener('keydown', interceptEnclosingKey, true);
@@ -203,7 +210,7 @@ onUnmounted(() => {
             :alt="alt"
             :width="width"
             :height="height"
-            :loading="loading"
+            :loading="effectiveLoading"
             :srcset="retrySource ? undefined : srcset"
             :sizes="sizes"
             :fetchpriority="fetchpriority"

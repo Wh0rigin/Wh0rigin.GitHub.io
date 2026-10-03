@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useModeStore } from '../../stores/mode';
-import { navigationLoad } from '../../composables/loadingExperience';
+import { navigationLoad, openingLoad, pendingImageCount } from '../../composables/loadingExperience';
 
 type Phase = 'waiting' | 'moving' | 'settled' | 'arrived' | 'dim' | 'finished';
 const modeStore = useModeStore();
@@ -27,6 +27,7 @@ const timelineDays = Array.from({ length: 8 }, (_, index) => {
 let active = true;
 const timers: Array<ReturnType<typeof setTimeout>> = [];
 let stopNavigationWatch: (() => void) | undefined;
+let stopImageWatch: (() => void) | undefined;
 let previousOverflow = '';
 let scrollLocked = false;
 const allowSkip = ref(false);
@@ -45,12 +46,28 @@ function waitForPage() {
     });
 }
 
+async function waitForImages() {
+    // The router settles before Vue mounts the incoming page's image components.
+    await nextTick();
+    while (active && pendingImageCount() > 0) {
+        await new Promise<void>((resolve) => {
+            stopImageWatch = watch(pendingImageCount, (pending) => {
+                if (pending === 0) { stopImageWatch?.(); resolve(); }
+            }, { flush: 'post' });
+        });
+        // Include images created by other images' ready handlers in this render.
+        await nextTick();
+    }
+}
+
 function finish() {
     if (!active) return;
     active = false;
+    openingLoad.active = false;
     phase.value = 'finished';
     timers.forEach(clearTimeout);
     stopNavigationWatch?.();
+    stopImageWatch?.();
     if (scrollLocked) document.documentElement.style.overflow = previousOverflow;
     scrollLocked = false;
 }
@@ -61,11 +78,13 @@ onMounted(async () => {
     scrollLocked = true;
     timers.push(setTimeout(() => { allowSkip.value = true; }, 1200));
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    // Only wait for the first route, never for window.load or noncritical images.
-    // A stalled route must also give way to the page's connection/retry feedback.
-    await Promise.all([Promise.race([waitForPage(), delay(8000)]), delay(reducedMotion ? 0 : 1600)]);
+    await Promise.all([waitForPage(), delay(reducedMotion ? 0 : 1600)]);
     if (!active) return;
-    if (!navigationLoad.initialSettled || navigationLoad.error || reducedMotion) { finish(); return; }
+    if (navigationLoad.error) { finish(); return; }
+    // No image timeout: users can enter early through the existing skip text.
+    await waitForImages();
+    if (!active) return;
+    if (reducedMotion) { finish(); return; }
     if (modeStore.theme === 'light') {
         highlightedDate.value = null;
         phase.value = 'moving';
@@ -89,13 +108,15 @@ onUnmounted(() => {
     active = false;
     timers.forEach(clearTimeout);
     stopNavigationWatch?.();
+    stopImageWatch?.();
+    openingLoad.active = false;
     if (scrollLocked) document.documentElement.style.overflow = previousOverflow;
 });
 </script>
 
 <template>
     <div class="loading" :class="[`phase-${phase}`, { 'light-loading': modeStore.theme === 'light', closing: modeStore.theme === 'light' && (phase === 'dim' || phase === 'finished') }]" :aria-hidden="phase === 'finished' || undefined" :inert="phase === 'finished' || undefined" aria-label="页面加载中">
-        <div v-if="allowSkip && navigationLoad.initialSettled && !navigationLoad.error && phase !== 'finished'" class="loading-skip" :class="{ 'hint-dismissed': skipHintDismissed }" @mouseenter="skipHintDismissed = false" @focusin="skipHintDismissed = false" @keydown.esc="skipHintDismissed = true">
+        <div v-if="allowSkip && phase !== 'finished'" class="loading-skip" :class="{ 'hint-dismissed': skipHintDismissed }" @mouseenter="skipHintDismissed = false" @focusin="skipHintDismissed = false" @keydown.esc="skipHintDismissed = true">
             <button type="button" class="loading-skip-text" aria-describedby="loading-skip-note" @click="finish">不想等了，直接进入页面</button>
             <span id="loading-skip-note" class="loading-skip-note" role="tooltip">资源可能尚未加载完成，提前进入可能影响浏览体验。</span>
         </div>

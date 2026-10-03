@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { computed, ref, onUnmounted } from 'vue';
+import { computed, ref, onUnmounted, watch } from 'vue';
 import { useModeStore } from '../stores/mode';
-import { conserveImageBandwidth } from '../composables/loadingExperience';
+import { conserveImageBandwidth, openingLoad } from '../composables/loadingExperience';
 import { heroImages, heroImageSizes } from '../assets/logo/images';
 import WhoIntro from '../components/home/WhoIntro.vue';
 import CodeWin from '../components/home/CodeWin.vue';
@@ -50,10 +50,15 @@ async function warmExpressions() {
 }
 function heroReady(src: string) {
     heroLoadedSrc.value = src;
+    scheduleExpressions();
+}
+function scheduleExpressions() {
+    if (openingLoad.active || !heroLoadedSrc.value) return;
     if (warmingScheduled) return;
     warmingScheduled = true;
     warmTimer = setTimeout(() => { void warmExpressions(); }, 8000);
 }
+watch(() => openingLoad.active, (waiting) => { if (!waiting) scheduleExpressions(); });
 function mousedown() {
     clearTimeout(restoreTimer);
     if (expressions.length) imageIndex.value = expressions[Math.floor(Math.random() * expressions.length)];
