@@ -1,33 +1,7 @@
+# Crawling is not permitted anywhere on this website.
+# Google's advertising crawlers require explicit user-agent entries.
 User-agent: *
-allow: /
-
-User-agent: Yisouspider
-allow: /
-
-User-agent: Applebot
-allow: /
-
-User-agent: bingbot
-allow: /
-
-User-agent: Sogou inst spider
-allow: /
-
-User-agent: Sogou web spider
-allow: /
-
-User-agent: 360Spider
-allow: /
-
-User-agent: Googlebot
-allow: /
-
-User-agent: Baiduspider
-allow: /
-
-User-agent: Bytespider
-allow: /
-
-User-agent: PetalBot
-allow: /
+User-agent: AdsBot-Google
+User-agent: AdsBot-Google-Mobile
+Disallow: /
 
