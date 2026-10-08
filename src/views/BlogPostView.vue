@@ -36,13 +36,6 @@ const post = computed(() => props.post);
                         <h2>{{ section.title }}</h2>
                         <p v-for="paragraph in (section.dialogue ? section.paragraphs.slice(0, 1) : section.paragraphs)" :key="paragraph">{{ paragraph }}</p>
                         <blockquote v-if="section.quote"><p>{{ section.quote }}</p></blockquote>
-                        <div v-if="section.dialogue?.length" class="article-dialogue" aria-label="李白先生和黑发少女的对话">
-                            <div v-for="(line, index) in section.dialogue" :key="`${line.speaker}-${index}`" class="dialogue-line" :class="index % 2 ? 'dialogue-line--answer' : 'dialogue-line--question'">
-                                <span class="dialogue-speaker">{{ line.speaker }}</span>
-                                <p>{{ line.text }}</p>
-                            </div>
-                        </div>
-                        <p v-for="paragraph in (section.dialogue ? section.paragraphs.slice(1) : [])" :key="paragraph">{{ paragraph }}</p>
                         <ul v-if="section.items" class="article-bullets"><li v-for="item in section.items" :key="item">{{ item }}</li></ul>
                         <div v-if="section.images?.length" class="article-media" :class="{ 'article-media--single': section.images.length === 1, 'article-media--decorated': section.decoration }">
                             <figure v-for="image in section.images" :key="image.src" class="article-media-figure">
@@ -54,6 +47,13 @@ const post = computed(() => props.post);
                                 <span class="article-media-decoration-label">{{ section.decoration.label }}</span>
                             </div>
                         </div>
+                        <div v-if="section.dialogue?.length" class="article-dialogue" aria-label="李白先生和黑发少女的对话">
+                            <div v-for="(line, index) in section.dialogue" :key="`${line.speaker}-${index}`" class="dialogue-line" :class="index % 2 ? 'dialogue-line--answer' : 'dialogue-line--question'">
+                                <span class="dialogue-speaker">{{ line.speaker }}</span>
+                                <p>{{ line.text }}</p>
+                            </div>
+                        </div>
+                        <p v-for="paragraph in (section.dialogue ? section.paragraphs.slice(1) : [])" :key="paragraph">{{ paragraph }}</p>
                         <div v-if="section.links?.length" class="article-links">
                             <WiredAction v-for="link in section.links" :key="link.href" :href="link.href" arrow="up-right" class="article-resource-link" target="_blank" rel="noopener noreferrer" :aria-label="`${link.label}（新标签页打开）`">{{ link.label }}</WiredAction>
                         </div>
