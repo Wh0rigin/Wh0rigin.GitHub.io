@@ -61,7 +61,7 @@ export const posts: BlogEntry[] = [
         readMinutes: 4,
         category: '动画随笔',
         tags: ['森见登美彦', '动画电影', '春宵苦短少女前进吧'],
-        summary: '看到杭州有酒吧提供同名“伪电气白兰”后，我去了一趟。一次巡礼里借来的书、带去的饼熊和 AKG 专辑，也把电影里的夜晚连到了现实。',
+        summary: '在小红书看到杭州有酒吧提供同名“伪电气白兰”后，我去了一趟。巡礼时遇见的少女借给我书和饼熊，我带去的 AKG 专辑也留在了照片里。',
         artwork: {
             headline: 'A NIGHT,',
             highlight: 'SEARCH.',
