@@ -36,6 +36,22 @@ export interface BlogPost extends BlogEntry {
 
 export const posts: BlogEntry[] = [
     {
+        slug: 'welcome-to-the-ai-age',
+        issue: '003',
+        title: '欢迎来到 AI 时代',
+        subtitle: '和父亲喝酒聊天时，聊起电脑，也想了想 AI。',
+        date: '2026-10-08',
+        readMinutes: 4,
+        category: '生活随笔',
+        tags: ['AI', '编程', '成长经历'],
+        summary: '国庆回家，和父亲久违地喝酒聊天。从他组装电脑、装系统的日子，想到自己这些年的竞赛和编程经历，也聊聊 AI 编程工具出现后，我对出路的焦虑。',
+        artwork: {
+            headline: 'AI,',
+            highlight: 'AGE.',
+            caption: 'A TALK WITH MY FATHER.',
+        },
+    },
+    {
         slug: 'anime-that-stayed-with-me',
         issue: '002',
         title: '从四叠半开始：影响我的动画',

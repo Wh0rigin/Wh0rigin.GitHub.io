@@ -2,6 +2,7 @@ import { findPost, type BlogPost, type BlogSection } from './posts';
 
 // Each body is a separate chunk; listing summaries never imports these files.
 const articleLoaders: Record<string, () => Promise<{ default: BlogSection[] }>> = {
+    'welcome-to-the-ai-age': () => import('./articles/welcome-to-the-ai-age'),
     'anime-that-stayed-with-me': () => import('./articles/anime-that-stayed-with-me'),
     'hello-wired-world': () => import('./articles/hello-wired-world'),
 };
