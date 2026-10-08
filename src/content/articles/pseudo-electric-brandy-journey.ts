@@ -60,6 +60,13 @@ const sections: BlogSection[] = [
             '在那里，我遇见了一位同样来巡礼的少女。她把带来的书和饼熊借给我，我拿出自己带来的 AKG 专辑，和它们一起拍了照。那张专辑里，正好收录着这部动画电影的主题曲。',
             '酒杯、借来的书和饼熊，还有我带去的 CD，都留在了这张照片里。原本只是因为一杯同名酒出发，最后还遇见了同样喜欢这部作品的人。这些小事让那趟杭州之行变成了我自己的故事。',
         ],
+        decoration: {
+            src: '/acg/mochiguma.svg',
+            alt: '饼熊的矢量插画',
+            width: 300,
+            height: 310,
+            label: 'MOCHIGUMA / 巡礼同行',
+        },
         images: [
             {
                 src: '/blog/pseudo-electric-brandy/morimi-book.webp',

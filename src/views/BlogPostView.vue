@@ -44,11 +44,15 @@ const post = computed(() => props.post);
                         </div>
                         <p v-for="paragraph in (section.dialogue ? section.paragraphs.slice(1) : [])" :key="paragraph">{{ paragraph }}</p>
                         <ul v-if="section.items" class="article-bullets"><li v-for="item in section.items" :key="item">{{ item }}</li></ul>
-                        <div v-if="section.images?.length" class="article-media" :class="{ 'article-media--single': section.images.length === 1 }">
+                        <div v-if="section.images?.length" class="article-media" :class="{ 'article-media--single': section.images.length === 1, 'article-media--decorated': section.decoration }">
                             <figure v-for="image in section.images" :key="image.src" class="article-media-figure">
                                 <WiredImage :src="image.src" :alt="image.alt" :width="image.width" :height="image.height" />
                                 <figcaption>{{ image.caption }}<a v-if="image.sourceHref" :href="image.sourceHref" target="_blank" rel="noopener noreferrer">{{ image.sourceLabel || '图片来源' }} ↗</a></figcaption>
                             </figure>
+                            <div v-if="section.decoration" class="article-media-decoration">
+                                <WiredImage :src="section.decoration.src" :alt="section.decoration.alt" :width="section.decoration.width" :height="section.decoration.height" compact />
+                                <span class="article-media-decoration-label">{{ section.decoration.label }}</span>
+                            </div>
                         </div>
                         <div v-if="section.links?.length" class="article-links">
                             <WiredAction v-for="link in section.links" :key="link.href" :href="link.href" arrow="up-right" class="article-resource-link" target="_blank" rel="noopener noreferrer" :aria-label="`${link.label}（新标签页打开）`">{{ link.label }}</WiredAction>

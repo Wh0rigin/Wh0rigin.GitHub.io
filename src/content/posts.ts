@@ -12,6 +12,7 @@ export interface BlogSection {
     links?: BlogLink[];
     images?: BlogImage[];
     dialogue?: BlogDialogueLine[];
+    decoration?: BlogDecoration;
 }
 
 export interface BlogImage {
@@ -27,6 +28,14 @@ export interface BlogImage {
 export interface BlogDialogueLine {
     speaker: string;
     text: string;
+}
+
+export interface BlogDecoration {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+    label: string;
 }
 
 export interface BlogEntry {
