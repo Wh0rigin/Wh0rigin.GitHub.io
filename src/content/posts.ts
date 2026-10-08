@@ -10,6 +10,23 @@ export interface BlogSection {
     quote?: string;
     items?: string[];
     links?: BlogLink[];
+    images?: BlogImage[];
+    dialogue?: BlogDialogueLine[];
+}
+
+export interface BlogImage {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+    caption: string;
+    sourceHref?: string;
+    sourceLabel?: string;
+}
+
+export interface BlogDialogueLine {
+    speaker: string;
+    text: string;
 }
 
 export interface BlogEntry {
@@ -35,6 +52,22 @@ export interface BlogPost extends BlogEntry {
 }
 
 export const posts: BlogEntry[] = [
+    {
+        slug: 'pseudo-electric-brandy-journey',
+        issue: '004',
+        title: '寻伪电气白兰之旅',
+        subtitle: '跟着黑发少女走进京都的夜里，聊聊伪电气白兰和人生的滋味。',
+        date: '2026-10-08',
+        readMinutes: 4,
+        category: '动画随笔',
+        tags: ['森见登美彦', '动画电影', '春宵苦短少女前进吧'],
+        summary: '从《春宵苦短，少女前进吧！》里寻找伪电气白兰的夜晚开始，看看李白先生和少女如何用几句对话，谈虚妄、孤独、分享与欢愉。',
+        artwork: {
+            headline: 'A NIGHT,',
+            highlight: 'SEARCH.',
+            caption: 'PSEUDO ELECTRIC BRANDY',
+        },
+    },
     {
         slug: 'welcome-to-the-ai-age',
         issue: '003',
