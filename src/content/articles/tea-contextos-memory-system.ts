@@ -110,8 +110,22 @@ const sections: BlogSection[] = [
         ],
     },
     {
+        id: 'mechanism-comparison',
+        title: '08 / ContextOS 和 Claude Code、Pi 有什么不同',
+        paragraphs: [
+            '这里比较的是官方文档描述的常见默认路径，不是说 Claude Code 或 Pi 只能做摘要。它们也会保存会话记录，并提供项目记忆、文件重读、分支或扩展能力。主要区别是：旧内容怎样离开当前请求，以及之后怎样找回来。',
+            'Claude Code 接近上下文限制时会压缩较早的会话内容；压缩后会重新加入项目指令、自动记忆、计划和 Git 状态，并重读一部分最近读取或修改的文件。Pi 会生成结构化摘要、保留一段近期消息，并把压缩位置记入会话树；原始 JSONL 会话仍可用于回看和分支。两者都在整理“接下来继续任务需要记住什么”。',
+            'ContextOS 的核心路径更偏向证据管理：合适的旧工具结果会被当前请求中的引用目录替代，需要时再从本地历史按页取回原文；满足条件时，也可以把较早的工具调用和配对结果一起收起。源码版本变化后，旧读取会失效；代码修改后的验证义务则由运行时单独记录。核心流程不需要先调用模型写一份摘要。',
+            '所以，区别不是有没有会话历史，而是当前请求主要依靠摘要延续，还是依靠可召回、可校验的原始证据延续。Pi 支持扩展定制压缩，Claude Code 也有钩子与文件重读等机制；这段比较的是它们文档描述的默认上下文路径，不是它们所有可扩展能力的上限。',
+        ],
+        links: [
+            { label: 'Claude Code：上下文窗口说明', href: 'https://code.claude.com/docs/en/context-window' },
+            { label: 'Pi：Compaction 机制说明', href: 'https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/compaction.md' },
+        ],
+    },
+    {
         id: 'current-limits',
-        title: '08 / 仍然需要说清楚的边界',
+        title: '09 / 仍然需要说清楚的边界',
         paragraphs: [
             'ContextOS 主要缩小模型请求，没有让 Agent 的全部历史或进程内存变成有界。引用、原始会话和索引仍然需要保存；短任务也可能因为工具说明和恢复步骤而负收益。',
             '它不是通用语义知识库，也不能凭源码哈希保证补丁正确。源码检查之后仍可能发生并发变化，验证命令的识别也有覆盖范围。现在 ContextOS 需要主动开启；三方实验中出现的归档元数据候选也不是默认运行时版本。',
