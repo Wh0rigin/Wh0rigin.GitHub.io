@@ -47,6 +47,7 @@ html[data-theme="golden"] .journal-title sup { color: #191814; }
 .article-labels .demo-label { --ui-badge-bg: var(--ui-paper); --ui-badge-color: var(--ui-muted); }
 .article-heading h1 { margin-top: 1.1875rem; font-size: clamp(2rem, 4.4vw, 3.5rem); font-weight: 950; letter-spacing: -.055em; line-height: 1.3; text-wrap: balance; text-shadow: 0.1875rem 0.1875rem 0 var(--ui-stage-shadow); }
 .article-subtitle { margin-top: 1.1875rem; max-width: 36.25rem; color: var(--ui-stage-muted); font-size: .92rem; line-height: 1.9; }
+.article-top-link { margin-top: 1.125rem; }
 .article-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.625rem 1.25rem; margin-top: 1.75rem; color: var(--ui-stage-muted); font-size: .67rem; }
 .author-mark { display: grid; place-items: center; width: 1.8125rem; height: 1.8125rem; margin-right: -0.625rem; font-weight: 950; font-style: italic; color: var(--ui-accent); background: var(--ui-paper); transform: rotate(-5deg); }
 .article-art { height: 16.875rem; --ui-panel-shadow: 0.4375rem 0.4375rem 0 var(--ui-layer), 0.75rem 0.75rem 0 var(--ui-stage-shadow); transform: rotate(3deg); }

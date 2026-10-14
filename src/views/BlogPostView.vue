@@ -21,6 +21,7 @@ const post = computed(() => props.post);
                     <div class="article-labels"><span>{{ post.category }}</span><WiredBadge v-if="post.demo" variant="soft" flat class="demo-label">DEMO / 第一篇</WiredBadge></div>
                     <h1>{{ post.title }}</h1>
                     <p class="article-subtitle">{{ post.subtitle }}</p>
+                    <WiredAction v-if="post.repositoryLink" :href="post.repositoryLink.href" arrow="up-right" class="article-resource-link article-top-link" target="_blank" rel="noopener noreferrer" :aria-label="`${post.repositoryLink.label}（新标签页打开）`">{{ post.repositoryLink.label }}</WiredAction>
                     <div class="article-meta"><span class="author-mark" aria-hidden="true">W.</span><span>Wh0rigin</span><time :datetime="post.date">{{ formatPostDate(post.date) }}</time><span>约 {{ post.readMinutes }} 分钟</span></div>
                 </div>
                 <div class="article-art wired-panel"><BlogArtwork :issue="post.issue" v-bind="post.artwork" /></div>

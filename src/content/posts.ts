@@ -49,6 +49,7 @@ export interface BlogEntry {
     category: string;
     tags: string[];
     summary: string;
+    repositoryLink?: BlogLink;
     demo?: boolean;
     artwork?: {
         headline: string;
@@ -72,6 +73,7 @@ export const posts: BlogEntry[] = [
         category: '工程设计',
         tags: ['TEA Coding Agent', 'ContextOS', '上下文管理', 'AI 编程'],
         summary: '长会话会重复发送已经读过的代码和工具结果。ContextOS 把原始历史、当前工作集与待验证状态分开管理，让旧证据能按需找回，也能在源码变化后失效。',
+        repositoryLink: { label: '查看 TEA 仓库', href: 'https://github.com/Wh0rigin/tea' },
         artwork: {
             headline: 'KEEP,',
             highlight: 'PROOF.',
