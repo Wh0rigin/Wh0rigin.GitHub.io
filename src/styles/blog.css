@@ -71,6 +71,7 @@ html[data-theme="golden"] .journal-title sup { color: #191814; }
 .dialogue-line p { font-size: 0.9rem; font-weight: 850; line-height: 1.6; }
 .article-media { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); align-items: start; gap: 1.125rem; margin: 1.75rem 0 2rem; }
 .article-media--single { grid-template-columns: minmax(0, 22rem); }
+.article-media--wide { grid-template-columns: minmax(0, 1fr); }
 .article-media--decorated { position: relative; padding-bottom: 6.75rem; }
 .article-media-figure { min-width: 0; margin: 0; padding: 0.625rem; border: 0.0625rem solid var(--ui-ink); background: var(--ui-paper); box-shadow: 0.3rem 0.3rem 0 var(--ui-layer); transform: rotate(-0.7deg); }
 .article-media-figure:nth-child(even) { transform: translateY(0.375rem) rotate(0.8deg); box-shadow: -0.25rem 0.3rem 0 var(--ui-accent); }

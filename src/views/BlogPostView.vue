@@ -37,7 +37,7 @@ const post = computed(() => props.post);
                         <p v-for="paragraph in (section.dialogue ? section.paragraphs.slice(0, 1) : section.paragraphs)" :key="paragraph">{{ paragraph }}</p>
                         <blockquote v-if="section.quote"><p>{{ section.quote }}</p></blockquote>
                         <ul v-if="section.items" class="article-bullets"><li v-for="item in section.items" :key="item">{{ item }}</li></ul>
-                        <div v-if="section.images?.length" class="article-media" :class="{ 'article-media--single': section.images.length === 1, 'article-media--decorated': section.decoration }">
+                        <div v-if="section.images?.length" class="article-media" :class="{ 'article-media--single': section.images.length === 1 && !section.wideMedia, 'article-media--wide': section.wideMedia, 'article-media--decorated': section.decoration }">
                             <figure v-for="image in section.images" :key="image.src" class="article-media-figure">
                                 <WiredImage :src="image.src" :alt="image.alt" :width="image.width" :height="image.height" />
                                 <figcaption>{{ image.caption }}<a v-if="image.sourceHref" :href="image.sourceHref" target="_blank" rel="noopener noreferrer">{{ image.sourceLabel || '图片来源' }} ↗</a></figcaption>

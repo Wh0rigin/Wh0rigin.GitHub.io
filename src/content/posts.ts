@@ -11,6 +11,7 @@ export interface BlogSection {
     items?: string[];
     links?: BlogLink[];
     images?: BlogImage[];
+    wideMedia?: boolean;
     dialogue?: BlogDialogueLine[];
     decoration?: BlogDecoration;
 }
@@ -61,6 +62,22 @@ export interface BlogPost extends BlogEntry {
 }
 
 export const posts: BlogEntry[] = [
+    {
+        slug: 'tea-contextos-memory-system',
+        issue: '005',
+        title: '给 Coding Agent 一份能查证的记忆',
+        subtitle: '拆解 TEA 的 ContextOS：如何保存完整历史、缩小每轮请求，并在源码变化后拒绝旧证据。',
+        date: '2026-10-14',
+        readMinutes: 9,
+        category: '工程设计',
+        tags: ['TEA Coding Agent', 'ContextOS', '上下文管理', 'AI 编程'],
+        summary: '长会话会重复发送已经读过的代码和工具结果。ContextOS 把原始历史、当前工作集与待验证状态分开管理，让旧证据能按需找回，也能在源码变化后失效。',
+        artwork: {
+            headline: 'KEEP,',
+            highlight: 'PROOF.',
+            caption: 'TEA / CONTEXTOS',
+        },
+    },
     {
         slug: 'pseudo-electric-brandy-journey',
         issue: '004',
